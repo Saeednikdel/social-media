@@ -36,6 +36,9 @@ const Chat = ({ match, load_msg, message, isAuthenticated }) => {
       console.error("connection closed unexpectedly!!!");
       setConnectionStatus("قطع شد");
     };
+    return () => {
+      client.close();
+    };
   }, [room]);
   if (isAuthenticated === false) return <Redirect to="/login" />;
   const handleClick = (e) => {

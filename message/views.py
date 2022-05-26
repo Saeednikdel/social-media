@@ -26,7 +26,31 @@ def roomMsg(request, pk):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def roomList(request, pk):
-    user = UserAccount.objects.get(id=pk)
+    user = get_object_or_404(UserAccount ,id=pk)
     rooms =Room.objects.filter(users=user)
     serializer = RoomSerializer(rooms, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def getRoom(request, user1, user2):
+    user_1 = get_object_or_404(UserAccount ,id=user1)
+    user_2 = get_object_or_404(UserAccount ,id=user2)
+    room = Room.objects.filter(users=user_1)
+    if room.exists():
+        room = room.filter(users=user_2)
+        if room.exists():
+            room = room.get(users=user_2)
+            return Response({"room_id":room.id})
+        else:
+            new_room = Room()
+            new_room.save()
+            new_room.users.add(user_1)
+            new_room.users.add(user_2)
+            return Response({"room_id":new_room.id})
+    else:
+        new_room = Room()
+        new_room.save()
+        new_room.users.add(user_1)
+        new_room.users.add(user_2)
+        return Response({"room_id":new_room.id})

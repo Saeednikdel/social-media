@@ -36,9 +36,7 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated }) => {
                     chatuser.id !== user.id && (
                       <Avatar
                         src={chatuser.image}
-                        className={
-                          room.online_list.length > 0 ? "online" : "offline"
-                        }
+                        style={{ width: 50, height: 50, margin: 10 }}
                       />
                     )
                 )}

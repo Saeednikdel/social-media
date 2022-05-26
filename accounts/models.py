@@ -50,3 +50,9 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def following_count(self):
         return self.following.exclude(following=self).count()
+
+    def follower_list(self):
+        return self.follower.exclude(follower=self)
+
+    def following_list(self):
+        return self.following.exclude(following=self)

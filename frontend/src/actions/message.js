@@ -5,7 +5,6 @@ import {
   LOAD_ROOMS_SUCCESS,
   LOAD_ROOMS_FAIL,
 } from "./types";
-
 export const load_msg = (room) => async (dispatch) => {
   const config = {
     headers: {

@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Avatar,
   Button,
+  IconButton,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import Notification from "../components/Notification";
@@ -16,8 +17,11 @@ import { connect } from "react-redux";
 import { load_profile, load_user_posts } from "../actions/blog";
 import { follow_unfollw } from "../actions/auth";
 import jMoment from "moment-jalaali";
-import { useLocation, withRouter } from "react-router-dom";
+import { useLocation, withRouter, Link } from "react-router-dom";
 import PostCard from "../components/PostCard";
+import { MailOutline } from "@material-ui/icons";
+import axios from "axios";
+import Redirect from "react-router-dom/es/Redirect";
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -70,8 +74,7 @@ const UserProfile = ({
   follow_unfollw,
   user,
 }) => {
-  const [openPopup, setOpenPopup] = useState(false);
-
+  const [chatId, setChatId] = useState(false);
   const [page, setPage] = useState(
     getQueryVariable("page") ? parseInt(getQueryVariable("page")) : 1
   );
@@ -109,6 +112,27 @@ const UserProfile = ({
     history.push(window.location.pathname + "?" + currentUrlParams.toString());
     window.scrollTo({ top: 0, right: 0, behavior: "smooth" });
   };
+
+  async function get_chat() {
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/message/getroom/${user.id}/${profile.id}/`,
+        config
+      );
+      setChatId(res.data.room_id);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  if (chatId !== false) return <Redirect to={`/chat/${chatId}/`} />;
+
   return profile ? (
     <>
       <Card variant="outlined">
@@ -134,10 +158,17 @@ const UserProfile = ({
               <div
                 style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}
               >
+                <IconButton
+                  onClick={() => get_chat()}
+                  style={{ marginLeft: 20 }}
+                >
+                  <MailOutline color="secondary" />
+                </IconButton>
+
                 <Button
-                  variant="outlined"
                   color="secondary"
                   onClick={() => follow_unfollw(profile.id)}
+                  style={{ marginLeft: 20 }}
                 >
                   {profile.followed === true ? "آنفالو" : "فالو"}
                 </Button>
