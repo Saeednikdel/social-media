@@ -33,9 +33,38 @@ import {
   NEW_POST_FAIL,
   FOLLOW_SUCCESS,
   FOLLOW_FAIL,
+  UPDATE_AVATAR_SUCCESS,
+  UPDATE_AVATAR_FAIL,
 } from "./types";
 import { load_post, load_profile } from "./blog";
-
+export const update_avatar = (image) => async (dispatch) => {
+  let formData = new FormData();
+  const user = localStorage.getItem("id");
+  formData.append("image", image);
+  formData.append("id", user);
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `JWT ${localStorage.getItem("access")}`,
+      Accept: "application/json",
+    },
+  };
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/accounts/avatar/`,
+      formData,
+      config
+    );
+    dispatch({
+      type: UPDATE_AVATAR_SUCCESS,
+    });
+    dispatch(load_user());
+  } catch (err) {
+    dispatch({
+      type: UPDATE_AVATAR_FAIL,
+    });
+  }
+};
 export const follow_unfollw = (target_id) => async (dispatch) => {
   if (localStorage.getItem("access")) {
     const config = {

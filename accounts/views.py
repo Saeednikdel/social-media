@@ -6,7 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 import math
 from django.shortcuts import get_object_or_404
-
+from .serializers import AvatarSerializer
+from rest_framework import status
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def follow(request):
@@ -23,3 +24,14 @@ def follow(request):
         user.following.add(target)
         target.follower.add(user)
         return Response({"followed"})
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def avatar(request):
+    user = get_object_or_404(UserAccount,id=request.data.get('id'))
+    serializer = AvatarSerializer(data=request.data,instance=user)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

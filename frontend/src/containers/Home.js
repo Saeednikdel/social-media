@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react";
 import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
   Typography,
   Grid,
   makeStyles,
   CircularProgress,
-  Avatar,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import Notification from "../components/Notification";
 import DialogAlert from "../components/DialogAlert";
+import PostCard from "../components/PostCard";
 import { connect } from "react-redux";
 import { load_posts } from "../actions/blog";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import placeholderImage from "../placeholder-image.png";
-import jMoment from "moment-jalaali";
-import { Favorite, Visibility } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   noItemContainer: {
     textAlign: "center",
@@ -94,50 +87,7 @@ const Home = ({ posts, load_posts, history, isAuthenticated }) => {
         <Grid container spacing={1} style={{ marginTop: 2 }}>
           {posts.posts.map((post) => (
             <Grid item xs={12}>
-              <Card variant="outlined">
-                <CardActionArea component={NavLink} to={`/detail/${post.id}/`}>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <Link
-                      className={classes.navLink}
-                      exact
-                      to={`/profile/${post.user}/`}
-                    >
-                      <Avatar
-                        src={post.user_image}
-                        style={{ height: 50, width: 50, margin: 10 }}
-                      />
-                    </Link>
-                    <div>
-                      <Link
-                        className={classes.navLink}
-                        exact
-                        to={`/profile/${post.user}/`}
-                      >
-                        <Typography variant="body1">
-                          {post.user_name}
-                        </Typography>
-                      </Link>
-                      <Typography color="textSecondary" variant="body2">
-                        {jMoment(post.date, "YYYY/M/D").format("jYYYY/jM/jD")}
-                      </Typography>
-                    </div>
-                  </div>
-
-                  <CardContent style={{ height: 160 }}>
-                    <Typography variant="textSecondary" gutterBottom>
-                      {post.text}...
-                    </Typography>
-
-                    <div className={classes.like}>
-                      <Typography variant="body2">{post.like_count}</Typography>
-                      <Favorite
-                        color="error"
-                        style={{ fontSize: 30, marginRight: 5 }}
-                      />
-                    </div>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
+              <PostCard post={post} />
             </Grid>
           ))}
         </Grid>

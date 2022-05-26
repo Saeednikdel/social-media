@@ -16,6 +16,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = UserAccount
         fields = ('id', 'name','image',)
 
+class AvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = ('id','image')
 
 class UserDetailSerializer(serializers.ModelSerializer):
     # follower_list = UserSerializer(source="follower", read_only=True, many=True)

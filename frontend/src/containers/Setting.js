@@ -7,9 +7,8 @@ import {
   IconButton,
   Button,
 } from "@material-ui/core";
-import { ExitToApp } from "@material-ui/icons";
 import { connect } from "react-redux";
-import { load_user } from "../actions/auth";
+import { load_user, update_avatar } from "../actions/auth";
 import jMoment from "moment-jalaali";
 import { logout } from "../actions/auth";
 import { Link } from "react-router-dom";
@@ -19,8 +18,15 @@ import SetEmail from "../containers/SetEmail";
 import SetPassword from "../containers/SetPassword";
 import Popup from "../components/Popup";
 import SetUserDetail from "../containers/SetUserDetail";
+import axios from "axios";
 
-const Setting = ({ user, load_user, logout, isAuthenticated }) => {
+const Setting = ({
+  user,
+  load_user,
+  logout,
+  isAuthenticated,
+  update_avatar,
+}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,8 +63,8 @@ const Setting = ({ user, load_user, logout, isAuthenticated }) => {
     }
   }
   async function uploadImage(e) {
-    const file = e.target.files[0];
-    console.log("file", file);
+    const image = e.target.files[0];
+    update_avatar(image);
   }
   return user ? (
     <div>
@@ -144,4 +150,6 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
 });
-export default connect(mapStateToProps, { load_user, logout })(Setting);
+export default connect(mapStateToProps, { load_user, logout, update_avatar })(
+  Setting
+);

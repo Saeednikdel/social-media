@@ -31,6 +31,8 @@ import {
   NEW_POST_FAIL,
   FOLLOW_SUCCESS,
   FOLLOW_FAIL,
+  UPDATE_AVATAR_SUCCESS,
+  UPDATE_AVATAR_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -190,6 +192,8 @@ export default function (state = initialState, action) {
         requestSuccess: null,
         requestFail: null,
       };
+    case UPDATE_AVATAR_SUCCESS:
+    case UPDATE_AVATAR_FAIL:
     case FOLLOW_SUCCESS:
     case FOLLOW_FAIL:
     case BOOKMARK_SUCCESS:
