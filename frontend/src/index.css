@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "Vazir";
+  src: local("Vazir"), url("./font/Vazir-Regular-FD-WOL.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.offline {
+  height: 90px;
+  width: 90px;
+  margin: 10px;
+}
+.online {
+  height: 90px;
+  width: 90px;
+  margin: 10px;
+  animation: pulse 1500ms infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: #2196f3 0 0 0 0;
+  }
+  75% {
+    box-shadow: #2196f300 0 0 0 10px;
+  }
+}
