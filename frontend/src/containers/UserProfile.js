@@ -46,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   avatar: {
-    height: 100,
-    width: 100,
-    marginLeft: 40,
-    marginTop: -50,
-    border: "5px solid",
+    height: 90,
+    width: 90,
+    marginLeft: 45,
+    marginTop: -45,
+    border: "4px solid",
     borderColor: `${theme.palette.primary.border}`,
   },
   noItemContainer: {
@@ -140,7 +140,7 @@ const UserProfile = ({
           src="http://127.0.0.1:8000/media/header.jpg"
           style={{
             width: "100%",
-            height: 200,
+            height: 150,
             objectFit: "cover",
           }}
         />
@@ -160,7 +160,7 @@ const UserProfile = ({
               >
                 <IconButton
                   onClick={() => get_chat()}
-                  style={{ marginLeft: 20 }}
+                  style={{ marginLeft: 10 }}
                 >
                   <MailOutline color="secondary" />
                 </IconButton>
@@ -168,7 +168,7 @@ const UserProfile = ({
                 <Button
                   color="secondary"
                   onClick={() => follow_unfollw(profile.id)}
-                  style={{ marginLeft: 20 }}
+                  style={{ marginLeft: 10 }}
                 >
                   {profile.followed === true ? "آنفالو" : "فالو"}
                 </Button>

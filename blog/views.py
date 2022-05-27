@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 import math
 from django.shortcuts import get_object_or_404
+from notification.models import Notification
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -103,12 +104,16 @@ def like(request):
         like.delete()
         post.like_count -= 1
         post.save()
+        notif = get_object_or_404(Notification, sender=user, post=post, receiver=post.user, kind="L")
+        notif.delete()
         return Response({"disliked"})
     else:
         like, created = Like.objects.get_or_create(post=post, user=user)
         like.save()
         post.like_count += 1
         post.save()
+        notif, created = Notification.objects.get_or_create(sender=user, post=post, receiver=post.user, kind="L")
+        notif.save()
         return Response({"liked"})
 
 @api_view(['GET'])

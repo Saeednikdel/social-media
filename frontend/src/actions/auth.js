@@ -35,8 +35,44 @@ import {
   FOLLOW_FAIL,
   UPDATE_AVATAR_SUCCESS,
   UPDATE_AVATAR_FAIL,
+  LOAD_NOTIF_SUCCESS,
+  LOAD_NOTIF_FAIL,
 } from "./types";
 import { load_post, load_profile } from "./blog";
+
+export const load_notif =
+  (page = 1) =>
+  async (dispatch) => {
+    if (localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      const userId = localStorage.getItem("id");
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/notification/${userId}/${page}/`,
+          config
+        );
+
+        dispatch({
+          type: LOAD_NOTIF_SUCCESS,
+          payload: res.data,
+        });
+      } catch (err) {
+        dispatch({
+          type: LOAD_NOTIF_FAIL,
+        });
+      }
+    } else {
+      dispatch({
+        type: LOAD_NOTIF_FAIL,
+      });
+    }
+  };
 export const update_avatar = (image) => async (dispatch) => {
   let formData = new FormData();
   const user = localStorage.getItem("id");

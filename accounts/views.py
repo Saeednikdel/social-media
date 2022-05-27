@@ -8,6 +8,8 @@ import math
 from django.shortcuts import get_object_or_404
 from .serializers import AvatarSerializer, FollowerSerializer,FollowingSerializer
 from rest_framework import status
+from notification.models import Notification
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def follow(request):
@@ -16,6 +18,8 @@ def follow(request):
     if target in user.following.all():
         user.following.remove(target)
         target.follower.remove(user)
+        notif = get_object_or_404(Notification, sender=user, receiver=target, kind="F")
+        notif.delete()
         return Response({"unfollowed"})
     else:
         if user.following.count() == 0:
@@ -23,6 +27,8 @@ def follow(request):
             user.follower.add(user)
         user.following.add(target)
         target.follower.add(user)
+        notif, created = Notification.objects.get_or_create(sender=user, receiver=target, kind="F")
+        notif.save()
         return Response({"followed"})
 
 @api_view(['POST'])

@@ -98,11 +98,7 @@ const Appbar = ({
           <IconButton color="inherit" onClick={toggleDrawer}>
             <Menu />
           </IconButton>
-          <div className={classes.center}>
-            <Link to="/">
-              <img src={logo} style={{ height: 30 }} />
-            </Link>
-          </div>
+          <div className={classes.center}></div>
           <IconButton color="inherit" onClick={onChange}>
             {checked ? <Brightness7 /> : <Brightness4 />}
           </IconButton>

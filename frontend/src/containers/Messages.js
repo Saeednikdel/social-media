@@ -22,10 +22,8 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated }) => {
   const classes = useStyles();
   if (isAuthenticated === false) return <Redirect to="/login" />;
 
-  const handleClick = () => {};
-
   return (
-    <div>
+    <>
       {rooms &&
         rooms.map((room) => (
           <>
@@ -50,7 +48,7 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated }) => {
             <Divider />
           </>
         ))}
-    </div>
+    </>
   );
 };
 

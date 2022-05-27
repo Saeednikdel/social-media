@@ -33,6 +33,8 @@ import {
   FOLLOW_FAIL,
   UPDATE_AVATAR_SUCCESS,
   UPDATE_AVATAR_FAIL,
+  LOAD_NOTIF_SUCCESS,
+  LOAD_NOTIF_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -120,6 +122,11 @@ export default function (state = initialState, action) {
         ...state,
         requestSuccess: true,
       };
+    case LOAD_NOTIF_SUCCESS:
+      return {
+        ...state,
+        notification: payload,
+      };
     case NEW_POST_FAIL:
     case SET_COMMENTS_FAIL:
       return {
@@ -192,6 +199,7 @@ export default function (state = initialState, action) {
         requestSuccess: null,
         requestFail: null,
       };
+    case LOAD_NOTIF_FAIL:
     case UPDATE_AVATAR_SUCCESS:
     case UPDATE_AVATAR_FAIL:
     case FOLLOW_SUCCESS:

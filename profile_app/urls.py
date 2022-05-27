@@ -11,6 +11,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
     path('api/blog/', include('blog.urls')),
     path('api/accounts/', include('accounts.urls')),
+    path('api/notification/', include('notification.urls')),
     path('api/message/', include('message.urls')),
     path('api/', include('resume.urls')),
     # path('api/resume/', include('resume.urls')),

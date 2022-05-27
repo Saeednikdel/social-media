@@ -4,6 +4,13 @@
   font-weight: normal;
   font-style: normal;
 }
+.blur {
+  top: 0%;
+  bottom: auto;
+  background-color: rgba(white, white, white, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
 .offline {
   height: 90px;
   width: 90px;

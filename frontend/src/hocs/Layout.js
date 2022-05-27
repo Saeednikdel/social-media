@@ -71,7 +71,22 @@ const Layout = (props) => {
     <StylesProvider jss={jss}>
       <ThemeProvider theme={darkTheme}>
         <Appbar checked={darkState} onChange={handleThemeChange} />
-        <Container maxWidth="md">{props.children}</Container>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1000,
+              flex: 1,
+            }}
+          >
+            {props.children}
+          </div>
+        </div>
         <CssBaseline />
         <Footer />
         <BottomBar />

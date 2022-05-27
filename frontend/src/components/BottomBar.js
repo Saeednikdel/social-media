@@ -11,10 +11,10 @@ import {
 } from "@material-ui/core";
 
 import {
-  Email,
+  EmailOutlined,
   Add,
   NotificationsNone,
-  Home,
+  HomeOutlined,
   Search,
 } from "@material-ui/icons";
 
@@ -50,7 +50,7 @@ function BottomBar() {
         <Toolbar className={classes.toolbar}>
           <Link className={classes.navLink} to="/messages">
             <IconButton color="inherit" aria-label="Open drawer">
-              <Email />
+              <EmailOutlined />
             </IconButton>
           </Link>
           <Link className={classes.navLink} to="/notification">
@@ -68,7 +68,7 @@ function BottomBar() {
           </IconButton>
           <Link className={classes.navLink} to="/">
             <IconButton color="inherit">
-              <Home />
+              <HomeOutlined />
             </IconButton>
           </Link>
         </Toolbar>
