@@ -36,7 +36,6 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
       const data = JSON.parse(message.data);
       data.message && setChat((prev) => [data, ...prev]);
       data.online && setOnline(data.online);
-      console.log(message.data);
     };
     client.onclose = (e) => {
       console.error("connection closed unexpectedly!!!");
@@ -78,6 +77,7 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
           maxWidth: 500,
           paddingTop: 20,
           flex: 1,
+          padding: 10,
         }}
       >
         <Typography variant="subtitle2" color="textSecondary">
@@ -90,9 +90,10 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
           ref={chatContainer}
           id="scrollableDiv"
           style={{
-            height: 400,
-            maxWidth: 500,
+            height: 350,
+            width: "100%",
             overflow: "auto",
+
             border: "silver 1px solid",
             borderRadius: 8,
             overflow: "auto",
