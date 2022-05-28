@@ -23,9 +23,9 @@ def postList(request, pk):
             posts = Post.objects.all().order_by('-date')
     else:
         posts = Post.objects.all().order_by('-date')
-    itemperpage = 5
+    itemperpage = 10
     paginator = Paginator(posts, itemperpage)
-    count = math.ceil(len(posts) / itemperpage)
+    count = len(posts) 
     posts = paginator.get_page(pk)
     serializer = PostsSerializer(posts, many=True)
     new_dict = {"count": count}
@@ -37,9 +37,9 @@ def postList(request, pk):
 def userPostList(request, pk,sk):
     user = get_object_or_404(UserAccount, id=pk)
     posts =Post.objects.filter(user=user).order_by('-date')
-    itemperpage = 5
+    itemperpage = 10
     paginator = Paginator(posts, itemperpage)
-    count = math.ceil(len(posts) / itemperpage)
+    count = len(posts)
     posts = paginator.get_page(sk)
     serializer = PostsSerializer(posts, many=True)
     new_dict = {"count": count}

@@ -5,7 +5,7 @@ import {
   LOAD_ROOMS_SUCCESS,
   LOAD_ROOMS_FAIL,
 } from "./types";
-export const load_msg = (room) => async (dispatch) => {
+export const load_msg = (room, page) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +14,7 @@ export const load_msg = (room) => async (dispatch) => {
   };
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/message/room/${room}/`,
+      `${process.env.REACT_APP_API_URL}/api/message/room/${room}/${page}/`,
       config
     );
 

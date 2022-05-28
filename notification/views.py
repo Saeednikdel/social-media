@@ -15,9 +15,9 @@ from django.shortcuts import get_object_or_404
 def notification(request, pk, sk):
     user = get_object_or_404(UserAccount, id=pk)
     notif =Notification.objects.filter(receiver=user).order_by('-date')
-    itemperpage = 20
+    count = len(notif)
+    itemperpage = 10
     paginator = Paginator(notif, itemperpage)
-    count = math.ceil(len(notif) / itemperpage)
     notif = paginator.get_page(count)
     serializer = NotificationSerializer(notif, many=True)
     new_dict = {"count": count}

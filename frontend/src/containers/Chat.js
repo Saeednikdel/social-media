@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { w3cwebsocket } from "websocket";
-import { TextField, Typography, IconButton } from "@material-ui/core";
+import {
+  TextField,
+  Typography,
+  IconButton,
+  CircularProgress,
+} from "@material-ui/core";
 import { connect } from "react-redux";
 import { ArrowBackIos } from "@material-ui/icons";
 import { load_msg } from "../actions/message";
 import Redirect from "react-router-dom/es/Redirect";
 import { withRouter } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const Chat = ({ match, load_msg, message, isAuthenticated }) => {
+const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
   const room = match.params.room;
   const userid = localStorage.getItem("id");
   const client = new w3cwebsocket(
@@ -19,17 +25,17 @@ const Chat = ({ match, load_msg, message, isAuthenticated }) => {
   const [connectionStatus, setConnectionStatus] = useState("در حال اتصال...");
   const [chat, setChat] = useState([]);
   const chatContainer = useRef();
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    load_msg(room);
+    fetchData();
     client.onopen = () => {
       setConnectionStatus("متصل");
     };
     client.onmessage = (message) => {
       const data = JSON.parse(message.data);
-      data.message && setChat((prev) => [...prev, data]);
+      data.message && setChat((prev) => [data, ...prev]);
       data.online && setOnline(data.online);
-      scrollTomyRef();
       console.log(message.data);
     };
     client.onclose = (e) => {
@@ -55,10 +61,9 @@ const Chat = ({ match, load_msg, message, isAuthenticated }) => {
       setMsg("");
     }
   };
-  const scrollTomyRef = () => {
-    const scroll =
-      chatContainer.current.scrollHeight - chatContainer.current.clientHeight;
-    chatContainer.current.scrollTo(0, scroll);
+  const fetchData = async () => {
+    await load_msg(room, page);
+    setPage(page + 1);
   };
   return (
     <div
@@ -83,39 +88,18 @@ const Chat = ({ match, load_msg, message, isAuthenticated }) => {
         </Typography>
         <div
           ref={chatContainer}
+          id="scrollableDiv"
           style={{
             height: 400,
             maxWidth: 500,
             overflow: "auto",
             border: "silver 1px solid",
             borderRadius: 8,
+            overflow: "auto",
+            display: "flex",
+            flexDirection: "column-reverse",
           }}
         >
-          {message &&
-            message.msg.map((item) => (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    item.user == userid ? "flex-start" : "flex-end",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  style={{
-                    wordWrap: "break-word",
-                    backgroundColor:
-                      item.user == userid ? "#00ced1" : "#20b2aa",
-                    borderRadius: 8,
-                    margin: 10,
-                    padding: 10,
-                    maxWidth: 300,
-                  }}
-                >
-                  {item.content}
-                </Typography>
-              </div>
-            ))}
           {chat &&
             chat.map((item) => (
               <div
@@ -141,6 +125,51 @@ const Chat = ({ match, load_msg, message, isAuthenticated }) => {
                 </Typography>
               </div>
             ))}
+          {message && (
+            <InfiniteScroll
+              dataLength={message.length}
+              next={fetchData}
+              style={{ display: "flex", flexDirection: "column-reverse" }}
+              inverse={true}
+              scrollableTarget="scrollableDiv"
+              hasMore={count > message.length}
+              loader={
+                <div>
+                  <CircularProgress color="secondary" />
+                </div>
+              }
+              endMessage={
+                <div>
+                  <p>...</p>
+                </div>
+              }
+            >
+              {message.map((item) => (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent:
+                      item.user == userid ? "flex-start" : "flex-end",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    style={{
+                      wordWrap: "break-word",
+                      backgroundColor:
+                        item.user == userid ? "#00ced1" : "#20b2aa",
+                      borderRadius: 8,
+                      margin: 10,
+                      padding: 10,
+                      maxWidth: 300,
+                    }}
+                  >
+                    {item.content}
+                  </Typography>
+                </div>
+              ))}
+            </InfiniteScroll>
+          )}
         </div>
         <form
           autoComplete="off"
@@ -173,5 +202,6 @@ const Chat = ({ match, load_msg, message, isAuthenticated }) => {
 const mapStateToProps = (state) => ({
   message: state.message.message,
   isAuthenticated: state.auth.isAuthenticated,
+  count: state.message.msg_count,
 });
 export default withRouter(connect(mapStateToProps, { load_msg })(Chat));

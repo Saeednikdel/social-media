@@ -80,7 +80,7 @@ const Layout = (props) => {
         >
           <div
             style={{
-              maxWidth: 1000,
+              maxWidth: 900,
               flex: 1,
             }}
           >

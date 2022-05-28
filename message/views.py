@@ -11,13 +11,13 @@ from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def roomMsg(request, pk):
-    room = get_object_or_404(Room, id=pk)
-    msg =Message.objects.filter(room=room).order_by('date')
-    itemperpage = 101
+def roomMsg(request, room, page):
+    room = get_object_or_404(Room, id=room)
+    msg =Message.objects.filter(room=room).order_by('-date')
+    itemperpage = 10
     paginator = Paginator(msg, itemperpage)
-    count = math.ceil(len(msg) / itemperpage)
-    msg = paginator.get_page(count)
+    count = len(msg)
+    msg = paginator.get_page(page)
     serializer = MessageSerializer(msg, many=True)
     new_dict = {"count": count}
     new_dict.update({"msg": serializer.data})

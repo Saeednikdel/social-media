@@ -1,33 +1,61 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Typography, Avatar, makeStyles, Divider } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Typography, makeStyles, CircularProgress } from "@material-ui/core";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import Redirect from "react-router-dom/es/Redirect";
 import { load_notif } from "../actions/auth";
 import NotifCard from "../components/NotifCard";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const useStyles = makeStyles((theme) => ({
-  navLink: {
-    textDecoration: "none",
-    color: "inherit",
-  },
-  avatar: {
-    height: 50,
-    width: 50,
+  loader: {
+    textAlign: "center",
   },
 }));
-const Messages = ({ load_notif, isAuthenticated, notification }) => {
+const Messages = ({
+  load_notif,
+  isAuthenticated,
+  notification,
+  notif_count,
+}) => {
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
-    load_notif(1);
+    if (notification.length === 0) {
+      fetchData();
+    }
   }, []);
+  const fetchData = async () => {
+    await load_notif(page);
+    setPage(page + 1);
+  };
   const classes = useStyles();
   if (isAuthenticated === false) return <Redirect to="/login" />;
   return (
     <>
-      {notification && notification.notification.length > 0 ? (
-        notification.notification.map((notif) => <NotifCard notif={notif} />)
+      {notification && notification.length > 0 ? (
+        <InfiniteScroll
+          dataLength={notification.length}
+          next={fetchData}
+          hasMore={notif_count > notification.length}
+          loader={
+            <div className={classes.loader}>
+              <CircularProgress color="secondary" />
+            </div>
+          }
+          endMessage={
+            <div className={classes.loader}>
+              <p>...</p>
+            </div>
+          }
+        >
+          {notification.map((notif) => (
+            <NotifCard notif={notif} />
+          ))}
+        </InfiniteScroll>
       ) : (
-        <Typography>No Notification</Typography>
+        <div className={classes.loader}>
+          <Typography>No Notification</Typography>
+        </div>
       )}
     </>
   );
@@ -36,5 +64,6 @@ const Messages = ({ load_notif, isAuthenticated, notification }) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   notification: state.auth.notification,
+  notif_count: state.auth.notif_count,
 });
 export default connect(mapStateToProps, { load_notif })(Messages);

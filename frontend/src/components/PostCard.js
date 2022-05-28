@@ -60,7 +60,7 @@ export default function PostCard({ post }) {
 
           <div className={classes.like}>
             <Typography variant="body2">{post.like_count}</Typography>
-            <Favorite color="error" style={{ fontSize: 30, marginRight: 5 }} />
+            <Favorite color="error" style={{ fontSize: 25, marginRight: 5 }} />
           </div>
         </CardContent>
       </CardActionArea>

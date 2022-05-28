@@ -44,6 +44,7 @@ const initialState = {
   user: {
     id: null,
   },
+  notification: [],
 };
 
 export default function (state = initialState, action) {
@@ -125,7 +126,8 @@ export default function (state = initialState, action) {
     case LOAD_NOTIF_SUCCESS:
       return {
         ...state,
-        notification: payload,
+        notification: state.notification.concat(payload.notification),
+        notif_count: payload.count,
       };
     case NEW_POST_FAIL:
     case SET_COMMENTS_FAIL:
