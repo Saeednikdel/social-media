@@ -17,12 +17,13 @@ import Chat from "./containers/Chat";
 import PageNotFound from "./components/PageNotFound";
 import { Provider } from "react-redux";
 import store from "./store";
-
+import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./hocs/Layout";
 
 const App = () => (
   <Provider store={store}>
     <Router>
+      <ScrollToTop />
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />

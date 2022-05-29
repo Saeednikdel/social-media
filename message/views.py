@@ -25,11 +25,17 @@ def roomMsg(request, room, page):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def roomList(request, pk):
-    user = get_object_or_404(UserAccount ,id=pk)
-    rooms =Room.objects.filter(users=user)
+def roomList(request, user, page):
+    user = get_object_or_404(UserAccount ,id=user)
+    rooms =Room.objects.filter(users=user).order_by('-id')
+    itemperpage = 3
+    paginator = Paginator(rooms, itemperpage)
+    count = len(rooms)
+    rooms = paginator.get_page(page)
     serializer = RoomSerializer(rooms, many=True)
-    return Response(serializer.data)
+    new_dict = {"count": count}
+    new_dict.update({"rooms": serializer.data})
+    return Response(new_dict)
 
 @api_view(['GET'])
 @permission_classes([AllowAny])

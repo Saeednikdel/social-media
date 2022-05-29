@@ -4,7 +4,7 @@ import {
   LOAD_ROOMS_SUCCESS,
   LOAD_ROOMS_FAIL,
 } from "../actions/types";
-const initialState = { message: [] };
+const initialState = { message: [], rooms: [] };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -19,7 +19,8 @@ export default function (state = initialState, action) {
     case LOAD_ROOMS_SUCCESS:
       return {
         ...state,
-        rooms: payload,
+        rooms: state.rooms.concat(payload.rooms),
+        room_count: payload.count,
         message: [],
         msg_count: 0,
       };

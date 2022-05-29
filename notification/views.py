@@ -11,14 +11,14 @@ import math
 from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def notification(request, pk, sk):
     user = get_object_or_404(UserAccount, id=pk)
     notif =Notification.objects.filter(receiver=user).order_by('-date')
     count = len(notif)
     itemperpage = 10
     paginator = Paginator(notif, itemperpage)
-    notif = paginator.get_page(count)
+    notif = paginator.get_page(sk)
     serializer = NotificationSerializer(notif, many=True)
     new_dict = {"count": count}
     new_dict.update({"notification": serializer.data})

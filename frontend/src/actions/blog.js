@@ -62,6 +62,7 @@ export const load_user_posts = (userId, page) => async (dispatch) => {
     dispatch({
       type: LOAD_USER_POSTS_SUCCESS,
       payload: res.data,
+      page: page,
     });
   } catch (err) {
     dispatch({

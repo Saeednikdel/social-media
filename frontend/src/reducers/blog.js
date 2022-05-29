@@ -18,7 +18,7 @@ import {
 const initialState = { posts: [], userposts: [] };
 
 export default function (state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload, page } = action;
 
   switch (type) {
     case LOAD_POSTS_SUCCESS:
@@ -28,11 +28,19 @@ export default function (state = initialState, action) {
         count: payload.count,
       };
     case LOAD_USER_POSTS_SUCCESS:
-      return {
-        ...state,
-        userposts: state.userposts.concat(payload.posts),
-        profile_count: payload.count,
-      };
+      if (page === 1) {
+        return {
+          ...state,
+          userposts: payload.posts,
+          profile_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          userposts: state.userposts.concat(payload.posts),
+          profile_count: payload.count,
+        };
+      }
     case LOAD_POST_SUCCESS:
       return {
         ...state,
@@ -42,8 +50,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         profile: payload,
-        userposts: [],
-        profile_count: 0,
       };
     case LOAD_MENU_SUCCESS:
       return {

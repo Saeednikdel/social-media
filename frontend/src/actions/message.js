@@ -28,7 +28,7 @@ export const load_msg = (room, page) => async (dispatch) => {
     });
   }
 };
-export const load_rooms = () => async (dispatch) => {
+export const load_rooms = (page) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const load_rooms = () => async (dispatch) => {
   const user = localStorage.getItem("id");
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/message/room-list/${user}/`,
+      `${process.env.REACT_APP_API_URL}/api/message/room-list/${user}/${page}/`,
       config
     );
 
