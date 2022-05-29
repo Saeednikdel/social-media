@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 import math
 from django.shortcuts import get_object_or_404
-from .serializers import AvatarSerializer, FollowerSerializer,FollowingSerializer
+from .serializers import AvatarSerializer, FollowerSerializer,FollowingSerializer,UserSetSerializer, HeaderSerializer
 from rest_framework import status
 from notification.models import Notification
 
@@ -42,6 +42,18 @@ def avatar(request):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def header(request):
+    user = get_object_or_404(UserAccount,id=request.data.get('id'))
+    serializer = HeaderSerializer(data=request.data, instance=user)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def followerList(request, id):
@@ -55,3 +67,14 @@ def followingList(request, id):
     user = get_object_or_404(UserAccount ,id=id)
     serializer = FollowingSerializer(user, many=False)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def userSet(request):
+    user = get_object_or_404(UserAccount ,id=request.data.get('id'))
+    serializer = UserSetSerializer(instance=user, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)

@@ -1,8 +1,8 @@
-# E-commerce-App-React-Django
+# Social Media web app
 
-Created with Django djoser / React Redux
+Created with Django djoser redis / React Redux material-ui
 
-[Live Demo](https://saeed70.pythonanywhere.com/)
+[Live Demo](https://profileapp.pythonanywhere.com/)
 
 <br/>
 <p align="center">
@@ -17,9 +17,9 @@ Created with Django djoser / React Redux
 
 # Installation
 
-`pip install django`
-
 `virtualenv venv`
+
+`pip install django`
 
 # For Mac/ Linux
 
@@ -36,7 +36,6 @@ Created with Django djoser / React Redux
 `python manage.py migrate`
 
 `python manage.py runserver`
-
 
 # For Admin Login
 

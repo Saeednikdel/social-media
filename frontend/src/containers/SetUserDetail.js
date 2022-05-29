@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const SetUserDetail = ({
   propsid,
   propsname,
+  propsbio,
   propsphone_no,
   propsbirth_date,
   setOpenPopup,
@@ -31,13 +32,14 @@ const SetUserDetail = ({
   const [formData, setFormData] = useState({
     id: propsid,
     name: propsname,
+    bio: propsbio,
     phone_no: propsphone_no,
     birth_date: propsbirth_date,
   });
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
 
-  const { id, name, phone_no, account_no, birth_date, id_code } = formData;
+  const { id, name, bio, phone_no, birth_date } = formData;
   useEffect(() => {
     if (requestFail) {
       setRequestSent(false);
@@ -53,7 +55,7 @@ const SetUserDetail = ({
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    set_user_detail(id, name, account_no, phone_no, birth_date, id_code);
+    set_user_detail(id, name, bio, phone_no, birth_date);
     setRequestSent(true);
   };
   return (
@@ -67,6 +69,18 @@ const SetUserDetail = ({
             label="نام و نام خانوادگی"
             name="name"
             value={name}
+            onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            className={classes.textField}
+            autoComplete="off"
+            type="text"
+            label="بیو"
+            name="bio"
+            value={bio}
             onChange={(e) => onChange(e)}
             required
           />

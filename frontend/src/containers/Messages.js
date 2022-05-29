@@ -29,14 +29,16 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchData();
+    if (rooms.length === 0) {
+      fetchData();
+    }
   }, []);
-  const classes = useStyles();
-  if (isAuthenticated === false) return <Redirect to="/login" />;
   const fetchData = async () => {
     await load_rooms(page);
     setPage(page + 1);
   };
+  const classes = useStyles();
+  if (isAuthenticated === false) return <Redirect to="/login" />;
   return (
     <>
       {rooms && (

@@ -73,10 +73,15 @@ export const load_notif =
       });
     }
   };
-export const update_avatar = (image) => async (dispatch) => {
+export const update_avatar = (image, path) => async (dispatch) => {
   let formData = new FormData();
   const user = localStorage.getItem("id");
-  formData.append("image", image);
+  if (path === "avatar") {
+    formData.append("image", image);
+  } else {
+    formData.append("header", image);
+  }
+
   formData.append("id", user);
   const config = {
     headers: {
@@ -87,7 +92,7 @@ export const update_avatar = (image) => async (dispatch) => {
   };
   try {
     const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}/api/accounts/avatar/`,
+      `${process.env.REACT_APP_API_URL}/api/accounts/${path}/`,
       formData,
       config
     );
@@ -191,7 +196,7 @@ export const comment = (item, star, title, description) => async (dispatch) => {
 };
 
 export const set_user_detail =
-  (id, name, account_no, phone_no, birth_date, id_code) => async (dispatch) => {
+  (id, name, bio, phone_no, birth_date) => async (dispatch) => {
     if (localStorage.getItem("access")) {
       const config = {
         headers: {
@@ -203,15 +208,14 @@ export const set_user_detail =
       const body = JSON.stringify({
         id,
         name,
-        account_no,
+        bio,
         phone_no,
         birth_date,
-        id_code,
       });
 
       try {
         const res = await axios.post(
-          `${process.env.REACT_APP_API_URL}/api/user-set/`,
+          `${process.env.REACT_APP_API_URL}/api/accounts/user-set/`,
           body,
           config
         );

@@ -51,6 +51,7 @@ const Setting = ({
           <SetUserDetail
             propsid={user.id}
             propsname={user.name}
+            propsbio={user.bio}
             propsphone_no={user.phone_no}
             propsbirth_date={user.birth_date}
             setOpenPopup={setOpenPopup}
@@ -62,32 +63,60 @@ const Setting = ({
         return <SetPassword setOpenPopup={setOpenPopup} />;
     }
   }
-  async function uploadImage(e) {
+  async function uploadAvatar(e) {
     const image = e.target.files[0];
-    update_avatar(image);
+    update_avatar(image, "avatar");
+  }
+  async function uploadHeader(e) {
+    const image = e.target.files[0];
+    update_avatar(image, "header");
   }
   return user ? (
-    <div>
+    <div style={{ padding: 10 }}>
       <Button
-        style={{ margin: 20 }}
+        style={{ margin: 10 }}
         color="secondary"
         variant="outlined"
         onClick={() => handleDialog("ویرایش مشخصات")}
       >
         ویرایش مشخصات
       </Button>
-      <label style={{ marginTop: 20 }} htmlFor="contained-button-file">
+      <label style={{ margin: 20 }} htmlFor="contained-button-file">
         <input
           accept="image/*"
           id="contained-button-file"
           // multiple
           style={{ display: "none" }}
           type="file"
-          onChange={uploadImage}
+          onChange={uploadAvatar}
         />
-
         <Avatar src={user.image} />
       </label>
+      <Divider />
+      <Typography variant="h6">هدر</Typography>
+      <label htmlFor="contained-button-file1">
+        <input
+          accept="image/*"
+          id="contained-button-file1"
+          // multiple
+          style={{ display: "none" }}
+          type="file"
+          onChange={uploadHeader}
+        />
+        <img
+          src={
+            user.header || `${process.env.REACT_APP_API_URL}/media/header.jpg`
+          }
+          style={{
+            height: 50,
+            objectFit: "cover",
+          }}
+          onError={(e) => {
+            e.target.src = `${process.env.REACT_APP_API_URL}/media/header.jpg`;
+          }}
+        />
+      </label>
+      <Divider />
       <Typography variant="h6">ایمیل</Typography>
       <Typography variant="subtitle1">
         {user.email ? user.email : "--"}
@@ -100,6 +129,9 @@ const Setting = ({
       <Typography variant="subtitle1">
         {user.name ? user.name : "--"}
       </Typography>
+      <Divider />
+      <Typography variant="h6">نام</Typography>
+      <Typography variant="subtitle1">{user.bio ? user.bio : "--"}</Typography>
       <Divider />
       <Typography variant="h6">تلفن</Typography>
       <Typography variant="subtitle1">

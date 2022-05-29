@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     height: 90,
     width: 90,
-    marginLeft: 45,
+    marginLeft: 40,
     marginTop: -45,
     border: "4px solid",
     borderColor: `${theme.palette.primary.border}`,
@@ -62,7 +62,9 @@ const UserProfile = ({
 
   useEffect(() => {
     fetchUserData();
-    fetchData();
+    if (userposts.length === 0) {
+      fetchData();
+    }
   }, [userId]);
 
   const fetchUserData = async () => {
@@ -96,11 +98,17 @@ const UserProfile = ({
     <>
       <Card variant="outlined">
         <img
-          src="http://127.0.0.1:8000/media/header.jpg"
+          src={
+            profile.header ||
+            `${process.env.REACT_APP_API_URL}/media/header.jpg`
+          }
           style={{
             width: "100%",
             height: 150,
             objectFit: "cover",
+          }}
+          onError={(e) => {
+            e.target.src = `${process.env.REACT_APP_API_URL}/media/header.jpg`;
           }}
         />
         <Avatar className={classes.avatar} src={profile.image} />
@@ -115,7 +123,11 @@ const UserProfile = ({
             </div>
             {isAuthenticated && user.id !== profile.id && (
               <div
-                style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
               >
                 <IconButton
                   onClick={() => get_chat()}

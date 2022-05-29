@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  Grid,
-  makeStyles,
-  CircularProgress,
-} from "@material-ui/core";
+import { Typography, makeStyles, CircularProgress } from "@material-ui/core";
 import PostCard from "../components/PostCard";
 import { connect } from "react-redux";
 import { load_posts } from "../actions/blog";
@@ -36,6 +31,7 @@ const Home = ({ posts, load_posts, count }) => {
     await load_posts(page, false);
     setPage(page + 1);
   };
+  console.log(page);
   return (
     <div className={classes.container}>
       {posts ? (

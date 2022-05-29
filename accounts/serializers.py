@@ -21,6 +21,11 @@ class AvatarSerializer(serializers.ModelSerializer):
         model = UserAccount
         fields = ('id','image')
 
+class HeaderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = ('id','header')
+        
 class UserDetailSerializer(serializers.ModelSerializer):
     # follower_list = UserSerializer(source="follower", read_only=True, many=True)
     followers = serializers.IntegerField(source='follower_count')
@@ -28,16 +33,12 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserAccount
-        fields = ('id', 'followers', 'followings', 'email', 'name', 'image', 'phone_no', 'birth_date', 'join_date', 'is_entity', 'is_staff', 'bio')
+        fields = ('id', 'followers', 'followings','header', 'email', 'name', 'image','header', 'phone_no', 'birth_date', 'join_date', 'is_entity', 'is_staff', 'bio')
 
-class UserDetailSerializer2(serializers.ModelSerializer):
-    followers = serializers.IntegerField(source='follower_count')
-    followings = serializers.IntegerField(source='following_count')
-
+class UserSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = ('id', 'followers', 'followings', 'email', 'name', 'image', 'join_date', 'is_entity', 'bio')
-
+        fields = ('id', 'name', 'bio','phone_no', 'birth_date')
 
 class FollowerSerializer(serializers.ModelSerializer):
     followers_list = UserSerializer(source="follower_list", read_only=True, many=True)
