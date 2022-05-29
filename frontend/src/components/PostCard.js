@@ -53,7 +53,7 @@ export default function PostCard({ post }) {
           </div>
         </div>
 
-        <CardContent style={{ height: 160 }}>
+        <CardContent style={{ minHeight: 100 }}>
           <Typography variant="textSecondary" gutterBottom>
             {post.text}...
           </Typography>
