@@ -5,6 +5,7 @@ import {
   makeStyles,
   IconButton,
   Drawer,
+  Divider,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -69,7 +70,7 @@ const Appbar = ({
   };
   return (
     <>
-      <AppBar position="sticky" color="inherit">
+      <AppBar position="sticky" elevation={0} color="inherit">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>
             <Menu />
@@ -79,8 +80,8 @@ const Appbar = ({
             {checked ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
         </Toolbar>
+        <Divider />
       </AppBar>
-
       <Drawer anchor={"left"} open={drawerstate} onClose={toggleDrawer}>
         <div className={classes.list}>
           <Toolbar>

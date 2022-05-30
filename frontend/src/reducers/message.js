@@ -3,6 +3,7 @@ import {
   LOAD_MSG_FAIL,
   LOAD_ROOMS_SUCCESS,
   LOAD_ROOMS_FAIL,
+  LOGOUT,
 } from "../actions/types";
 const initialState = { message: [], rooms: [] };
 
@@ -24,6 +25,14 @@ export default function (state = initialState, action) {
         message: [],
         msg_count: 0,
       };
+    case LOGOUT:
+      localStorage.removeItem("id");
+      return {
+        ...state,
+        message: [],
+        rooms: [],
+      };
+
     case LOAD_MSG_FAIL:
     case LOAD_ROOMS_FAIL:
     default:

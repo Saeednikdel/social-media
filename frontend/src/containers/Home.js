@@ -14,26 +14,22 @@ const useStyles = makeStyles((theme) => ({
   loader: {
     textAlign: "center",
   },
-  container: {
-    marginTop: 20,
-  },
 }));
 const Home = ({ posts, load_posts, count }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const classes = useStyles();
 
   useEffect(() => {
     if (posts.length === 0) {
-      fetchData();
+      load_posts(1, false);
     }
   }, []);
   const fetchData = async () => {
     await load_posts(page, false);
     setPage(page + 1);
   };
-  console.log(page);
   return (
-    <div className={classes.container}>
+    <div>
       {posts ? (
         <InfiniteScroll
           dataLength={posts.length}

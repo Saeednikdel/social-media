@@ -40,6 +40,7 @@ export const load_posts = (page, keyword) => async (dispatch) => {
     dispatch({
       type: LOAD_POSTS_SUCCESS,
       payload: res.data,
+      page: page,
     });
   } catch (err) {
     dispatch({
@@ -208,8 +209,4 @@ export const like = (id) => async (dispatch) => {
       type: LIKE_FAIL,
     });
   }
-};
-
-export const logout2 = () => (dispatch) => {
-  dispatch({ type: LOGOUT });
 };

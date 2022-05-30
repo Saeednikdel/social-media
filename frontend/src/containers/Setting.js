@@ -159,14 +159,7 @@ const Setting = ({
       </div>
       <div className={classes.detailContainer}>
         <Divider />
-        <Typography variant="h6">ایمیل</Typography>
-        <Typography variant="subtitle1">
-          {user.email ? user.email : "--"}
-          <IconButton onClick={() => handleDialog("تغییر ایمیل")}>
-            <Edit />
-          </IconButton>
-        </Typography>
-        <Divider />
+
         <Typography variant="h6">نام</Typography>
         <Typography variant="subtitle1">
           {user.name ? user.name : "--"}
@@ -187,6 +180,14 @@ const Setting = ({
           {user.birth_date
             ? jMoment(user.birth_date, "YYYY/M/D").format("jYYYY/jM/jD")
             : "--"}
+        </Typography>
+        <Divider />
+        <Typography variant="h6">ایمیل</Typography>
+        <Typography variant="subtitle1">
+          {user.email ? user.email : "--"}
+          <IconButton onClick={() => handleDialog("تغییر ایمیل")}>
+            <Edit />
+          </IconButton>
         </Typography>
         <Divider />
         <Typography variant="h6">رمز عبور</Typography>

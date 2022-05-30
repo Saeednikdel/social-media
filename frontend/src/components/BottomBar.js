@@ -8,6 +8,7 @@ import {
   Toolbar,
   IconButton,
   Fab,
+  Divider,
 } from "@material-ui/core";
 
 import {
@@ -45,8 +46,14 @@ const useStyles = makeStyles((theme) => ({
 function BottomBar() {
   const classes = useStyles();
   return (
-    <React.Fragment>
-      <AppBar position="fixed" color="inherit" className={classes.appBar}>
+    <>
+      <AppBar
+        position="fixed"
+        color="inherit"
+        elevation={0}
+        className={classes.appBar}
+      >
+        <Divider />
         <Toolbar className={classes.toolbar}>
           <Link className={classes.navLink} to="/messages">
             <IconButton color="inherit" aria-label="Open drawer">
@@ -73,7 +80,7 @@ function BottomBar() {
           </Link>
         </Toolbar>
       </AppBar>
-    </React.Fragment>
+    </>
   );
 }
 

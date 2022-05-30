@@ -25,10 +25,12 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
   const [connectionStatus, setConnectionStatus] = useState("در حال اتصال...");
   const [chat, setChat] = useState([]);
   const chatContainer = useRef();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
-    fetchData();
+    if (message.length === 0) {
+      load_msg(room, 1);
+    }
     client.onopen = () => {
       setConnectionStatus("متصل");
     };
@@ -38,7 +40,7 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
       data.online && setOnline(data.online);
     };
     client.onclose = (e) => {
-      console.error("connection closed unexpectedly!!!");
+      console.log("connection closed");
       setConnectionStatus("قطع شد");
     };
     return () => {

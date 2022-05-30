@@ -17,11 +17,11 @@ const Messages = ({
   notification,
   notif_count,
 }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
     if (notification.length === 0) {
-      fetchData();
+      load_notif(1);
     }
   }, []);
   const fetchData = async () => {
@@ -32,7 +32,7 @@ const Messages = ({
   if (isAuthenticated === false) return <Redirect to="/login" />;
   return (
     <>
-      {notification && notification.length > 0 ? (
+      {notification && (
         <InfiniteScroll
           dataLength={notification.length}
           next={fetchData}
@@ -52,10 +52,6 @@ const Messages = ({
             <NotifCard notif={notif} />
           ))}
         </InfiniteScroll>
-      ) : (
-        <div className={classes.loader}>
-          <Typography>No Notification</Typography>
-        </div>
       )}
     </>
   );

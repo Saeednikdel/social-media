@@ -7,9 +7,6 @@ import BookmarkCard from "../components/BookmarkCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const useStyles = makeStyles((theme) => ({
-  pageContainer: {
-    marginTop: `${theme.spacing(2)}px`,
-  },
   loader: {
     textAlign: "center",
   },
@@ -21,11 +18,11 @@ const Bookmark = ({
   bookmark_count,
   isAuthenticated,
 }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
     if (bookmarkList.length === 0) {
-      fetchData();
+      load_bookmark(1);
     }
   }, []);
   const fetchData = async () => {
@@ -36,7 +33,7 @@ const Bookmark = ({
   if (isAuthenticated === false) return <Redirect to="/login" />;
 
   return bookmarkList ? (
-    <div className={classes.pageContainer}>
+    <div>
       <InfiniteScroll
         dataLength={bookmarkList.length}
         next={fetchData}

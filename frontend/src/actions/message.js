@@ -4,6 +4,7 @@ import {
   LOAD_MSG_FAIL,
   LOAD_ROOMS_SUCCESS,
   LOAD_ROOMS_FAIL,
+  LOGOUT,
 } from "./types";
 export const load_msg = (room, page) => async (dispatch) => {
   const config = {
@@ -51,4 +52,7 @@ export const load_rooms = (page) => async (dispatch) => {
       type: LOAD_ROOMS_FAIL,
     });
   }
+};
+export const logout3 = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };

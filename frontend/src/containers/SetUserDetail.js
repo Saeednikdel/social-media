@@ -82,7 +82,6 @@ const SetUserDetail = ({
             name="bio"
             value={bio}
             onChange={(e) => onChange(e)}
-            required
           />
         </div>
         <div>
@@ -94,7 +93,6 @@ const SetUserDetail = ({
             name="phone_no"
             value={phone_no}
             onChange={(e) => onChange(e)}
-            required
           />
         </div>
         <div>

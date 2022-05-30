@@ -4,10 +4,7 @@ import {
   LOAD_POST_SUCCESS,
   LOAD_POST_FAIL,
   LOGOUT,
-  BOOKMARK_SUCCESS,
-  BOOKMARK_FAIL,
   LOAD_COMMENTS_SUCCESS,
-  LOAD_MENU_SUCCESS,
   LOAD_LIKE_SUCCESS,
   LOAD_LIKE_FAIL,
   LOAD_PROFILE_SUCCESS,
@@ -22,11 +19,20 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case LOAD_POSTS_SUCCESS:
-      return {
-        ...state,
-        posts: state.posts.concat(payload.posts),
-        count: payload.count,
-      };
+      if (page === 1) {
+        return {
+          ...state,
+          posts: payload.posts,
+          count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          posts: state.posts.concat(payload.posts),
+          count: payload.count,
+        };
+      }
+
     case LOAD_USER_POSTS_SUCCESS:
       if (page === 1) {
         return {
@@ -51,11 +57,6 @@ export default function (state = initialState, action) {
         ...state,
         profile: payload,
       };
-    case LOAD_MENU_SUCCESS:
-      return {
-        ...state,
-        category: payload,
-      };
     case LOAD_COMMENTS_SUCCESS:
       return {
         ...state,
@@ -66,13 +67,6 @@ export default function (state = initialState, action) {
         ...state,
         likes: payload,
       };
-    case LOGOUT:
-      localStorage.removeItem("id");
-      return {
-        ...state,
-        order: null,
-      };
-
     case LOAD_POSTS_FAIL:
     case LOAD_POST_FAIL:
     case LOAD_LIKE_FAIL:

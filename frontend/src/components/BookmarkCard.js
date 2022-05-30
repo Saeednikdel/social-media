@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Card,
+  Divider,
   CardActionArea,
   CardContent,
   makeStyles,
@@ -28,46 +28,44 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BookmarkCard({ post }) {
   const classes = useStyles();
-
   return (
-    <Card variant="outlined">
-      <CardActionArea component={NavLink} to={`/detail/${post.post_id}/`}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+    <CardActionArea component={NavLink} to={`/detail/${post.post_id}/`}>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Link
+          className={classes.navLink}
+          exact
+          to={`/profile/${post.post_user_id}/`}
+        >
+          <Avatar
+            src={post.user_image}
+            style={{ height: 50, width: 50, margin: 10 }}
+          />
+        </Link>
+        <div>
           <Link
             className={classes.navLink}
             exact
-            to={`/profile/${post.user_id}/`}
+            to={`/profile/${post.post_user_id}/`}
           >
-            <Avatar
-              src={post.user_image}
-              style={{ height: 50, width: 50, margin: 10 }}
-            />
+            <Typography variant="body1">{post.user_name}</Typography>
           </Link>
-          <div>
-            <Link
-              className={classes.navLink}
-              exact
-              to={`/profile/${post.post_user_id}/`}
-            >
-              <Typography variant="body1">{post.user_name}</Typography>
-            </Link>
-            <Typography color="textSecondary" variant="body2">
-              {jMoment(post.post_date, "YYYY/M/D").format("jYYYY/jM/jD")}
-            </Typography>
-          </div>
-        </div>
-
-        <CardContent style={{ height: 160 }}>
-          <Typography variant="textSecondary" gutterBottom>
-            {post.post_content}...
+          <Typography color="textSecondary" variant="body2">
+            {jMoment(post.post_date, "YYYY/M/D").format("jYYYY/jM/jD")}
           </Typography>
+        </div>
+      </div>
 
-          <div className={classes.like}>
-            <Typography variant="body2">{post.post_like}</Typography>
-            <Favorite color="error" style={{ fontSize: 30, marginRight: 5 }} />
-          </div>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+      <CardContent style={{ height: 160 }}>
+        <Typography variant="textSecondary" gutterBottom>
+          {post.post_content}...
+        </Typography>
+
+        <div className={classes.like}>
+          <Typography variant="body2">{post.post_like}</Typography>
+          <Favorite color="error" style={{ fontSize: 30, marginRight: 5 }} />
+        </div>
+      </CardContent>
+      <Divider />
+    </CardActionArea>
   );
 }

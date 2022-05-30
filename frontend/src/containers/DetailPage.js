@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  Card,
+  Divider,
   Typography,
   Grid,
   makeStyles,
@@ -164,114 +164,87 @@ const DetailPage = ({
 
   return post ? (
     <>
-      <Card variant="outlined" className={classes.pageContainer}>
-        <Grid container>
-          <Grid xs={12} sm={6}>
-            <div style={{ display: "flex", alignItems: "center" }}>
+      <Grid container>
+        <Grid xs={12} sm={6}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Link
+              className={classes.navLink}
+              exact
+              to={`/profile/${post.user}/`}
+            >
+              <Avatar
+                style={{ height: 60, width: 60, margin: 10 }}
+                src={post.user_image}
+              />
+            </Link>
+            <div>
               <Link
                 className={classes.navLink}
                 exact
                 to={`/profile/${post.user}/`}
               >
-                <Avatar
-                  style={{ height: 60, width: 60, margin: 10 }}
-                  src={post.user_image}
-                />
+                <Typography variant="h6">{post.user_name}</Typography>
               </Link>
-              <div>
-                <Link
-                  className={classes.navLink}
-                  exact
-                  to={`/profile/${post.user}/`}
-                >
-                  <Typography variant="h6">{post.user_name}</Typography>
-                </Link>
-                <Typography color="textSecondary" variant="subtitle2">
-                  {jMoment(post.date, "YYYY/M/D").format("jYYYY/jM/jD")}
-                </Typography>
-              </div>
-            </div>
-          </Grid>
-          <Grid xs={12} sm={6}>
-            <div
-              style={{
-                flexGrow: 1,
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
-              <IconButton>
-                <Typography color="textSecondary" variant="h6">
-                  {post.like_count}
-                </Typography>
-              </IconButton>
-              <IconButton>
-                {likes &&
-                  likes.likes
-                    .slice(0, 3)
-                    .reverse()
-                    .map((like) => (
-                      <Avatar
-                        src={like.user_image}
-                        style={{ height: 35, width: 35, marginLeft: -8 }}
-                      />
-                    ))}
-              </IconButton>
-              <IconButton onClick={() => LikeHandle(post.id)}>
-                {post.liked ? (
-                  <Favorite color="error" style={{ fontSize: 35 }} />
-                ) : (
-                  <FavoriteBorder color="error" style={{ fontSize: 35 }} />
-                )}
-              </IconButton>
-              <IconButton
-                color="secondary"
-                onClick={() => BookmarkHandle(post.id)}
-              >
-                {post.bookmarked ? (
-                  <Bookmark style={{ fontSize: 35 }} />
-                ) : (
-                  <BookmarkBorder style={{ fontSize: 35 }} />
-                )}
-              </IconButton>
-            </div>
-          </Grid>
-        </Grid>
-
-        <Grid container>
-          <Grid xs={12} md={8}>
-            {/* <CardMedia
-              component='img'
-              image={post.image}
-              height='400'
-              onError={(e) => {
-                e.target.src = placeholderImage;
-              }}
-            /> */}
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Typography
-                color="textSecondary"
-                variant="subtitle2"
-                style={{ margin: 10 }}
-              >
-                بازدید : {post.view}
-              </Typography>
-              <Typography
-                color="textSecondary"
-                variant="subtitle2"
-                style={{ margin: 10 }}
-              >
-                پسندیده : {post.like_count}
+              <Typography color="textSecondary" variant="subtitle2">
+                {jMoment(post.date, "YYYY/M/D").format("jYYYY/jM/jD")}
               </Typography>
             </div>
-          </Grid>
-          <div className={classes.summery}>
-            <Typography variant="h6" gutterBottom>
-              {post.content}
-            </Typography>
           </div>
         </Grid>
-      </Card>
+        <Grid xs={12} sm={6}>
+          <div
+            style={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <IconButton>
+              <Typography color="textSecondary" variant="h6">
+                {post.like_count}
+              </Typography>
+            </IconButton>
+            <IconButton>
+              {likes &&
+                likes.likes
+                  .slice(0, 3)
+                  .reverse()
+                  .map((like) => (
+                    <Avatar
+                      src={like.user_image}
+                      style={{ height: 25, width: 25, marginLeft: -8 }}
+                    />
+                  ))}
+            </IconButton>
+            <IconButton onClick={() => LikeHandle(post.id)}>
+              {post.liked ? (
+                <Favorite color="error" style={{ fontSize: 25 }} />
+              ) : (
+                <FavoriteBorder color="error" style={{ fontSize: 25 }} />
+              )}
+            </IconButton>
+            <IconButton
+              color="secondary"
+              onClick={() => BookmarkHandle(post.id)}
+            >
+              {post.bookmarked ? (
+                <Bookmark style={{ fontSize: 25 }} />
+              ) : (
+                <BookmarkBorder style={{ fontSize: 25 }} />
+              )}
+            </IconButton>
+          </div>
+        </Grid>
+      </Grid>
+
+      <div className={classes.summery}>
+        <Typography variant="body1" gutterBottom>
+          {post.content}
+        </Typography>
+      </div>
+
+      <Divider />
+
       {/* <Card className={classes.commentContainer}>
         <Button
           color='secondary'

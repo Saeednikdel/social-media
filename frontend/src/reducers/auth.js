@@ -134,11 +134,20 @@ export default function (state = initialState, action) {
         requestSuccess: true,
       };
     case LOAD_NOTIF_SUCCESS:
-      return {
-        ...state,
-        notification: state.notification.concat(payload.notification),
-        notif_count: payload.count,
-      };
+      if (page === 1) {
+        return {
+          ...state,
+          notification: payload.notification,
+          notif_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          notification: state.notification.concat(payload.notification),
+          notif_count: payload.count,
+        };
+      }
+
     case NEW_POST_FAIL:
     case SET_COMMENTS_FAIL:
       return {
@@ -204,6 +213,8 @@ export default function (state = initialState, action) {
         refresh: null,
         isAuthenticated: false,
         user: null,
+        notification: [],
+        bookmarks: [],
       };
     case RESET_STATE:
       return {

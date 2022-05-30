@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
     if (rooms.length === 0) {
-      fetchData();
+      load_rooms(1);
     }
   }, []);
   const fetchData = async () => {

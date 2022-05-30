@@ -6,6 +6,7 @@ import {
   makeStyles,
   Typography,
   Avatar,
+  Divider,
 } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
 import { NavLink, Link } from "react-router-dom";
@@ -37,47 +38,44 @@ export default function NotifCard({ notif }) {
     msg = " روی پست شما نوشت ";
   }
   return (
-    <Card variant="outlined">
-      <CardActionArea
-        component={NavLink}
-        to={
-          notif.kind === "F"
-            ? `/profile/${notif.sender_id}/`
-            : `/detail/${notif.post}/`
-        }
-      >
-        <div style={{ display: "flex", alignItems: "center" }}>
+    <CardActionArea
+      component={NavLink}
+      to={
+        notif.kind === "F"
+          ? `/profile/${notif.sender_id}/`
+          : `/detail/${notif.post}/`
+      }
+    >
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Link
+          className={classes.navLink}
+          exact
+          to={`/profile/${notif.sender_id}/`}
+        >
+          <Avatar
+            src={notif.sender_image}
+            style={{ height: 50, width: 50, margin: 10 }}
+          />
+        </Link>
+        <div>
           <Link
             className={classes.navLink}
             exact
             to={`/profile/${notif.sender_id}/`}
           >
-            <Avatar
-              src={notif.sender_image}
-              style={{ height: 50, width: 50, margin: 10 }}
-            />
-          </Link>
-          <div>
-            <Link
-              className={classes.navLink}
-              exact
-              to={`/profile/${notif.sender_id}/`}
-            >
-              <Typography variant="body1">
-                {notif.sender_name}
-                {msg}
-              </Typography>
-            </Link>
-            <Typography color="textSecondary" variant="body2">
-              {jMoment(notif.date, "YYYY/M/D HH:mm").format(
-                "jYYYY/jM/jD HH:mm"
-              )}
+            <Typography variant="body1">
+              {notif.sender_name}
+              {msg}
             </Typography>
-          </div>
+          </Link>
+          <Typography color="textSecondary" variant="body2">
+            {jMoment(notif.date, "YYYY/M/D HH:mm").format("jYYYY/jM/jD HH:mm")}
+          </Typography>
         </div>
+      </div>
 
-        <CardContent></CardContent>
-      </CardActionArea>
-    </Card>
+      <CardContent></CardContent>
+      <Divider />
+    </CardActionArea>
   );
 }

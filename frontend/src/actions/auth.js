@@ -1,5 +1,6 @@
 import axios from "axios";
-import { logout2, load_replies } from "./blog";
+import { load_replies } from "./blog";
+import { logout3 } from "./message";
 import {
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
@@ -61,6 +62,7 @@ export const load_notif =
         dispatch({
           type: LOAD_NOTIF_SUCCESS,
           payload: res.data,
+          page: page,
         });
       } catch (err) {
         dispatch({
@@ -598,7 +600,7 @@ export const set_password =
   };
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
-  dispatch(logout2({ type: LOGOUT }));
+  dispatch(logout3({ type: LOGOUT }));
 };
 export const resetState = () => (dispatch) => {
   dispatch({ type: RESET_STATE });
