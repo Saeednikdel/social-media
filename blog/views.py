@@ -149,7 +149,7 @@ def bookmark(request):
 @permission_classes([AllowAny])
 def bookmarkList(request, user_id,page):
     user = UserAccount.objects.get(id=user_id)
-    bookmarks = Bookmark.objects.filter(user=user)
+    bookmarks = Bookmark.objects.filter(user=user).order_by('-date')
     itemperpage = 5
     paginator = Paginator(bookmarks, itemperpage)
     count = len(bookmarks)

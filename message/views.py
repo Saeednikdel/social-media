@@ -28,7 +28,7 @@ def roomMsg(request, room, page):
 def roomList(request, user, page):
     user = get_object_or_404(UserAccount ,id=user)
     rooms =Room.objects.filter(users=user).order_by('-id')
-    itemperpage = 3
+    itemperpage = 20
     paginator = Paginator(rooms, itemperpage)
     count = len(rooms)
     rooms = paginator.get_page(page)

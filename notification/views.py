@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404
 @permission_classes([IsAuthenticated])
 def notification(request, pk, sk):
     user = get_object_or_404(UserAccount, id=pk)
-    notif =Notification.objects.filter(receiver=user).order_by('-date')
+    notif =Notification.objects.filter(receiver=user).exclude(sender=user).order_by('-date')
     count = len(notif)
     itemperpage = 10
     paginator = Paginator(notif, itemperpage)

@@ -39,6 +39,7 @@ class Like(models.Model):
 class Bookmark(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.email
