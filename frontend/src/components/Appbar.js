@@ -5,11 +5,9 @@ import {
   makeStyles,
   IconButton,
   Drawer,
-  Divider,
-  TextField,
 } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/auth";
 import {
@@ -17,13 +15,11 @@ import {
   Brightness4,
   PermIdentityRounded,
   Menu,
-  SearchSharp,
   Settings,
   ArrowBack,
   BookmarkBorder,
   ArrowForward,
 } from "@material-ui/icons";
-import logo from "../sk.svg";
 const useStyles = makeStyles((theme) => ({
   center: { flexGrow: 1, textAlign: "center" },
   rightIcons: { flexGrow: 1 },
@@ -54,7 +50,6 @@ const Appbar = ({
   history,
   user,
 }) => {
-  useEffect(() => {}, []);
   const classes = useStyles();
 
   const logOut = () => {
@@ -72,25 +67,6 @@ const Appbar = ({
 
     setDrawerState(!drawerstate);
   };
-  const [expanded, setExpanded] = useState(false);
-  const handleExpand = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-  const [search, setSearch] = useState("");
-  const onTextChange = (e) => setSearch(e.target.value);
-
-  const onSearch = (e) => {
-    e.preventDefault();
-    const currentUrlParams = new URLSearchParams();
-    currentUrlParams.set("keyword", search);
-    if (window.location.pathname === "/") {
-      history.push(
-        window.location.pathname + "?" + currentUrlParams.toString()
-      );
-    } else {
-      window.location.replace("/?keyword=" + search);
-    }
-  };
   return (
     <>
       <AppBar position="sticky" color="inherit">
@@ -104,30 +80,6 @@ const Appbar = ({
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Toolbar>
-        <div className={classes.rightIcons}></div>
-        <form autoComplete="off" onSubmit={(e) => onSearch(e)}>
-          <TextField
-            autoComplete="off"
-            style={{ marginTop: 5 }}
-            id="search"
-            placeholder="جستجو"
-            color="secondary"
-            variant="outlined"
-            value={search}
-            onChange={(e) => onTextChange(e)}
-            size="small"
-            InputProps={{
-              endAdornment: (
-                <IconButton color="inherit" size="small" type="submit">
-                  <SearchSharp />
-                </IconButton>
-              ),
-            }}
-          />
-        </form>
-      </Toolbar>
-      <Divider />
 
       <Drawer anchor={"left"} open={drawerstate} onClose={toggleDrawer}>
         <div className={classes.list}>
@@ -191,4 +143,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default withRouter(connect(mapStateToProps, { logout })(Appbar));
+export default connect(mapStateToProps, { logout })(Appbar);

@@ -295,6 +295,7 @@ export const load_bookmark =
         dispatch({
           type: LOAD_BOOKMARK_SUCCESS,
           payload: res.data,
+          page: page,
         });
       } catch (err) {
         dispatch({

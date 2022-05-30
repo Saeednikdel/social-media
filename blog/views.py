@@ -152,7 +152,7 @@ def bookmarkList(request, user_id,page):
     bookmarks = Bookmark.objects.filter(user=user)
     itemperpage = 5
     paginator = Paginator(bookmarks, itemperpage)
-    count = math.ceil(len(bookmarks) / itemperpage)
+    count = len(bookmarks)
     bookmarks= paginator.get_page(page)
     serializer = BookmarkSerializer(bookmarks, many=True)
     new_dict = {"count": count}

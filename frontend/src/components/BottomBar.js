@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   fabButton: {
     position: "absolute",

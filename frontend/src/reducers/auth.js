@@ -45,10 +45,11 @@ const initialState = {
     id: null,
   },
   notification: [],
+  bookmarks: [],
 };
 
 export default function (state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload, page } = action;
 
   switch (type) {
     case AUTHENTICATED_SUCCESS:
@@ -113,10 +114,19 @@ export default function (state = initialState, action) {
         requestFail: true,
       };
     case LOAD_BOOKMARK_SUCCESS:
-      return {
-        ...state,
-        bookmarks: payload,
-      };
+      if (page === 1) {
+        return {
+          ...state,
+          bookmarks: payload.bookmarks,
+          bookmark_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          bookmarks: state.bookmarks.concat(payload.bookmarks),
+          bookmark_count: payload.count,
+        };
+      }
     case NEW_POST_SUCCESS:
     case SET_COMMENTS_SUCCESS:
       return {
