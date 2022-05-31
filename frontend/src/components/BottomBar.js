@@ -70,9 +70,11 @@ function BottomBar() {
               <Add />
             </Fab>
           </Link>
-          <IconButton color="inherit">
-            <Search />
-          </IconButton>
+          <Link className={classes.navLink} to="/search">
+            <IconButton color="inherit">
+              <Search />
+            </IconButton>
+          </Link>
           <Link className={classes.navLink} to="/">
             <IconButton color="inherit">
               <HomeOutlined />

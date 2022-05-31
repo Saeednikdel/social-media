@@ -18,6 +18,7 @@ import {
 } from "../actions/types";
 const initialState = {
   posts: [],
+  search_posts: [],
   userposts: [],
   likes: [],
   follower: [],
@@ -25,22 +26,38 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  const { type, payload, page } = action;
+  const { type, payload, page, keyword } = action;
 
   switch (type) {
     case LOAD_POSTS_SUCCESS:
-      if (page === 1) {
-        return {
-          ...state,
-          posts: payload.posts,
-          count: payload.count,
-        };
+      if (keyword) {
+        if (page === 1) {
+          return {
+            ...state,
+            search_posts: payload.posts,
+            search_pcount: payload.count,
+          };
+        } else {
+          return {
+            ...state,
+            search_posts: state.search_posts.concat(payload.posts),
+            search_pcount: payload.count,
+          };
+        }
       } else {
-        return {
-          ...state,
-          posts: state.posts.concat(payload.posts),
-          count: payload.count,
-        };
+        if (page === 1) {
+          return {
+            ...state,
+            posts: payload.posts,
+            count: payload.count,
+          };
+        } else {
+          return {
+            ...state,
+            posts: state.posts.concat(payload.posts),
+            count: payload.count,
+          };
+        }
       }
 
     case LOAD_USER_POSTS_SUCCESS:
