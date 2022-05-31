@@ -55,15 +55,15 @@ export default function BookmarkCard({ post }) {
         </div>
       </div>
 
-      <CardContent style={{ height: 160 }}>
+      <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
         <Typography variant="textSecondary" gutterBottom>
           {post.post_content}...
         </Typography>
 
-        <div className={classes.like}>
+        {/* <div className={classes.like}>
           <Typography variant="body2">{post.post_like}</Typography>
           <Favorite color="error" style={{ fontSize: 30, marginRight: 5 }} />
-        </div>
+        </div> */}
       </CardContent>
       <Divider />
     </CardActionArea>

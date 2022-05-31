@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from accounts.models import UserAccount
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Post, Like, Bookmark, Reply
-from .serializers import BookmarkSerializer, LikeSerializer, PostSerializer,NewPostSerializer ,ReplySerializer, PostsSerializer, UserDetailSerializer
+from .serializers import BookmarkSerializer, LikeSerializer, PostSerializer,NewPostSerializer ,ReplySerializer, PostsSerializer, UserDetailSerializer,FollowerSerializer
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 import math
@@ -118,17 +118,46 @@ def like(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def likeList(request, pk, sk):
-    post = Post.objects.get(id=pk)
+def likeList(request, id, page):
+    post = Post.objects.get(id=id)
     likes = Like.objects.filter(post=post).order_by('-date')
     itemperpage = 10
     paginator = Paginator(likes, itemperpage)
-    count = math.ceil(len(likes) / itemperpage)
-    likes = paginator.get_page(sk)
+    count = len(likes)
+    likes = paginator.get_page(page)
     serializer = LikeSerializer(likes, many=True)
     new_dict = {"count": count}
     new_dict.update({"likes": serializer.data})
     return Response(new_dict)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def followerList(request, id, page):
+    user = get_object_or_404(UserAccount ,id=id)
+    follower = user.follower.exclude(follower=user)
+    itemperpage = 10
+    paginator = Paginator(follower, itemperpage)
+    count = len(follower)
+    follower = paginator.get_page(page)
+    serializer = FollowerSerializer(follower, many=True)
+    new_dict = {"count": count}
+    new_dict.update({"follower": serializer.data})
+    return Response(new_dict)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def followingList(request, id, page):
+    user = get_object_or_404(UserAccount ,id=id)
+    following = user.following.exclude(following=user)
+    itemperpage = 10
+    paginator = Paginator(following, itemperpage)
+    count = len(following)
+    following = paginator.get_page(page)
+    serializer = FollowerSerializer(following, many=True)
+    new_dict = {"count": count}
+    new_dict.update({"following": serializer.data})
+    return Response(new_dict)
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])

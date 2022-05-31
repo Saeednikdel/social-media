@@ -59,9 +59,7 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
         >
           {rooms.map((room) => (
             <>
-              <div
-                style={{ display: "flex", alignItems: "center", margin: 10 }}
-              >
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <Link exact to={`/chat/${room.id}/`}>
                   {room.users_list.map(
                     (chatuser) =>
@@ -75,7 +73,7 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
                 </Link>
                 <div>
                   <Typography variant="body1">
-                    {room.users_list.map((u) => u.id !== user.id && u.name)}
+                    s{room.users_list.map((u) => u.id !== user.id && u.name)}
                   </Typography>
                 </div>
               </div>

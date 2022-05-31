@@ -199,23 +199,29 @@ const DetailPage = ({
               justifyContent: "flex-end",
             }}
           >
-            <IconButton>
-              <Typography color="textSecondary" variant="h6">
-                {post.like_count}
-              </Typography>
-            </IconButton>
-            <IconButton>
-              {likes &&
-                likes.likes
-                  .slice(0, 3)
-                  .reverse()
-                  .map((like) => (
-                    <Avatar
-                      src={like.user_image}
-                      style={{ height: 25, width: 25, marginLeft: -8 }}
-                    />
-                  ))}
-            </IconButton>
+            <Link
+              className={classes.navLink}
+              exact
+              to={`/list/like/${post.id}/`}
+            >
+              <IconButton>
+                <Typography color="textSecondary" variant="h6">
+                  {post.like_count}
+                </Typography>
+              </IconButton>
+              <IconButton>
+                {likes &&
+                  likes
+                    .slice(0, 3)
+                    .reverse()
+                    .map((like) => (
+                      <Avatar
+                        src={like.user_image}
+                        style={{ height: 25, width: 25, marginLeft: -8 }}
+                      />
+                    ))}
+              </IconButton>
+            </Link>
             <IconButton onClick={() => LikeHandle(post.id)}>
               {post.liked ? (
                 <Favorite color="error" style={{ fontSize: 25 }} />

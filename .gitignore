@@ -32,7 +32,7 @@ __pycache__/
 
 # C extensions
 *.so
-
+build.zip
 # Distribution / packaging
 .Python
 .env
@@ -58,7 +58,7 @@ static/
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-
+.eslintcache
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

@@ -8,7 +8,7 @@ import {
   Avatar,
   Divider,
 } from "@material-ui/core";
-import { Favorite } from "@material-ui/icons";
+import { Favorite, PersonAddRounded, ChatRounded } from "@material-ui/icons";
 import { NavLink, Link } from "react-router-dom";
 import jMoment from "moment-jalaali";
 
@@ -16,14 +16,6 @@ const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",
     color: "inherit",
-  },
-  like: {
-    position: "absolute",
-    bottom: 15,
-    right: 15,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
 }));
 
@@ -47,6 +39,13 @@ export default function NotifCard({ notif }) {
       }
     >
       <div style={{ display: "flex", alignItems: "center" }}>
+        {notif.kind === "L" && (
+          <Favorite color="error" style={{ marginRight: 10 }} />
+        )}
+        {notif.kind === "F" && (
+          <PersonAddRounded color="secondary" style={{ marginRight: 10 }} />
+        )}
+        {notif.kind === "C" && <ChatRounded style={{ marginRight: 10 }} />}
         <Link
           className={classes.navLink}
           exact

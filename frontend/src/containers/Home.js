@@ -55,11 +55,6 @@ const Home = ({ posts, load_posts, count }) => {
           <CircularProgress color="secondary" />
         </div>
       )}
-      {posts && posts.length < 1 && (
-        <div className={classes.noItemContainer}>
-          <Typography variant="h6">هیچ پستی پیدا نشد.</Typography>
-        </div>
-      )}
     </div>
   );
 };

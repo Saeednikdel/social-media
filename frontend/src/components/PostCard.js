@@ -48,15 +48,15 @@ export default function PostCard({ post }) {
         </div>
       </div>
 
-      <CardContent style={{ minHeight: 100 }}>
+      <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
         <Typography variant="textSecondary" gutterBottom>
           {post.text}...
         </Typography>
 
-        <div className={classes.like}>
+        {/* <div className={classes.like}>
           <Typography variant="body2">{post.like_count}</Typography>
           <Favorite color="error" style={{ fontSize: 25, marginRight: 5 }} />
-        </div>
+        </div> */}
       </CardContent>
       <Divider />
     </CardActionArea>

@@ -11,8 +11,18 @@ import {
   LOAD_PROFILE_FAIL,
   LOAD_USER_POSTS_SUCCESS,
   LOAD_USER_POSTS_FAIL,
+  LOAD_FOLLOWER_SUCCESS,
+  LOAD_FOLLOWER_FAIL,
+  LOAD_FOLLOWING_SUCCESS,
+  LOAD_FOLLOWING_FAIL,
 } from "../actions/types";
-const initialState = { posts: [], userposts: [] };
+const initialState = {
+  posts: [],
+  userposts: [],
+  likes: [],
+  follower: [],
+  following: [],
+};
 
 export default function (state = initialState, action) {
   const { type, payload, page } = action;
@@ -63,13 +73,52 @@ export default function (state = initialState, action) {
         comments: payload,
       };
     case LOAD_LIKE_SUCCESS:
-      return {
-        ...state,
-        likes: payload,
-      };
+      if (page === 1) {
+        return {
+          ...state,
+          likes: payload.likes,
+          like_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          likes: state.likes.concat(payload.likes),
+          like_count: payload.count,
+        };
+      }
+    case LOAD_FOLLOWER_SUCCESS:
+      if (page === 1) {
+        return {
+          ...state,
+          follower: payload.follower,
+          follower_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          follower: state.follower.concat(payload.follower),
+          follower_count: payload.count,
+        };
+      }
+    case LOAD_FOLLOWING_SUCCESS:
+      if (page === 1) {
+        return {
+          ...state,
+          following: payload.following,
+          following_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          following: state.following.concat(payload.following),
+          following_count: payload.count,
+        };
+      }
     case LOAD_POSTS_FAIL:
     case LOAD_POST_FAIL:
     case LOAD_LIKE_FAIL:
+    case LOAD_FOLLOWER_FAIL:
+    case LOAD_FOLLOWING_FAIL:
     case LOAD_PROFILE_FAIL:
     case LOAD_USER_POSTS_FAIL:
     default:

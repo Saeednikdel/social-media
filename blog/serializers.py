@@ -9,6 +9,15 @@ class LikeSerializer(serializers.ModelSerializer):
         model = Like
         fields = ('user', 'user_name', 'user_image')
 
+class FollowerSerializer(serializers.ModelSerializer):
+    user = serializers.IntegerField(source='id')
+    user_name = serializers.CharField(source='name')
+    user_image = serializers.ImageField(source='image')
+    class Meta:
+        model = UserAccount
+        fields = ('user', 'user_name', 'user_image')
+
+
 class ReplySerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.name')
     class Meta:

@@ -9,6 +9,7 @@ import Activate from "./containers/Activate";
 import DetailPage from "./containers/DetailPage";
 import UserProfile from "./containers/UserProfile";
 import Messages from "./containers/Messages";
+import List from "./containers/List";
 import Notification from "./containers/Notification";
 import NewPost from "./containers/NewPost";
 import ResetPassword from "./containers/ResetPassword";
@@ -34,6 +35,7 @@ const App = () => (
           <Route exact path="/Setting" component={Setting} />
           <Route exact path="/Bookmark" component={Bookmark} />
           <Route exact path="/messages" component={Messages} />
+          <Route exact path="/list/:type/:id" component={List} />
           <Route exact path="/notification" component={Notification} />
           <Route exact path="/newpost" component={NewPost} />
           <Route exact path="/reset_password" component={ResetPassword} />

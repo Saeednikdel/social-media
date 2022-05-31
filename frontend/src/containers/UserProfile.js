@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     height: 90,
     width: 90,
     marginLeft: 40,
-    marginTop: -45,
+    marginTop: -50,
     border: "4px solid",
     borderColor: `${theme.palette.primary.border}`,
   },
@@ -44,10 +44,16 @@ const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",
     color: "inherit",
-    padding: 20,
+    padding: 10,
     flex: 1,
     display: "flex",
     justifyContent: "flex-end",
+  },
+  navLinkFollower: {
+    textDecoration: "none",
+    color: "inherit",
+    marginRight: 20,
+    marginTop: 20,
   },
 }));
 const UserProfile = ({
@@ -152,20 +158,22 @@ const UserProfile = ({
           )}
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            color="textSecondary"
-            variant="subtitle2"
-            style={{ margin: 10 }}
+          <Link
+            className={classes.navLinkFollower}
+            to={`/list/follower/${userId}`}
           >
-            دنبال کننده : {profile.followers}
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="subtitle2"
-            style={{ margin: 10 }}
+            <Typography color="textSecondary" variant="subtitle2">
+              دنبال کننده : {profile.followers}
+            </Typography>
+          </Link>
+          <Link
+            className={classes.navLinkFollower}
+            to={`/list/following/${userId}`}
           >
-            دنبال میکند : {profile.followings}
-          </Typography>
+            <Typography color="textSecondary" variant="subtitle2">
+              دنبال میکند : {profile.followings}
+            </Typography>
+          </Link>
         </div>
       </div>
       <Divider />

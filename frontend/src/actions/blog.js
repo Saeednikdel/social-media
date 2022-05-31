@@ -15,6 +15,10 @@ import {
   LOAD_PROFILE_FAIL,
   LOAD_USER_POSTS_SUCCESS,
   LOAD_USER_POSTS_FAIL,
+  LOAD_FOLLOWER_SUCCESS,
+  LOAD_FOLLOWER_FAIL,
+  LOAD_FOLLOWING_SUCCESS,
+  LOAD_FOLLOWING_FAIL,
 } from "./types";
 import { load_bookmark } from "./auth";
 export const load_posts = (page, keyword) => async (dispatch) => {
@@ -168,10 +172,63 @@ export const load_likes =
       dispatch({
         type: LOAD_LIKE_SUCCESS,
         payload: res.data,
+        page: page,
       });
     } catch (err) {
       dispatch({
         type: LOAD_LIKE_FAIL,
+      });
+    }
+  };
+
+export const load_follower =
+  (postId, page = 1) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/blog/follower-list/${postId}/${page}/`,
+        config
+      );
+      dispatch({
+        type: LOAD_FOLLOWER_SUCCESS,
+        payload: res.data,
+        page: page,
+      });
+    } catch (err) {
+      dispatch({
+        type: LOAD_FOLLOWER_FAIL,
+      });
+    }
+  };
+
+export const load_following =
+  (postId, page = 1) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/blog/following-list/${postId}/${page}/`,
+        config
+      );
+      dispatch({
+        type: LOAD_FOLLOWING_SUCCESS,
+        payload: res.data,
+        page: page,
+      });
+    } catch (err) {
+      dispatch({
+        type: LOAD_FOLLOWING_FAIL,
       });
     }
   };

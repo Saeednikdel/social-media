@@ -8,7 +8,9 @@ urlpatterns = [
     path('post-create/', views.postCreate, name="post-create"),
 
     path('like/', views.like, name="like"),
-    path('like-list/<str:pk>/<str:sk>/', views.likeList, name="like-list"),
+    path('like-list/<str:id>/<str:page>/', views.likeList, name="like-list"),
+    path('follower-list/<str:id>/<str:page>/', views.followerList, name="follower-list"),
+    path('following-list/<str:id>/<str:page>/', views.followingList, name="following-list"),
 
     path('bookmark/', views.bookmark, name="bookmark"),
     path('bookmark-list/<str:user_id>/<str:page>/', views.bookmarkList, name="bookmark-list"),
