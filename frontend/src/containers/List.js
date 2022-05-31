@@ -42,15 +42,16 @@ const List = ({
   const id = match.params.id;
 
   useEffect(() => {
-    if (type === "like" && likes.length === 0) {
+    if (type === "like") {
       load_likes(id, 1);
     }
-    if (type === "follower" && follower.length === 0) {
+    if (type === "follower") {
       load_follower(id, 1);
     }
-    if (type === "following" && following.length === 0) {
+    if (type === "following") {
       load_following(id, 1);
     }
+    setPage(2);
   }, []);
   const fetchData = async () => {
     if (type === "like") {

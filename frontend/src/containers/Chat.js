@@ -28,9 +28,9 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    if (message.length === 0) {
-      load_msg(room, 1);
-    }
+    load_msg(room, 1);
+    setPage(2);
+
     client.onopen = () => {
       setConnectionStatus("متصل");
     };

@@ -84,13 +84,7 @@ const Appbar = ({
       </AppBar>
       <Drawer anchor={"left"} open={drawerstate} onClose={toggleDrawer}>
         <div className={classes.list}>
-          <Toolbar>
-            <Link className={classes.navLink} to="/" onClick={toggleDrawer}>
-              <Typography variant="h6" color="textPrimary">
-                صفحه اصلی
-              </Typography>
-            </Link>
-          </Toolbar>
+          <Toolbar></Toolbar>
 
           {isAuthenticated ? (
             <>

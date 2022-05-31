@@ -21,9 +21,8 @@ const Bookmark = ({
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    if (bookmarkList.length === 0) {
-      load_bookmark(1);
-    }
+    load_bookmark(1);
+    setPage(2);
   }, []);
   const fetchData = async () => {
     await load_bookmark(page);

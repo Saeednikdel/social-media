@@ -20,9 +20,8 @@ const Home = ({ posts, load_posts, count }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    if (posts.length === 0) {
-      load_posts(1, false);
-    }
+    load_posts(1, false);
+    setPage(2);
   }, []);
   const fetchData = async () => {
     await load_posts(page, false);

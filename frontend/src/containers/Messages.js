@@ -29,9 +29,8 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    if (rooms.length === 0) {
-      load_rooms(1);
-    }
+    load_rooms(1);
+    setPage(2);
   }, []);
   const fetchData = async () => {
     await load_rooms(page);

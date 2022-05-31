@@ -20,9 +20,8 @@ const Messages = ({
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    if (notification.length === 0) {
-      load_notif(1);
-    }
+    load_notif(1);
+    setPage(2);
   }, []);
   const fetchData = async () => {
     await load_notif(page);

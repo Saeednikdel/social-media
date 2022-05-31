@@ -31,7 +31,7 @@ const Activate = ({
 
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
-      {requestSent ? <LinearProgress /> : ""}
+      {requestSent && <LinearProgress />}
       <Typography variant="h5">تایید ایمیل</Typography>
       <Button
         style={{ margin: 20 }}
@@ -39,7 +39,6 @@ const Activate = ({
         variant="contained"
         color="secondary"
         onClick={verify_account}
-        type="button"
       >
         تایید
       </Button>

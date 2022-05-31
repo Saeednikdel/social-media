@@ -77,6 +77,7 @@ const UserProfile = ({
   useEffect(() => {
     load_profile(userId);
     load_user_posts(userId, 1);
+    setPage(2);
   }, [userId]);
 
   const fetchData = async () => {
