@@ -34,16 +34,19 @@ class BookmarkSerializer(serializers.ModelSerializer):
     post_user_id = serializers.IntegerField(source='post.user.id')
     image = serializers.ImageField(source='post.image')
     post_date = serializers.ReadOnlyField(source='post.date')
+    user_verified = serializers.BooleanField(source='post.user.is_verified')
+
     class Meta:
         model = Bookmark
-        fields = ('id','post_id','post_user_id','user_image','post_date','user_name','image', 'post_content', 'post_like', 'post_view')
+        fields = ('id','post_id','post_user_id', 'user_verified', 'user_image','post_date','user_name','image', 'post_content', 'post_like', 'post_view')
 
 class PostSerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.name')
     user_image = serializers.ImageField(source='user.image')
+    user_verified = serializers.BooleanField(source='user.is_verified')
     class Meta:
         model = Post
-        fields = ('id', 'user', 'user_name', 'user_image', 'like_count', 'date', 'view', 'content', 'image')
+        fields = ('id', 'user', 'user_name', 'user_verified', 'user_image', 'like_count', 'date', 'view', 'content', 'image')
 
 class NewPostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,10 +56,11 @@ class NewPostSerializer(serializers.ModelSerializer):
 class PostsSerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.name')
     user_image = serializers.ImageField(source='user.image')
+    user_verified = serializers.BooleanField(source='user.is_verified')
     text = serializers.ReadOnlyField(source='short_content')
     class Meta:
         model = Post
-        fields = ('id', 'user', 'user_name', 'user_image', 'like_count', 'date', 'view', 'image', 'text')
+        fields = ('id', 'user', 'user_name', 'user_verified', 'user_image', 'like_count', 'date', 'view', 'image', 'text')
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
@@ -65,4 +69,4 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserAccount
-        fields = ('id', 'followers','header', 'followings', 'email', 'name', 'image', 'join_date', 'is_entity', 'bio')
+        fields = ('id', 'followers', 'header', 'is_verified', 'followings', 'email', 'name', 'image', 'join_date', 'is_entity', 'bio')

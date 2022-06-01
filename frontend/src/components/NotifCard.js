@@ -62,10 +62,16 @@ export default function NotifCard({ notif }) {
             exact
             to={`/profile/${notif.sender_id}/`}
           >
-            <Typography variant="body1">
-              {notif.sender_name}
-              {msg}
-            </Typography>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="body1">{notif.sender_name}</Typography>
+              {notif.user_verified && (
+                <img
+                  src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
+                  style={{ height: 12, marginRight: 5, marginLeft: 5 }}
+                />
+              )}
+              <Typography>{msg}</Typography>
+            </div>
           </Link>
           <Typography color="textSecondary" variant="body2">
             {jMoment(notif.date, "YYYY/M/D HH:mm").format("jYYYY/jM/jD HH:mm")}

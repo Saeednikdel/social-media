@@ -46,6 +46,7 @@ export const load_rooms = (page) => async (dispatch) => {
     dispatch({
       type: LOAD_ROOMS_SUCCESS,
       payload: res.data,
+      page: page,
     });
   } catch (err) {
     dispatch({

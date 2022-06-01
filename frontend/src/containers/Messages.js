@@ -70,10 +70,20 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
                       )
                   )}
                 </Link>
-                <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
                   <Typography variant="body1">
-                    s{room.users_list.map((u) => u.id !== user.id && u.name)}
+                    {room.users_list.map((u) => u.id !== user.id && u.name)}
                   </Typography>
+                  {room.users_list.map(
+                    (u) =>
+                      u.id !== user.id &&
+                      u.is_verified && (
+                        <img
+                          src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
+                          style={{ height: 12, marginRight: 10 }}
+                        />
+                      )
+                  )}
                 </div>
               </div>
               <Divider />

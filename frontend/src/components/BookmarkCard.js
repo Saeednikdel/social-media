@@ -47,7 +47,15 @@ export default function BookmarkCard({ post }) {
             exact
             to={`/profile/${post.post_user_id}/`}
           >
-            <Typography variant="body1">{post.user_name}</Typography>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="body1">{post.user_name}</Typography>
+              {post.user_verified && (
+                <img
+                  src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
+                  style={{ height: 12, marginRight: 8 }}
+                />
+              )}
+            </div>
           </Link>
           <Typography color="textSecondary" variant="body2">
             {jMoment(post.post_date, "YYYY/M/D").format("jYYYY/jM/jD")}

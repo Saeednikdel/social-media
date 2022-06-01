@@ -14,7 +14,7 @@ class MessageSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = ('id', 'name', 'image')
+        fields = ('id', 'name', 'image', 'is_verified')
 
 
 class RoomSerializer(serializers.ModelSerializer):

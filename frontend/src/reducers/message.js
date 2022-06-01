@@ -8,7 +8,7 @@ import {
 const initialState = { message: [], rooms: [] };
 
 export default function (state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload, page } = action;
 
   switch (type) {
     case LOAD_MSG_SUCCESS:
@@ -18,13 +18,24 @@ export default function (state = initialState, action) {
         msg_count: payload.count,
       };
     case LOAD_ROOMS_SUCCESS:
-      return {
-        ...state,
-        rooms: state.rooms.concat(payload.rooms),
-        room_count: payload.count,
-        message: [],
-        msg_count: 0,
-      };
+      if (page === 1) {
+        return {
+          ...state,
+          rooms: payload.rooms,
+          room_count: payload.count,
+          message: [],
+          msg_count: 0,
+        };
+      } else {
+        return {
+          ...state,
+          rooms: state.rooms.concat(payload.rooms),
+          room_count: payload.count,
+          message: [],
+          msg_count: 0,
+        };
+      }
+
     case LOGOUT:
       localStorage.removeItem("id");
       return {

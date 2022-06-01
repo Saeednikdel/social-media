@@ -173,7 +173,7 @@ const DetailPage = ({
               to={`/profile/${post.user}/`}
             >
               <Avatar
-                style={{ height: 60, width: 60, margin: 10 }}
+                style={{ height: 50, width: 50, margin: 10 }}
                 src={post.user_image}
               />
             </Link>
@@ -183,7 +183,15 @@ const DetailPage = ({
                 exact
                 to={`/profile/${post.user}/`}
               >
-                <Typography variant="h6">{post.user_name}</Typography>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Typography variant="body1">{post.user_name}</Typography>
+                  {post.user_verified && (
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
+                      style={{ height: 12, marginRight: 8 }}
+                    />
+                  )}
+                </div>
               </Link>
               <Typography color="textSecondary" variant="subtitle2">
                 {jMoment(post.date, "YYYY/M/D").format("jYYYY/jM/jD")}

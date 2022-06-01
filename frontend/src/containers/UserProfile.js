@@ -123,7 +123,15 @@ const UserProfile = ({
       <div className={classes.pageContainer}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>
-            <Typography variant="h5">{profile.name}</Typography>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="h5">{profile.name}</Typography>
+              {profile.is_verified && (
+                <img
+                  src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
+                  style={{ height: 18, marginRight: 15 }}
+                />
+              )}
+            </div>
             <Typography color="textSecondary" variant="subtitle2">
               عضو از :
               {jMoment(profile.join_date, "YYYY/M/D").format("jYYYY/jM/jD")}
@@ -158,6 +166,9 @@ const UserProfile = ({
             </Link>
           )}
         </div>
+        {profile.bio && (
+          <Typography style={{ marginTop: 10 }}>{profile.bio}</Typography>
+        )}
         <div style={{ display: "flex", alignItems: "center" }}>
           <Link
             className={classes.navLinkFollower}
