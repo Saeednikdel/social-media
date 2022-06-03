@@ -90,7 +90,7 @@ const Appbar = ({
             <>
               <Link
                 className={classes.navLink}
-                to={user && `/profile/${user.id}/`}
+                to={user && `/profile/${user.name}/`}
                 onClick={toggleDrawer}
               >
                 <PermIdentityRounded className={classes.menuicon} />

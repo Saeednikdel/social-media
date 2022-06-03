@@ -32,16 +32,24 @@ export default function PostCard({ post }) {
   return (
     <CardActionArea component={NavLink} to={`/detail/${post.id}/`}>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Link className={classes.navLink} exact to={`/profile/${post.user}/`}>
+        <Link
+          className={classes.navLink}
+          exact
+          to={`/profile/${post.user_name}/`}
+        >
           <Avatar
             src={post.user_image}
             style={{ height: 50, width: 50, margin: 10 }}
           />
         </Link>
         <div>
-          <Link className={classes.navLink} exact to={`/profile/${post.user}/`}>
+          <Link
+            className={classes.navLink}
+            exact
+            to={`/profile/${post.user_name}/`}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body1">{post.user_name}</Typography>
+              <Typography variant="body1">{post.user_name}@</Typography>
               {post.user_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
@@ -60,11 +68,6 @@ export default function PostCard({ post }) {
         <Typography variant="textSecondary" gutterBottom>
           {post.text}...
         </Typography>
-
-        {/* <div className={classes.like}>
-          <Typography variant="body2">{post.like_count}</Typography>
-          <Favorite color="error" style={{ fontSize: 25, marginRight: 5 }} />
-        </div> */}
       </CardContent>
       <Divider />
     </CardActionArea>

@@ -53,7 +53,7 @@ export const load_posts = (page, keyword) => async (dispatch) => {
     });
   }
 };
-export const load_user_posts = (userId, page) => async (dispatch) => {
+export const load_user_posts = (name, page) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const load_user_posts = (userId, page) => async (dispatch) => {
   };
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/blog/user-post-list/${userId}/${page}/`,
+      `${process.env.REACT_APP_API_URL}/api/blog/user-post-list/${name}/${page}/`,
       config
     );
     dispatch({
@@ -104,7 +104,7 @@ export const load_post = (postId) => async (dispatch) => {
   }
 };
 
-export const load_profile = (target_id) => async (dispatch) => {
+export const load_profile = (name) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export const load_profile = (target_id) => async (dispatch) => {
     },
   };
   const user = localStorage.getItem("id");
-  const body = JSON.stringify({ user, target_id });
+  const body = JSON.stringify({ user, name });
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_API_URL}/api/blog/profile-detail/`,

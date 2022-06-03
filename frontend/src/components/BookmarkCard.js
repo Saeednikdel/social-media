@@ -34,7 +34,7 @@ export default function BookmarkCard({ post }) {
         <Link
           className={classes.navLink}
           exact
-          to={`/profile/${post.post_user_id}/`}
+          to={`/profile/${post.user_name}/`}
         >
           <Avatar
             src={post.user_image}
@@ -45,10 +45,10 @@ export default function BookmarkCard({ post }) {
           <Link
             className={classes.navLink}
             exact
-            to={`/profile/${post.post_user_id}/`}
+            to={`/profile/${post.user_name}/`}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body1">{post.user_name}</Typography>
+              <Typography variant="body1">{post.user_name}@</Typography>
               {post.user_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}

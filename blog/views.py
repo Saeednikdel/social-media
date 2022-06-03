@@ -34,13 +34,13 @@ def postList(request, pk):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def userPostList(request, pk,sk):
-    user = get_object_or_404(UserAccount, id=pk)
+def userPostList(request, name,page):
+    user = get_object_or_404(UserAccount, name=name)
     posts =Post.objects.filter(user=user).order_by('-date')
     itemperpage = 10
     paginator = Paginator(posts, itemperpage)
     count = len(posts)
-    posts = paginator.get_page(sk)
+    posts = paginator.get_page(page)
     serializer = PostsSerializer(posts, many=True)
     new_dict = {"count": count}
     new_dict.update({"posts": serializer.data})
@@ -73,7 +73,7 @@ def postDetail(request, pk):
 @permission_classes([AllowAny])
 def profileDetail(request):
     followed = False
-    target = get_object_or_404(UserAccount ,id=request.data.get('target_id'))
+    target = get_object_or_404(UserAccount ,name=request.data.get('name'))
     if request.data.get('user'):
         user = get_object_or_404(UserAccount, id=request.data.get('user'))
         if target in user.following.all():

@@ -1,10 +1,10 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework import status
 from .models import UserAccount
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
-import math
 from django.shortcuts import get_object_or_404
 from .serializers import AvatarSerializer, UserSetSerializer, HeaderSerializer
 from rest_framework import status
@@ -62,4 +62,4 @@ def userSet(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    return Response(serializer.errors)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

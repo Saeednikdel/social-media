@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const SetUserDetail = ({
   propsid,
   propsname,
+  propsprofile_name,
   propsbio,
   propsphone_no,
   propsbirth_date,
@@ -28,10 +29,12 @@ const SetUserDetail = ({
   resetState,
   requestSuccess,
   requestFail,
+  set_detail_error,
 }) => {
   const [formData, setFormData] = useState({
     id: propsid,
     name: propsname,
+    profile_name: propsprofile_name,
     bio: propsbio,
     phone_no: propsphone_no,
     birth_date: propsbirth_date,
@@ -39,7 +42,7 @@ const SetUserDetail = ({
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
 
-  const { id, name, bio, phone_no, birth_date } = formData;
+  const { id, name, profile_name, bio, phone_no, birth_date } = formData;
   useEffect(() => {
     if (requestFail) {
       setRequestSent(false);
@@ -55,7 +58,7 @@ const SetUserDetail = ({
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    set_user_detail(id, name, bio, phone_no, birth_date);
+    set_user_detail(id, name, profile_name, bio, phone_no, birth_date);
     setRequestSent(true);
   };
   return (
@@ -66,9 +69,27 @@ const SetUserDetail = ({
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="نام و نام خانوادگی"
+            label="نام کاربری"
             name="name"
             value={name}
+            error={set_detail_error && set_detail_error.name && true}
+            helperText={
+              set_detail_error &&
+              set_detail_error.name &&
+              set_detail_error.name[0]
+            }
+            onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            className={classes.textField}
+            autoComplete="off"
+            type="text"
+            label="نام"
+            name="profile_name"
+            value={profile_name}
             onChange={(e) => onChange(e)}
             required
           />
@@ -140,6 +161,7 @@ const SetUserDetail = ({
 const mapStateToProps = (state) => ({
   requestSuccess: state.auth.requestSuccess,
   requestFail: state.auth.requestFail,
+  set_detail_error: state.auth.set_detail_error,
 });
 export default connect(mapStateToProps, { set_user_detail, resetState })(
   SetUserDetail

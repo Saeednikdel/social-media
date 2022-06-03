@@ -5,16 +5,17 @@ from accounts.models import UserAccount
 
 class MessageSerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.name')
+    profile_name = serializers.ReadOnlyField(source='user.profile_name')
     user_image = serializers.ImageField(source='user.image')
     class Meta:
         model = Message
-        fields = ('user', 'user_name', 'user_image', 'content', 'date', 'seen', 'room')
+        fields = ('user', 'profile_name', 'user_name', 'user_image', 'content', 'date', 'seen', 'room')
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = ('id', 'name', 'image', 'is_verified')
+        fields = ('id', 'name', 'profile_name', 'image', 'is_verified')
 
 
 class RoomSerializer(serializers.ModelSerializer):

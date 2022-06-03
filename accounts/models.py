@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.core.validators import RegexValidator
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, name, password=None):
@@ -20,9 +21,12 @@ class UserAccountManager(BaseUserManager):
         user.save()
         return user
 
+alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+
 class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50, unique=True, validators=[alphanumeric])
+    profile_name = models.CharField(max_length=50, blank=True, null=True)
     bio = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

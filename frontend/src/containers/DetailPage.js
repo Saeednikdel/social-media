@@ -170,7 +170,7 @@ const DetailPage = ({
             <Link
               className={classes.navLink}
               exact
-              to={`/profile/${post.user}/`}
+              to={`/profile/${post.user_name}/`}
             >
               <Avatar
                 style={{ height: 50, width: 50, margin: 10 }}
@@ -181,10 +181,10 @@ const DetailPage = ({
               <Link
                 className={classes.navLink}
                 exact
-                to={`/profile/${post.user}/`}
+                to={`/profile/${post.user_name}/`}
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body1">{post.user_name}</Typography>
+                  <Typography variant="body1">{post.user_name}@</Typography>
                   {post.user_verified && (
                     <img
                       src={`${process.env.REACT_APP_API_URL}/media/verified.png`}

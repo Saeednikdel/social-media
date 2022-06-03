@@ -107,11 +107,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         requestSuccess: true,
+        set_detail_error: null,
       };
     case SET_USER_DETAIL_FAIL:
       return {
         ...state,
         requestFail: true,
+        set_detail_error: payload,
       };
     case LOAD_BOOKMARK_SUCCESS:
       if (page === 1) {
@@ -211,6 +213,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         requestFail: true,
+        signup_error: payload,
       };
     case LOGIN_FAIL:
       return {

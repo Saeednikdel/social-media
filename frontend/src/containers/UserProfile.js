@@ -72,16 +72,16 @@ const UserProfile = ({
   const [page, setPage] = useState(2);
 
   const classes = useStyles();
-  const userId = match.params.id;
+  const userName = match.params.name;
 
   useEffect(() => {
-    load_profile(userId);
-    load_user_posts(userId, 1);
+    load_profile(userName);
+    load_user_posts(userName, 1);
     setPage(2);
-  }, [userId]);
+  }, [userName]);
 
   const fetchData = async () => {
-    await load_user_posts(userId, page);
+    await load_user_posts(userName, page);
     setPage(page + 1);
   };
   async function get_chat() {
@@ -124,7 +124,8 @@ const UserProfile = ({
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h5">{profile.name}</Typography>
+              <Typography variant="h5">{profile.profile_name}</Typography>
+
               {profile.is_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
@@ -132,6 +133,9 @@ const UserProfile = ({
                 />
               )}
             </div>
+            <Typography variant="body1" color="textSecondary">
+              {profile.name}@
+            </Typography>
             <Typography color="textSecondary" variant="subtitle2">
               عضو از :
               {jMoment(profile.join_date, "YYYY/M/D").format("jYYYY/jM/jD")}
@@ -172,7 +176,7 @@ const UserProfile = ({
         <div style={{ display: "flex", alignItems: "center" }}>
           <Link
             className={classes.navLinkFollower}
-            to={`/list/follower/${userId}`}
+            to={`/list/follower/${userName}`}
           >
             <Typography color="textSecondary" variant="subtitle2">
               دنبال کننده : {profile.followers}
@@ -180,7 +184,7 @@ const UserProfile = ({
           </Link>
           <Link
             className={classes.navLinkFollower}
-            to={`/list/following/${userId}`}
+            to={`/list/following/${userName}`}
           >
             <Typography color="textSecondary" variant="subtitle2">
               دنبال میکند : {profile.followings}

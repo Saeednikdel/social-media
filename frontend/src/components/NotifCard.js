@@ -34,7 +34,7 @@ export default function NotifCard({ notif }) {
       component={NavLink}
       to={
         notif.kind === "F"
-          ? `/profile/${notif.sender_id}/`
+          ? `/profile/${notif.sender_name}/`
           : `/detail/${notif.post}/`
       }
     >
@@ -49,7 +49,7 @@ export default function NotifCard({ notif }) {
         <Link
           className={classes.navLink}
           exact
-          to={`/profile/${notif.sender_id}/`}
+          to={`/profile/${notif.sender_name}/`}
         >
           <Avatar
             src={notif.sender_image}
@@ -60,10 +60,10 @@ export default function NotifCard({ notif }) {
           <Link
             className={classes.navLink}
             exact
-            to={`/profile/${notif.sender_id}/`}
+            to={`/profile/${notif.sender_name}/`}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body1">{notif.sender_name}</Typography>
+              <Typography variant="body1">{notif.sender_name}@</Typography>
               {notif.user_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}

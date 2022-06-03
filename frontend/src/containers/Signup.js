@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.light,
     margin: 5,
   },
+  textfield: {
+    marginTop: 10,
+    minWidth: 250,
+  },
 }));
 const Signup = ({
   signup,
@@ -25,6 +29,7 @@ const Signup = ({
   requestSuccess,
   requestFail,
   resetState,
+  signup_error,
 }) => {
   const classes = useStyles();
   const [requestSent, setRequestSent] = useState(false);
@@ -74,86 +79,111 @@ const Signup = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    if (password === re_password) {
-      signup({ name, email, password, re_password });
-      setRequestSent(true);
-    }
+    signup({ name, email, password, re_password });
+    setRequestSent(true);
+    // if (password === re_password) {
+    //   signup({ name, email, password, re_password });
+    //   setRequestSent(true);
+    // }
   };
-
-  if (isAuthenticated) return <Redirect to='/' />;
+  if (isAuthenticated) return <Redirect to="/" />;
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
-      <Typography variant='h5'>ثبت نام</Typography>
-      <form autoComplete='off' onSubmit={(e) => onSubmit(e)}>
+      <Typography variant="h5">ثبت نام</Typography>
+      <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
         <div>
           <TextField
-            autoComplete='off'
-            type='text'
-            label='نام'
-            name='name'
+            className={classes.textfield}
+            autoComplete="off"
+            type="text"
+            label="نام کاربری"
+            name="name"
             value={name}
+            error={signup_error && signup_error.name && true}
+            helperText={
+              signup_error && signup_error.name && signup_error.name[0]
+            }
             onChange={(e) => onChange(e)}
             required
           />
         </div>
         <div>
           <TextField
-            autoComplete='off'
-            type='email'
-            label='ایمیل'
-            name='email'
+            className={classes.textfield}
+            autoComplete="off"
+            type="email"
+            label="ایمیل"
+            name="email"
             value={email}
+            error={signup_error && signup_error.email && true}
+            helperText={
+              signup_error && signup_error.email && signup_error.email[0]
+            }
             onChange={(e) => onChange(e)}
             required
           />
         </div>
         <div>
           <TextField
-            autoComplete='off'
-            type='password'
-            label='رمز عبور'
-            name='password'
+            className={classes.textfield}
+            autoComplete="off"
+            type="password"
+            label="رمز عبور"
+            name="password"
             value={password}
+            error={signup_error && signup_error.non_field_errors && true}
+            helperText={
+              signup_error &&
+              signup_error.non_field_errors &&
+              signup_error.non_field_errors[0]
+            }
             onChange={(e) => onChange(e)}
-            minLength='6'
+            minLength="6"
             required
           />
         </div>
         <div>
           <TextField
-            autoComplete='off'
-            type='password'
-            label='تایید رمز عبور'
-            name='re_password'
+            className={classes.textfield}
+            autoComplete="off"
+            type="password"
+            label="تایید رمز عبور"
+            name="re_password"
             value={re_password}
+            error={signup_error && signup_error.non_field_errors && true}
+            helperText={
+              signup_error &&
+              signup_error.non_field_errors &&
+              signup_error.non_field_errors[0]
+            }
             onChange={(e) => onChange(e)}
-            minLength='6'
+            minLength="6"
             required
           />
         </div>
         <Button
           style={{ margin: 20 }}
-          type='submit'
-          variant='contained'
-          color='secondary'
+          type="submit"
+          variant="contained"
+          color="secondary"
           startIcon={
             requestSent ? (
               <CircularProgress
                 size={20}
                 style={{ marginLeft: "10px" }}
-                color='inherit'
+                color="inherit"
               />
             ) : (
               <Done style={{ marginLeft: "10px" }} />
             )
-          }>
+          }
+        >
           ایجاد حساب
         </Button>
       </form>
-      <Typography variant='body1'>
+      <Typography variant="body1">
         قبلا ثبت نام کرده اید؟{" "}
-        <Link className={classes.navLink} to='/login'>
+        <Link className={classes.navLink} to="/login">
           ورود{" "}
         </Link>
       </Typography>
@@ -166,6 +196,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   requestSuccess: state.auth.requestSuccess,
   requestFail: state.auth.requestFail,
+  signup_error: state.auth.signup_error,
 });
 
 export default connect(mapStateToProps, { signup, resetState })(Signup);

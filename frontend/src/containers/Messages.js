@@ -72,7 +72,9 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
                 </Link>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Typography variant="body1">
-                    {room.users_list.map((u) => u.id !== user.id && u.name)}
+                    {room.users_list.map(
+                      (u) => u.id !== user.id && `${u.profile_name}@`
+                    )}
                   </Typography>
                   {room.users_list.map(
                     (u) =>

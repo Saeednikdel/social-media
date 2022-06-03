@@ -198,7 +198,7 @@ export const comment = (item, star, title, description) => async (dispatch) => {
 };
 
 export const set_user_detail =
-  (id, name, bio, phone_no, birth_date) => async (dispatch) => {
+  (id, name, profile_name, bio, phone_no, birth_date) => async (dispatch) => {
     if (localStorage.getItem("access")) {
       const config = {
         headers: {
@@ -210,6 +210,7 @@ export const set_user_detail =
       const body = JSON.stringify({
         id,
         name,
+        profile_name,
         bio,
         phone_no,
         birth_date,
@@ -227,10 +228,18 @@ export const set_user_detail =
           payload: res.data,
         });
         dispatch(load_user());
-      } catch (err) {
-        dispatch({
-          type: SET_USER_DETAIL_FAIL,
-        });
+      } catch (error) {
+        if (error.request.status === 400) {
+          dispatch({
+            type: SET_USER_DETAIL_FAIL,
+            payload: JSON.parse(error.request.response),
+          });
+        } else {
+          dispatch({
+            type: SET_USER_DETAIL_FAIL,
+            payload: { error: "unknown error" },
+          });
+        }
       }
     } else {
       dispatch({
@@ -418,12 +427,9 @@ export const login = (email, password) => async (dispatch) => {
 export const signup =
   ({ name, email, password, re_password }) =>
   async (dispatch) => {
-    // const csrftoken = getCookie("csrftoken");
-
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // "X-CSRFToken": csrftoken,
       },
     };
 
@@ -444,9 +450,17 @@ export const signup =
       // console.log("request.status", error.request.status);
       // console.log("request.response", error.request.response);
       // console.log("message", error.message);
-      dispatch({
-        type: SIGNUP_FAIL,
-      });
+      if (error.request.status === 400) {
+        dispatch({
+          type: SIGNUP_FAIL,
+          payload: JSON.parse(error.request.response),
+        });
+      } else {
+        dispatch({
+          type: SIGNUP_FAIL,
+          payload: { error: "unknown error" },
+        });
+      }
     }
   };
 

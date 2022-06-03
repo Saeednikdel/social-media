@@ -85,6 +85,7 @@ const Setting = ({
           <SetUserDetail
             propsid={user.id}
             propsname={user.name}
+            propsprofile_name={user.profile_name}
             propsbio={user.bio}
             propsphone_no={user.phone_no}
             propsbirth_date={user.birth_date}
@@ -160,9 +161,15 @@ const Setting = ({
       <div className={classes.detailContainer}>
         <Divider />
 
+        <Typography variant="h6">نام کاربری</Typography>
+        <Typography variant="subtitle1">
+          {user.name ? user.name : "--"}@
+        </Typography>
+        <Divider />
+
         <Typography variant="h6">نام</Typography>
         <Typography variant="subtitle1">
-          {user.name ? user.name : "--"}
+          {user.profile_name ? user.profile_name : "--"}
         </Typography>
         <Divider />
         <Typography variant="h6">بیو</Typography>

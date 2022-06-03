@@ -14,7 +14,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = ('id', 'name','image',)
+        fields = ('id', 'name','image', 'profile_name')
 
 class AvatarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,9 +33,9 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserAccount
-        fields = ('id', 'followers', 'followings','header', 'email', 'name', 'image','header', 'phone_no', 'birth_date', 'join_date', 'is_entity', 'is_staff', 'bio')
+        fields = ('id', 'profile_name', 'followers', 'followings','header', 'email', 'name', 'image','header', 'phone_no', 'birth_date', 'join_date', 'is_entity', 'is_staff', 'bio')
 
 class UserSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = ('id', 'name', 'bio','phone_no', 'birth_date')
+        fields = ('id', 'name','profile_name', 'bio','phone_no', 'birth_date')
