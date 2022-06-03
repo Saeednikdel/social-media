@@ -132,8 +132,8 @@ def likeList(request, id, page):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def followerList(request, id, page):
-    user = get_object_or_404(UserAccount ,id=id)
+def followerList(request, name, page):
+    user = get_object_or_404(UserAccount ,name=name)
     follower = user.follower.exclude(follower=user)
     itemperpage = 10
     paginator = Paginator(follower, itemperpage)
@@ -146,8 +146,8 @@ def followerList(request, id, page):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def followingList(request, id, page):
-    user = get_object_or_404(UserAccount ,id=id)
+def followingList(request, name, page):
+    user = get_object_or_404(UserAccount ,name=name)
     following = user.following.exclude(following=user)
     itemperpage = 10
     paginator = Paginator(following, itemperpage)
