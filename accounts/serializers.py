@@ -39,19 +39,3 @@ class UserSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
         fields = ('id', 'name', 'bio','phone_no', 'birth_date')
-
-class FollowerSerializer(serializers.ModelSerializer):
-    followers_list = UserSerializer(source="follower_list", read_only=True, many=True)
-    followers = serializers.IntegerField(source='follower_count')
-
-    class Meta:
-        model = UserAccount
-        fields = ('id', 'followers', 'followers_list')
-
-class FollowingSerializer(serializers.ModelSerializer):
-    followings_list = UserSerializer(source="following_list", read_only=True, many=True)
-    followings = serializers.IntegerField(source='following_count')
-
-    class Meta:
-        model = UserAccount
-        fields = ('id', 'followings', 'followings_list')
