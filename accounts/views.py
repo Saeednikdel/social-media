@@ -6,12 +6,12 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 import math
 from django.shortcuts import get_object_or_404
-from .serializers import AvatarSerializer, FollowerSerializer,FollowingSerializer,UserSetSerializer, HeaderSerializer
+from .serializers import AvatarSerializer, UserSetSerializer, HeaderSerializer
 from rest_framework import status
 from notification.models import Notification
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def follow(request):
     user = get_object_or_404(UserAccount, id=request.data.get('user'))
     target = get_object_or_404(UserAccount ,id=request.data.get('target_id'))
@@ -32,7 +32,7 @@ def follow(request):
         return Response({"followed"})
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def avatar(request):
     user = get_object_or_404(UserAccount,id=request.data.get('id'))
     serializer = AvatarSerializer(data=request.data, instance=user)
@@ -43,7 +43,7 @@ def avatar(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def header(request):
     user = get_object_or_404(UserAccount,id=request.data.get('id'))
     serializer = HeaderSerializer(data=request.data, instance=user)
@@ -54,23 +54,8 @@ def header(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def followerList(request, id):
-    user = get_object_or_404(UserAccount ,id=id)
-    serializer = FollowerSerializer(user, many=False)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def followingList(request, id):
-    user = get_object_or_404(UserAccount ,id=id)
-    serializer = FollowingSerializer(user, many=False)
-    return Response(serializer.data)
-
-
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def userSet(request):
     user = get_object_or_404(UserAccount ,id=request.data.get('id'))
     serializer = UserSetSerializer(instance=user, data=request.data)
