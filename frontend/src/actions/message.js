@@ -7,48 +7,63 @@ import {
   LOGOUT,
 } from "./types";
 export const load_msg = (room, page) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  };
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/message/room/${room}/${page}/`,
-      config
-    );
+  if (localStorage.getItem("access")) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/message/room/${room}/${page}/`,
+        config
+      );
 
-    dispatch({
-      type: LOAD_MSG_SUCCESS,
-      payload: res.data,
-    });
-  } catch (err) {
+      dispatch({
+        type: LOAD_MSG_SUCCESS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: LOAD_MSG_FAIL,
+      });
+    }
+  } else {
     dispatch({
       type: LOAD_MSG_FAIL,
     });
   }
 };
 export const load_rooms = (page) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  };
-  const user = localStorage.getItem("id");
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/message/room-list/${user}/${page}/`,
-      config
-    );
+  if (localStorage.getItem("access")) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
 
-    dispatch({
-      type: LOAD_ROOMS_SUCCESS,
-      payload: res.data,
-      page: page,
-    });
-  } catch (err) {
+    const user = localStorage.getItem("id");
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/message/room-list/${user}/${page}/`,
+        config
+      );
+
+      dispatch({
+        type: LOAD_ROOMS_SUCCESS,
+        payload: res.data,
+        page: page,
+      });
+    } catch (err) {
+      dispatch({
+        type: LOAD_ROOMS_FAIL,
+      });
+    }
+  } else {
     dispatch({
       type: LOAD_ROOMS_FAIL,
     });
