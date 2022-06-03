@@ -10,7 +10,7 @@ import math
 from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def roomMsg(request, room, page):
     room = get_object_or_404(Room, id=room)
     msg =Message.objects.filter(room=room).order_by('-date')
@@ -24,7 +24,7 @@ def roomMsg(request, room, page):
     return Response(new_dict)
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def roomList(request, user, page):
     user = get_object_or_404(UserAccount ,id=user)
     rooms =Room.objects.filter(users=user).order_by('-id')
@@ -38,7 +38,7 @@ def roomList(request, user, page):
     return Response(new_dict)
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def getRoom(request, user1, user2):
     user_1 = get_object_or_404(UserAccount ,id=user1)
     user_2 = get_object_or_404(UserAccount ,id=user2)

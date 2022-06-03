@@ -85,7 +85,7 @@ def profileDetail(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def postCreate(request):
     serializer = NewPostSerializer(data=request.data)
     if serializer.is_valid():
@@ -94,7 +94,7 @@ def postCreate(request):
     return Response(serializer.errors)
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def like(request):
     post = get_object_or_404(Post, id=request.data.get('id'))
     user = UserAccount.objects.get(id=request.data.get('user'))
@@ -160,7 +160,7 @@ def followingList(request, id, page):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def bookmark(request):
     post = get_object_or_404(Post, id=request.data.get('id'))
     user = UserAccount.objects.get(id=request.data.get('user'))
@@ -175,7 +175,7 @@ def bookmark(request):
         return Response({"added to Bookmark"})
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def bookmarkList(request, user_id,page):
     user = UserAccount.objects.get(id=user_id)
     bookmarks = Bookmark.objects.filter(user=user).order_by('-date')
@@ -189,7 +189,7 @@ def bookmarkList(request, user_id,page):
     return Response(new_dict)
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def reply(request):
     serializer = ReplySerializer(data=request.data)
     if serializer.is_valid():
