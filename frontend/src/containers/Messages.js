@@ -80,7 +80,7 @@ const Messages = ({ load_rooms, rooms, user, isAuthenticated, room_count }) => {
                       u.is_verified && (
                         <img
                           src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
-                          style={{ height: 12, marginRight: 10 }}
+                          style={{ height: 12, marginRight: 5 }}
                         />
                       )
                   )}

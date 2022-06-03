@@ -128,7 +128,7 @@ const UserProfile = ({
               {profile.is_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
-                  style={{ height: 18, marginRight: 15 }}
+                  style={{ height: 18, marginRight: 10 }}
                 />
               )}
             </div>

@@ -52,7 +52,7 @@ export default function BookmarkCard({ post }) {
               {post.user_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
-                  style={{ height: 12, marginRight: 8 }}
+                  style={{ height: 12, marginRight: 5 }}
                 />
               )}
             </div>
