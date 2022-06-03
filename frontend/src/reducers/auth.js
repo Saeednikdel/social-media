@@ -182,16 +182,30 @@ export default function (state = initialState, action) {
       };
     //
     case AUTHENTICATED_FAIL:
+      localStorage.removeItem("access");
       localStorage.removeItem("id");
+      localStorage.removeItem("refresh");
       return {
         ...state,
+        access: null,
+        refresh: null,
         isAuthenticated: false,
+        user: null,
+        notification: [],
+        bookmarks: [],
       };
     case USER_LOADED_FAIL:
+      localStorage.removeItem("access");
       localStorage.removeItem("id");
+      localStorage.removeItem("refresh");
       return {
         ...state,
+        access: null,
+        refresh: null,
+        isAuthenticated: false,
         user: null,
+        notification: [],
+        bookmarks: [],
       };
     case SIGNUP_FAIL:
       return {
