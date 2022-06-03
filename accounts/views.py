@@ -14,7 +14,7 @@ from notification.models import Notification
 @permission_classes([IsAuthenticated])
 def follow(request):
     user = get_object_or_404(UserAccount, id=request.data.get('user'))
-    target = get_object_or_404(UserAccount ,id=request.data.get('target_id'))
+    target = get_object_or_404(UserAccount ,name=request.data.get('target_name'))
     if target in user.following.all():
         user.following.remove(target)
         target.follower.remove(user)

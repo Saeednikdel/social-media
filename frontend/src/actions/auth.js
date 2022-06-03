@@ -108,7 +108,7 @@ export const update_avatar = (image, path) => async (dispatch) => {
     });
   }
 };
-export const follow_unfollw = (target_id) => async (dispatch) => {
+export const follow_unfollw = (target_name) => async (dispatch) => {
   if (localStorage.getItem("access")) {
     const config = {
       headers: {
@@ -118,7 +118,7 @@ export const follow_unfollw = (target_id) => async (dispatch) => {
       },
     };
     const user = localStorage.getItem("id");
-    const body = JSON.stringify({ user, target_id });
+    const body = JSON.stringify({ user, target_name });
 
     try {
       const res = await axios.post(
@@ -129,7 +129,7 @@ export const follow_unfollw = (target_id) => async (dispatch) => {
       dispatch({
         type: FOLLOW_SUCCESS,
       });
-      dispatch(load_profile(target_id));
+      dispatch(load_profile(target_name));
     } catch (err) {
       dispatch({
         type: FOLLOW_FAIL,
