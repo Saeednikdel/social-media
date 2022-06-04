@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  Card,
-  CardActionArea,
   CardContent,
   makeStyles,
   Typography,
@@ -9,7 +7,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import { Favorite, PersonAddRounded, ChatRounded } from "@material-ui/icons";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import jMoment from "moment-jalaali";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,8 +28,8 @@ export default function NotifCard({ notif }) {
     msg = " روی پست شما نوشت ";
   }
   return (
-    <CardActionArea
-      component={NavLink}
+    <Link
+      className={classes.navLink}
       to={
         notif.kind === "F"
           ? `/profile/${notif.sender_name}/`
@@ -81,6 +79,6 @@ export default function NotifCard({ notif }) {
 
       <CardContent></CardContent>
       <Divider />
-    </CardActionArea>
+    </Link>
   );
 }
