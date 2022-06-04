@@ -14,13 +14,8 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "inherit",
   },
-  like: {
-    position: "absolute",
-    bottom: 15,
-    right: 15,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  para: {
+    fontSize: 17,
   },
 }));
 
@@ -62,7 +57,10 @@ export default function BookmarkCard({ post }) {
       </div>
 
       <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
-        <pre dangerouslySetInnerHTML={{ __html: linkify(post.post_content) }} />
+        <p
+          className={classes.para}
+          dangerouslySetInnerHTML={{ __html: linkify(post.post_content) }}
+        />
       </CardContent>
       <Divider />
     </Link>

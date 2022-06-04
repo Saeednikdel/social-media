@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "inherit",
   },
+  para: {
+    fontSize: 17,
+  },
 }));
 const DetailPage = ({
   post,
@@ -252,7 +255,10 @@ const DetailPage = ({
       </Grid>
 
       <div className={classes.summery}>
-        <pre dangerouslySetInnerHTML={{ __html: linkify(post.content) }} />
+        <p
+          className={classes.para}
+          dangerouslySetInnerHTML={{ __html: linkify(post.content) }}
+        />
       </div>
 
       <Divider />

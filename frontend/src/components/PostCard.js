@@ -14,13 +14,8 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "inherit",
   },
-  like: {
-    position: "absolute",
-    bottom: 15,
-    right: 15,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  para: {
+    fontSize: 17,
   },
 }));
 
@@ -63,7 +58,10 @@ export default function PostCard({ post }) {
       </div>
 
       <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
-        <pre dangerouslySetInnerHTML={{ __html: linkify(post.text) }} />
+        <p
+          className={classes.para}
+          dangerouslySetInnerHTML={{ __html: linkify(post.text) }}
+        />
       </CardContent>
       <Divider />
     </Link>

@@ -17,7 +17,7 @@ export default function (text) {
     .replace(
       reHash,
       (hash) =>
-        `<a class="tag" href="${hash_url}?hashtag=${hash
+        `<a class="tag" href="${hash_url}?keyword=${hash
           .replace("#", "")
           .trim()}">${hash}</a>`
     )

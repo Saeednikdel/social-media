@@ -35,13 +35,13 @@ export default function (state = initialState, action) {
           return {
             ...state,
             search_posts: payload.posts,
-            search_pcount: payload.count,
+            search_count: payload.count,
           };
         } else {
           return {
             ...state,
             search_posts: state.search_posts.concat(payload.posts),
-            search_pcount: payload.count,
+            search_count: payload.count,
           };
         }
       } else {

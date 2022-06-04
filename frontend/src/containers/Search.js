@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IconButton,
   makeStyles,
@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { load_posts } from "../actions/blog";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchSharp } from "@material-ui/icons";
+
 const useStyles = makeStyles((theme) => ({
   loader: {
     textAlign: "center",
@@ -26,20 +27,37 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: `${theme.palette.primary.border}`,
   },
 }));
-const Search = ({ posts, load_posts, count }) => {
+const Search = ({ posts, load_posts, count, history }) => {
   const [page, setPage] = useState(1);
   const classes = useStyles();
-  const [search, setSearch] = useState("");
-
-  const fetchData = (e, source) => {
-    e.preventDefault();
-    if (source === "scroll") {
-      load_posts(page, search);
-      setPage(page + 1);
-    } else {
-      load_posts(1, search);
+  const [search, setSearch] = useState(
+    getQueryVariable("keyword") ? getQueryVariable("keyword") : ""
+  );
+  useEffect(() => {
+    if (getQueryVariable("keyword")) {
+      load_posts(1, getQueryVariable("keyword"));
       setPage(2);
     }
+  }, []);
+
+  const submit = (e) => {
+    e.preventDefault();
+    const currentUrlParams = new URLSearchParams();
+    currentUrlParams.set("keyword", search);
+    if (window.location.pathname === "/search") {
+      history.push(
+        window.location.pathname + "?" + currentUrlParams.toString()
+      );
+    } else {
+      window.location.replace("/?keyword=" + search);
+    }
+    load_posts(1, search);
+    setPage(2);
+  };
+  const fetchData = async () => {
+    console.log("fetch", page, search);
+    await load_posts(page, search);
+    setPage(page + 1);
   };
   return (
     <div>
@@ -47,7 +65,7 @@ const Search = ({ posts, load_posts, count }) => {
       {posts && (
         <InfiniteScroll
           dataLength={posts.length}
-          next={(e) => fetchData(e, "scroll")}
+          next={fetchData}
           hasMore={count > posts.length}
           loader={
             <div className={classes.loader}>
@@ -67,7 +85,7 @@ const Search = ({ posts, load_posts, count }) => {
       )}
       <div className={classes.form}>
         <Toolbar />
-        <form autoComplete="off" onSubmit={(e) => fetchData(e, "form")}>
+        <form autoComplete="off" onSubmit={(e) => submit(e)}>
           <TextField
             autoComplete="off"
             id="search"
@@ -90,6 +108,24 @@ const Search = ({ posts, load_posts, count }) => {
       </div>
     </div>
   );
+
+  function getQueryVariable(variable) {
+    var query = decodeURI(window.location.search.substring(1)).replace(
+      /\+/g,
+      " "
+    );
+    //console.log(query); //"app=article&act=news_content&aid=160990"
+    var vars = query.split("&");
+    //console.log(vars); //[ 'app=article', 'act=news_content', 'aid=160990' ]
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      //console.log(pair); //[ 'app', 'article' ][ 'act', 'news_content' ][ 'aid', '160990' ]
+      if (pair[0] == variable) {
+        return pair[1];
+      }
+    }
+    return false;
+  }
 };
 
 const mapStateToProps = (state) => ({
