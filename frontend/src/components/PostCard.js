@@ -1,16 +1,14 @@
 import React from "react";
 import {
   Divider,
-  CardActionArea,
   CardContent,
   makeStyles,
   Typography,
   Avatar,
 } from "@material-ui/core";
-import { Favorite } from "@material-ui/icons";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import jMoment from "moment-jalaali";
-
+import linkify from "../utils/linkify";
 const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",
@@ -28,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostCard({ post }) {
   const classes = useStyles();
-
+  const stopEvent = (event) => event.stopPropagation();
   return (
-    <CardActionArea component={NavLink} to={`/detail/${post.id}/`}>
+    <Link className={classes.navLink} to={`/detail/${post.id}/`}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <Link
           className={classes.navLink}
@@ -65,11 +63,9 @@ export default function PostCard({ post }) {
       </div>
 
       <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
-        <Typography variant="textSecondary" gutterBottom>
-          {post.text}...
-        </Typography>
+        <pre dangerouslySetInnerHTML={{ __html: linkify(post.text) }} />
       </CardContent>
       <Divider />
-    </CardActionArea>
+    </Link>
   );
 }

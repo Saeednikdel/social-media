@@ -4,6 +4,10 @@
   font-weight: normal;
   font-style: normal;
 }
+.tag {
+  text-decoration: none;
+  color: #2979ff;
+}
 .blur {
   top: 0%;
   bottom: auto;

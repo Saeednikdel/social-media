@@ -6,7 +6,6 @@ import {
   makeStyles,
   IconButton,
   LinearProgress,
-  CardMedia,
   Avatar,
 } from "@material-ui/core";
 import {
@@ -21,6 +20,7 @@ import { load_post, load_replies, like, load_likes } from "../actions/blog";
 import { bookmark } from "../actions/auth";
 import jMoment from "moment-jalaali";
 import { Link, withRouter } from "react-router-dom";
+import linkify from "../utils/linkify";
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -252,9 +252,7 @@ const DetailPage = ({
       </Grid>
 
       <div className={classes.summery}>
-        <Typography variant="body1" gutterBottom>
-          {post.content}
-        </Typography>
+        <pre dangerouslySetInnerHTML={{ __html: linkify(post.content) }} />
       </div>
 
       <Divider />

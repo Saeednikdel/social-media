@@ -1,16 +1,14 @@
 import React from "react";
 import {
   Divider,
-  CardActionArea,
   CardContent,
   makeStyles,
   Typography,
   Avatar,
 } from "@material-ui/core";
-import { Favorite } from "@material-ui/icons";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import jMoment from "moment-jalaali";
-
+import linkify from "../utils/linkify";
 const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",
@@ -29,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BookmarkCard({ post }) {
   const classes = useStyles();
   return (
-    <CardActionArea component={NavLink} to={`/detail/${post.post_id}/`}>
+    <Link className={classes.navLink} to={`/detail/${post.post_id}/`}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <Link
           className={classes.navLink}
@@ -64,16 +62,9 @@ export default function BookmarkCard({ post }) {
       </div>
 
       <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
-        <Typography variant="textSecondary" gutterBottom>
-          {post.post_content}...
-        </Typography>
-
-        {/* <div className={classes.like}>
-          <Typography variant="body2">{post.post_like}</Typography>
-          <Favorite color="error" style={{ fontSize: 30, marginRight: 5 }} />
-        </div> */}
+        <pre dangerouslySetInnerHTML={{ __html: linkify(post.post_content) }} />
       </CardContent>
       <Divider />
-    </CardActionArea>
+    </Link>
   );
 }
