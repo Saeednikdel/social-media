@@ -64,6 +64,7 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         access: payload.access,
         refresh: payload.refresh,
+        login_error: null,
       };
     case USER_LOADED_SUCCESS:
       localStorage.setItem("id", payload.id);
@@ -76,11 +77,13 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: false,
         requestSuccess: true,
+        signup_error: null,
       };
     case RESET_PASSWORD_SUCCESS:
       return {
         ...state,
         requestSuccess: true,
+        set_pass_error: null,
       };
     case RESET_PASSWORD_CONFIRM_SUCCESS:
       return {
@@ -96,6 +99,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         requestSuccess: true,
+        set_email_error: null,
       };
     case SET_PASSWORD_SUCCESS:
       return {
@@ -176,11 +180,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         requestFail: true,
+        set_email_error: payload,
       };
     case SET_PASSWORD_FAIL:
       return {
         ...state,
         requestFail: true,
+        set_pass_error: payload,
       };
     //
     case AUTHENTICATED_FAIL:
@@ -219,6 +225,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         requestFail: true,
+        login_error: payload,
       };
     case LOGOUT:
       localStorage.removeItem("access");

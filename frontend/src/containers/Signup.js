@@ -44,21 +44,7 @@ const Signup = ({
     password: "",
     re_password: "",
   });
-  // const [helperText, setHelperText] = useState({
-  //   name_helper: "",
-  //   email_helper: "",
-  //   password_helper: "",
-  //   re_password_helper: "",
-  // });
-  // const [errorList, setErrorList] = useState({
-  //   name_error: false,
-  //   email_error: false,
-  //   password_error: false,
-  //   re_password_error: false,
-  // });
   const { name, email, password, re_password } = formData;
-  // const { name_helper, email_helper, password_helper, re_password_helper } = helperText;
-  // const { name_error, email_error, password_error, re_password_error } = errorList;
   useEffect(() => {
     if (requestFail) {
       setRequestSent(false);
@@ -131,11 +117,9 @@ const Signup = ({
             label="رمز عبور"
             name="password"
             value={password}
-            error={signup_error && signup_error.non_field_errors && true}
+            error={signup_error && signup_error.password && true}
             helperText={
-              signup_error &&
-              signup_error.non_field_errors &&
-              signup_error.non_field_errors[0]
+              signup_error && signup_error.password && signup_error.password[0]
             }
             onChange={(e) => onChange(e)}
             minLength="6"

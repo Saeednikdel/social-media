@@ -18,6 +18,7 @@ const SetPassword = ({
   requestSuccess,
   resetState,
   requestFail,
+  set_pass_error,
 }) => {
   const [formData, setFormData] = useState({
     new_password: "",
@@ -49,15 +50,21 @@ const SetPassword = ({
 
   return (
     <div style={{ textAlign: "center" }}>
-      <form autoComplete='off' onSubmit={(e) => onSubmit(e)}>
+      <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
         <div>
           <TextField
             className={classes.textField}
-            autoComplete='off'
-            type='password'
-            label='رمز عبور جدید'
-            name='new_password'
+            autoComplete="off"
+            type="password"
+            label="رمز عبور جدید"
+            name="new_password"
             value={new_password}
+            error={set_pass_error && set_pass_error.new_password && true}
+            helperText={
+              set_pass_error &&
+              set_pass_error.new_password &&
+              set_pass_error.new_password[0]
+            }
             onChange={(e) => onChange(e)}
             required
           />
@@ -65,11 +72,17 @@ const SetPassword = ({
         <div>
           <TextField
             className={classes.textField}
-            autoComplete='off'
-            type='password'
-            label='تکرار رمز جدید'
-            name='re_new_password'
+            autoComplete="off"
+            type="password"
+            label="تکرار رمز جدید"
+            name="re_new_password"
             value={re_new_password}
+            error={set_pass_error && set_pass_error.non_field_errors && true}
+            helperText={
+              set_pass_error &&
+              set_pass_error.non_field_errors &&
+              set_pass_error.non_field_errors[0]
+            }
             onChange={(e) => onChange(e)}
             required
           />
@@ -77,31 +90,38 @@ const SetPassword = ({
         <div>
           <TextField
             className={classes.textField}
-            autoComplete='off'
-            type='password'
-            label='رمز عبور فعلی'
-            name='current_password'
+            autoComplete="off"
+            type="password"
+            label="رمز عبور فعلی"
+            name="current_password"
             value={current_password}
+            error={set_pass_error && set_pass_error.current_password && true}
+            helperText={
+              set_pass_error &&
+              set_pass_error.current_password &&
+              set_pass_error.current_password[0]
+            }
             onChange={(e) => onChange(e)}
             required
           />
         </div>
         <Button
           className={classes.button}
-          variant='contained'
-          color='secondary'
-          type='submit'
+          variant="contained"
+          color="secondary"
+          type="submit"
           startIcon={
             requestSent ? (
               <CircularProgress
                 size={20}
                 style={{ marginLeft: "10px" }}
-                color='inherit'
+                color="inherit"
               />
             ) : (
               <Done style={{ marginLeft: "10px" }} />
             )
-          }>
+          }
+        >
           تایید
         </Button>
       </form>
@@ -111,6 +131,7 @@ const SetPassword = ({
 const mapStateToProps = (state) => ({
   requestSuccess: state.auth.requestSuccess,
   requestFail: state.auth.requestFail,
+  set_pass_error: state.auth.set_pass_error,
 });
 export default connect(mapStateToProps, { set_password, resetState })(
   SetPassword

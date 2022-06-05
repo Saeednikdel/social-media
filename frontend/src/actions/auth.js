@@ -418,9 +418,18 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch(load_user());
   } catch (error) {
-    dispatch({
-      type: LOGIN_FAIL,
-    });
+    console.log(error.request.response);
+    if (error.request.status === 401) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: JSON.parse(error.request.response),
+      });
+    } else {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: { error: "unknown error" },
+      });
+    }
   }
 };
 
@@ -573,9 +582,17 @@ export const set_email =
         });
         dispatch(load_user());
       } catch (error) {
-        dispatch({
-          type: SET_EMAIL_FAIL,
-        });
+        if (error.request.status === 400) {
+          dispatch({
+            type: SET_EMAIL_FAIL,
+            payload: JSON.parse(error.request.response),
+          });
+        } else {
+          dispatch({
+            type: SET_EMAIL_FAIL,
+            payload: { error: "unknown error" },
+          });
+        }
       }
     }
   };
@@ -606,9 +623,17 @@ export const set_password =
           type: SET_PASSWORD_SUCCESS,
         });
       } catch (error) {
-        dispatch({
-          type: SET_PASSWORD_FAIL,
-        });
+        if (error.request.status === 400) {
+          dispatch({
+            type: SET_PASSWORD_FAIL,
+            payload: JSON.parse(error.request.response),
+          });
+        } else {
+          dispatch({
+            type: SET_PASSWORD_FAIL,
+            payload: { error: "unknown error" },
+          });
+        }
       }
     }
   };

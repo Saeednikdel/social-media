@@ -17,7 +17,13 @@ const useStyles = makeStyles((theme) => ({
     margin: 5,
   },
 }));
-const Login = ({ login, isAuthenticated, requestFail, resetState }) => {
+const Login = ({
+  login,
+  isAuthenticated,
+  requestFail,
+  resetState,
+  login_error,
+}) => {
   const classes = useStyles();
   const [requestSent, setRequestSent] = useState(false);
 
@@ -45,63 +51,65 @@ const Login = ({ login, isAuthenticated, requestFail, resetState }) => {
     login(email, password);
   };
 
-  if (isAuthenticated) return <Redirect to='/' />;
-
+  if (isAuthenticated) return <Redirect to="/" />;
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
-      <Typography variant='h5'>ورود</Typography>
-      <form autoComplete='off' onSubmit={(e) => onSubmit(e)}>
+      <Typography variant="h5">ورود</Typography>
+      <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
         <div>
           <TextField
-            autoComplete='off'
-            type='email'
-            label='ایمیل'
-            name='email'
+            autoComplete="off"
+            type="email"
+            label="ایمیل"
+            name="email"
             value={email}
+            error={login_error && login_error.detail && true}
+            helperText={login_error && login_error.detail && login_error.detail}
             onChange={(e) => onChange(e)}
             required
           />
         </div>
         <div>
           <TextField
-            autoComplete='off'
-            type='password'
-            label='رمز عبور'
-            name='password'
+            autoComplete="off"
+            type="password"
+            label="رمز عبور"
+            name="password"
             value={password}
             onChange={(e) => onChange(e)}
-            minLength='4'
+            minLength="4"
             required
           />
         </div>
         <Button
-          type='submit'
+          type="submit"
           style={{ margin: 20 }}
-          variant='contained'
-          color='secondary'
+          variant="contained"
+          color="secondary"
           startIcon={
             requestSent ? (
               <CircularProgress
                 size={20}
                 style={{ marginLeft: "10px" }}
-                color='inherit'
+                color="inherit"
               />
             ) : (
               <Done style={{ marginLeft: "10px" }} />
             )
-          }>
+          }
+        >
           ورود
         </Button>
       </form>
-      <Typography variant='body1'>
+      <Typography variant="body1">
         قبلا ثبت نام نکرده اید؟{" "}
-        <Link className={classes.navLink} to='/signup'>
+        <Link className={classes.navLink} to="/signup">
           ثبت نام
         </Link>
       </Typography>
-      <Typography variant='body1'>
+      <Typography variant="body1">
         رمز عبورتان را فراموش کرده اید؟{" "}
-        <Link className={classes.navLink} to='/reset_password'>
+        <Link className={classes.navLink} to="/reset_password">
           بازیابی
         </Link>
       </Typography>
@@ -113,6 +121,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   requestSuccess: state.auth.requestSuccess,
   requestFail: state.auth.requestFail,
+  login_error: state.auth.login_error,
 });
 
 export default connect(mapStateToProps, { login, resetState })(Login);
