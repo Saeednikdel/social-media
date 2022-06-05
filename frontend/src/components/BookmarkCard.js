@@ -5,8 +5,9 @@ import {
   makeStyles,
   Typography,
   Avatar,
+  CardActionArea,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import jMoment from "moment-jalaali";
 import linkify from "../utils/linkify";
 const useStyles = makeStyles((theme) => ({
@@ -21,8 +22,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BookmarkCard({ post }) {
   const classes = useStyles();
+  const history = useHistory();
+
   return (
-    <Link className={classes.navLink} to={`/detail/${post.post_id}/`}>
+    <CardActionArea onClick={() => history.push(`/detail/${post.post_id}/`)}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <Link
           className={classes.navLink}
@@ -63,6 +66,6 @@ export default function BookmarkCard({ post }) {
         />
       </CardContent>
       <Divider />
-    </Link>
+    </CardActionArea>
   );
 }
