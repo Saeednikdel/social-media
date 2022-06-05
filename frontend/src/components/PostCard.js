@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
   para: {
     fontSize: 16,
   },
+  avatar: { height: 50, width: 50, margin: 10 },
+  avatarContainer: { display: "flex", alignItems: "center" },
+  name: { display: "flex", alignItems: "center" },
+  content: { minHeight: 70, paddingLeft: 70 },
 }));
 
 export default function PostCard({ post }) {
@@ -24,16 +28,13 @@ export default function PostCard({ post }) {
 
   return (
     <Link className={classes.navLink} to={`/detail/${post.id}/`}>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className={classes.avatarContainer}>
         <Link
           className={classes.navLink}
           exact
           to={`/profile/${post.user_name}/`}
         >
-          <Avatar
-            src={post.user_image}
-            style={{ height: 50, width: 50, margin: 10 }}
-          />
+          <Avatar src={post.user_image} className={classes.avatar} />
         </Link>
         <div>
           <Link
@@ -41,7 +42,7 @@ export default function PostCard({ post }) {
             exact
             to={`/profile/${post.user_name}/`}
           >
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div className={classes.name}>
               <Typography variant="body1">{post.user_name}@</Typography>
               {post.user_verified && (
                 <img
@@ -57,7 +58,7 @@ export default function PostCard({ post }) {
         </div>
       </div>
 
-      <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
+      <CardContent className={classes.content}>
         <p
           className={classes.para}
           dangerouslySetInnerHTML={{ __html: linkify(post.text) }}
