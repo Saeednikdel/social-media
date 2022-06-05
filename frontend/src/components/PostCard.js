@@ -5,9 +5,8 @@ import {
   makeStyles,
   Typography,
   Avatar,
-  CardActionArea,
 } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import jMoment from "moment-jalaali";
 import linkify from "../utils/linkify";
 const useStyles = makeStyles((theme) => ({
@@ -16,16 +15,15 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
   },
   para: {
-    fontSize: 17,
+    fontSize: 16,
   },
 }));
 
 export default function PostCard({ post }) {
   const classes = useStyles();
-  const history = useHistory();
 
   return (
-    <CardActionArea onClick={() => history.push(`/detail/${post.id}/`)}>
+    <Link className={classes.navLink} to={`/detail/${post.id}/`}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <Link
           className={classes.navLink}
@@ -66,6 +64,6 @@ export default function PostCard({ post }) {
         />
       </CardContent>
       <Divider />
-    </CardActionArea>
+    </Link>
   );
 }
