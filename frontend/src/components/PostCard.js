@@ -43,11 +43,16 @@ export default function PostCard({ post }) {
             to={`/profile/${post.user_name}/`}
           >
             <div className={classes.name}>
-              <Typography variant="body1">{post.user_name}@</Typography>
+              <Typography variant="body1" color="textSecondary">
+                {post.user_name}@
+              </Typography>
+              <Typography variant="body1" style={{ marginRight: 4 }}>
+                {post.profile_name}
+              </Typography>
               {post.user_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
-                  style={{ height: 12, marginRight: 5 }}
+                  style={{ height: 12, marginRight: 4 }}
                 />
               )}
             </div>

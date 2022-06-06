@@ -42,7 +42,12 @@ export default function BookmarkCard({ post }) {
             to={`/profile/${post.user_name}/`}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body1">{post.user_name}@</Typography>
+              <Typography variant="body1" color="textSecondary">
+                {post.user_name}@
+              </Typography>
+              <Typography variant="body1" style={{ marginRight: 4 }}>
+                {post.profile_name}
+              </Typography>
               {post.user_verified && (
                 <img
                   src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
