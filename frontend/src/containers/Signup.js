@@ -73,6 +73,31 @@ const Signup = ({
     // }
   };
   if (isAuthenticated) return <Redirect to="/" />;
+
+  const nameHelper = (text) => {
+    switch (text) {
+      case "Only alphanumeric characters are allowed.":
+        return "فقط حروف انگلیسی و اعداد بدون فاصله";
+      case "user account with this name already exists.":
+        return "این نام کاربری در دسترس نیست";
+      default:
+        return "";
+    }
+  };
+  const passHelper = (text) => {
+    switch (text) {
+      case "This password is too short. It must contain at least 8 characters.":
+        return "حداقل ۸ کاراکتر شامل حروف و اعداد";
+      case "This password is too common.":
+        return "یک رمزعبور بهتر انتخاب کنید";
+      case "This password is entirely numeric.":
+        return "رمزعبور کاملا عددی مجاز نیست";
+      case "The password is too similar to the email.":
+        return "رمزعبور مشابه ایمیل مجاز نیست";
+      default:
+        return "";
+    }
+  };
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
       <Typography variant="h5">ثبت نام</Typography>
@@ -87,7 +112,9 @@ const Signup = ({
             value={name}
             error={signup_error && signup_error.name && true}
             helperText={
-              signup_error && signup_error.name && signup_error.name[0]
+              signup_error &&
+              signup_error.name &&
+              nameHelper(signup_error.name[0])
             }
             onChange={(e) => onChange(e)}
             required
@@ -103,7 +130,9 @@ const Signup = ({
             value={email}
             error={signup_error && signup_error.email && true}
             helperText={
-              signup_error && signup_error.email && signup_error.email[0]
+              signup_error &&
+              signup_error.email &&
+              "ثبت نام با این ایمیل ممکن نیست"
             }
             onChange={(e) => onChange(e)}
             required
@@ -119,7 +148,9 @@ const Signup = ({
             value={password}
             error={signup_error && signup_error.password && true}
             helperText={
-              signup_error && signup_error.password && signup_error.password[0]
+              signup_error &&
+              signup_error.password &&
+              passHelper(signup_error.password[0])
             }
             onChange={(e) => onChange(e)}
             minLength="6"
@@ -138,7 +169,7 @@ const Signup = ({
             helperText={
               signup_error &&
               signup_error.non_field_errors &&
-              signup_error.non_field_errors[0]
+              "تکرار رمز اشتباه است"
             }
             onChange={(e) => onChange(e)}
             minLength="6"

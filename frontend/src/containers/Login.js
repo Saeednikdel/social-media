@@ -64,7 +64,9 @@ const Login = ({
             name="email"
             value={email}
             error={login_error && login_error.detail && true}
-            helperText={login_error && login_error.detail && login_error.detail}
+            helperText={
+              login_error && login_error.detail && "رمز یا ایمیل اشتباه است"
+            }
             onChange={(e) => onChange(e)}
             required
           />

@@ -64,7 +64,7 @@ const SetEmail = ({
             helperText={
               set_email_error &&
               set_email_error.new_email &&
-              set_email_error.new_email[0]
+              "این ایمیل در دسترس نیست"
             }
             onChange={(e) => onChange(e)}
             required
@@ -82,7 +82,7 @@ const SetEmail = ({
             helperText={
               set_email_error &&
               set_email_error.non_field_errors &&
-              set_email_error.non_field_errors[0]
+              "تکرار ایمیل اشتباه است"
             }
             onChange={(e) => onChange(e)}
             required
@@ -97,6 +97,12 @@ const SetEmail = ({
             name="current_password"
             value={current_password}
             onChange={(e) => onChange(e)}
+            error={set_email_error && set_email_error.current_password && true}
+            helperText={
+              set_email_error &&
+              set_email_error.current_password &&
+              "رمزعبور اشتباه است"
+            }
             required
           />
         </div>

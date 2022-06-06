@@ -47,7 +47,20 @@ const SetPassword = ({
     set_password(new_password, re_new_password, current_password);
     setRequestSent(true);
   };
-
+  const passHelper = (text) => {
+    switch (text) {
+      case "This password is too short. It must contain at least 8 characters.":
+        return "حداقل ۸ کاراکتر شامل حروف و اعداد";
+      case "This password is too common.":
+        return "یک رمزعبور بهتر انتخاب کنید";
+      case "This password is entirely numeric.":
+        return "رمزعبور کاملا عددی مجاز نیست";
+      case "The password is too similar to the email.":
+        return "رمزعبور مشابه ایمیل مجاز نیست";
+      default:
+        return "";
+    }
+  };
   return (
     <div style={{ textAlign: "center" }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
@@ -63,7 +76,7 @@ const SetPassword = ({
             helperText={
               set_pass_error &&
               set_pass_error.new_password &&
-              set_pass_error.new_password[0]
+              passHelper(set_pass_error.new_password[0])
             }
             onChange={(e) => onChange(e)}
             required
@@ -81,7 +94,7 @@ const SetPassword = ({
             helperText={
               set_pass_error &&
               set_pass_error.non_field_errors &&
-              set_pass_error.non_field_errors[0]
+              "تکرار رمز اشتباه است"
             }
             onChange={(e) => onChange(e)}
             required
@@ -99,7 +112,7 @@ const SetPassword = ({
             helperText={
               set_pass_error &&
               set_pass_error.current_password &&
-              set_pass_error.current_password[0]
+              "رمزعبور اشتباه است"
             }
             onChange={(e) => onChange(e)}
             required

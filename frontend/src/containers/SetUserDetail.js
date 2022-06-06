@@ -61,6 +61,16 @@ const SetUserDetail = ({
     set_user_detail(id, name, profile_name, bio, phone_no, birth_date);
     setRequestSent(true);
   };
+  const nameHelper = (text) => {
+    switch (text) {
+      case "Only alphanumeric characters are allowed.":
+        return "فقط حروف انگلیسی و اعداد بدون فاصله";
+      case "user account with this name already exists.":
+        return "این نام کاربری در دسترس نیست";
+      default:
+        return "";
+    }
+  };
   return (
     <div style={{ textAlign: "center" }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
@@ -76,7 +86,7 @@ const SetUserDetail = ({
             helperText={
               set_detail_error &&
               set_detail_error.name &&
-              set_detail_error.name[0]
+              nameHelper(set_detail_error.name[0])
             }
             onChange={(e) => onChange(e)}
             required
