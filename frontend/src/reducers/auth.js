@@ -89,6 +89,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         requestSuccess: true,
+        reset_pass_error: null,
       };
     case ACTIVATION_SUCCESS:
       return {
@@ -170,6 +171,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         requestFail: true,
+        reset_pass_error: payload,
       };
     case ACTIVATION_FAIL:
       return {

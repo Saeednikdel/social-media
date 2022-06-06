@@ -549,9 +549,17 @@ export const reset_password_confirm =
         payload: res.data,
       });
     } catch (error) {
-      dispatch({
-        type: RESET_PASSWORD_CONFIRM_FAIL,
-      });
+      if (error.request.status === 400) {
+        dispatch({
+          type: RESET_PASSWORD_CONFIRM_FAIL,
+          payload: JSON.parse(error.request.response),
+        });
+      } else {
+        dispatch({
+          type: RESET_PASSWORD_CONFIRM_FAIL,
+          payload: { error: "unknown error" },
+        });
+      }
     }
   };
 export const set_email =
