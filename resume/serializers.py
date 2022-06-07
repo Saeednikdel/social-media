@@ -5,12 +5,12 @@ from .models import Resume, Language, Skill, EducationDegree, JobHistory
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
-        fields = ('id', 'user', 'title', 'level', 'lang_skills', 'end_date', 'certificate')
+        fields = ('id', 'user', 'title', 'level')
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = ('id', 'user', 'title', 'level', 'end_date', 'certificate')
+        fields = ('id', 'user', 'title', 'level')
 
 class EducationDegreeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,6 +28,14 @@ class ResumeSerializer(serializers.ModelSerializer):
     skill = SkillSerializer(source="skills", read_only=True, many=True)
     job_history = JobHistorySerializer(source="job_histories", read_only=True, many=True)
     education = EducationDegreeSerializer(source="educations", read_only=True, many=True)
+    name = serializers.CharField(source="user.name")
+    phone_no = serializers.CharField(source="user.phone_no")
+    profile_name = serializers.CharField(source="user.profile_name")
+    militry_service = serializers.CharField(source="user.militry_service")
+    address = serializers.CharField(source="user.address")
+    birth_date = serializers.DateField(source="user.birth_date")
+    image = serializers.ImageField(source="user.image")
+    email = serializers.EmailField(source="user.email")
     class Meta:
         model = Resume
-        fields = ('id', 'user', 'militry_service', 'address', 'language', 'skill', 'job_history', 'education')
+        fields = ('id', 'user', 'name', 'email', 'image', 'birth_date', 'phone_no', 'profile_name', 'militry_service', 'address', 'language', 'skill', 'job_history', 'education')

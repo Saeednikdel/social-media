@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
   button: { marginTop: 20, marginBottom: 20 },
 }));
 const SetUserDetail = ({
-  propsid,
-  propsname,
-  propsprofile_name,
-  propsbio,
-  propsphone_no,
-  propsbirth_date,
+  _id,
+  _name,
+  _profile_name,
+  _bio,
+  _phone_no,
+  _birth_date,
   setOpenPopup,
   set_user_detail,
   resetState,
@@ -32,12 +32,12 @@ const SetUserDetail = ({
   set_detail_error,
 }) => {
   const [formData, setFormData] = useState({
-    id: propsid,
-    name: propsname,
-    profile_name: propsprofile_name,
-    bio: propsbio,
-    phone_no: propsphone_no,
-    birth_date: propsbirth_date,
+    id: _id,
+    name: _name,
+    profile_name: _profile_name,
+    bio: _bio,
+    phone_no: _phone_no,
+    birth_date: _birth_date,
   });
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();

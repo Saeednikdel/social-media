@@ -18,7 +18,8 @@ from djoser.conf import settings
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def resumeDetail(request, pk):
-    resume = get_object_or_404(Resume, user=pk)
+    user = get_object_or_404(UserAccount, id=pk)
+    resume, created = Resume.objects.get_or_create(user=user)
     serializer = ResumeSerializer(resume, many=False)
     return Response(serializer.data)
 

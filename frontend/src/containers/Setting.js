@@ -83,12 +83,12 @@ const Setting = ({
       case "ویرایش مشخصات":
         return (
           <SetUserDetail
-            propsid={user.id}
-            propsname={user.name}
-            propsprofile_name={user.profile_name}
-            propsbio={user.bio}
-            propsphone_no={user.phone_no}
-            propsbirth_date={user.birth_date}
+            _id={user.id}
+            _name={user.name}
+            _profile_name={user.profile_name}
+            _bio={user.bio}
+            _phone_no={user.phone_no}
+            _birth_date={user.birth_date}
             setOpenPopup={setOpenPopup}
           />
         );
