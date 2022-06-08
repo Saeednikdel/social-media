@@ -39,6 +39,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     open_to_work = models.BooleanField(default=True)
     is_entity = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
+    show_resume = models.BooleanField(default=False)
     join_date = models.DateTimeField(auto_now_add=True)
     birth_date = models.DateField(blank=True ,null=True)
     image = models.ImageField(blank=True, null=True)

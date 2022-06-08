@@ -33,9 +33,11 @@ class ResumeSerializer(serializers.ModelSerializer):
     profile_name = serializers.CharField(source="user.profile_name")
     militry_service = serializers.CharField(source="user.militry_service")
     address = serializers.CharField(source="user.address")
+    bio = serializers.CharField(source="user.bio")
     birth_date = serializers.DateField(source="user.birth_date")
     image = serializers.ImageField(source="user.image")
     email = serializers.EmailField(source="user.email")
+    show_resume = serializers.BooleanField(source="user.show_resume")
     class Meta:
         model = Resume
-        fields = ('id', 'user', 'name', 'email', 'image', 'birth_date', 'phone_no', 'profile_name', 'militry_service', 'address', 'language', 'skill', 'job_history', 'education')
+        fields = ('id', 'user', 'name', 'bio', 'show_resume', 'email', 'image', 'birth_date', 'phone_no', 'profile_name', 'militry_service', 'address', 'language', 'skill', 'job_history', 'education')
