@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Typography, Chip, Button, makeStyles } from "@material-ui/core";
 import SetLanguage from "../forms/SetLanguage";
 import Popup from "../Popup";
+import { add_language } from "../../actions/resume";
+
 const useStyles = makeStyles((theme) => ({
   chip: {
     margin: 10,
@@ -11,10 +13,9 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "wrap",
   },
 }));
-export const Language = ({ language }) => {
+export const Language = ({ language, add_language }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const classes = useStyles();
-  const handleDelete = (id) => {};
   const convert = (string) => {
     switch (string) {
       case "R":
@@ -47,7 +48,7 @@ export const Language = ({ language }) => {
             <Chip
               className={classes.chip}
               label={l.title + " | " + convert(l.level)}
-              onDelete={() => handleDelete(l.id)}
+              onDelete={() => add_language(l.id)}
               color="secondary"
             />
           ))}
@@ -65,4 +66,4 @@ export const Language = ({ language }) => {
 
 const mapStateToProps = (state) => ({ language: state.resume.resume.language });
 
-export default connect(mapStateToProps)(Language);
+export default connect(mapStateToProps, { add_language })(Language);

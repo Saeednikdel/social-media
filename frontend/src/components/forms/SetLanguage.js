@@ -11,12 +11,13 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import { add_language } from "../../actions/resume";
 
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
 }));
-const SetLanguage = ({ setOpenPopup, requestSuccess, requestFail }) => {
+const SetLanguage = ({ setOpenPopup, add_language, new_lang }) => {
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -32,20 +33,19 @@ const SetLanguage = ({ setOpenPopup, requestSuccess, requestFail }) => {
     { title: "مکالمه", value: "S" },
   ];
   useEffect(() => {
-    if (requestFail) {
+    if (new_lang && new_lang.title === title) {
+      setOpenPopup(false);
+    } else if (new_lang && new_lang === "error") {
       setRequestSent(false);
     }
-    if (requestSuccess) {
-      setOpenPopup(false);
-    }
-  }, [requestFail, requestSuccess]);
+  }, [new_lang]);
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
     setRequestSent(true);
-    console.log(formData);
+    add_language(false, title, level);
   };
   return (
     <div style={{ textAlign: "center" }}>
@@ -104,7 +104,6 @@ const SetLanguage = ({ setOpenPopup, requestSuccess, requestFail }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  requestSuccess: state.auth.requestSuccess,
-  requestFail: state.auth.requestFail,
+  new_lang: state.resume.new_lang,
 });
-export default connect(mapStateToProps, {})(SetLanguage);
+export default connect(mapStateToProps, { add_language })(SetLanguage);

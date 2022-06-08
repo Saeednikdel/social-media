@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Typography, Chip, Button, makeStyles } from "@material-ui/core";
+import { add_skill } from "../../actions/resume";
 
 import SetSkill from "../forms/SetSkill";
 import Popup from "../Popup";
@@ -12,10 +13,9 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "wrap",
   },
 }));
-export const Skills = ({ skill }) => {
+export const Skills = ({ skill, add_skill }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const classes = useStyles();
-  const handleDelete = (id) => {};
   const convert = (string) => {
     switch (string) {
       case "J":
@@ -48,7 +48,7 @@ export const Skills = ({ skill }) => {
             <Chip
               className={classes.chip}
               label={l.title + " | " + convert(l.level)}
-              onDelete={() => handleDelete(l.id)}
+              onDelete={() => add_skill(l.id)}
               color="secondary"
             />
           ))}
@@ -66,4 +66,4 @@ export const Skills = ({ skill }) => {
 
 const mapStateToProps = (state) => ({ skill: state.resume.resume.skill });
 
-export default connect(mapStateToProps)(Skills);
+export default connect(mapStateToProps, { add_skill })(Skills);

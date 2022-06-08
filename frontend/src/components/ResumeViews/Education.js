@@ -12,8 +12,9 @@ import { DeleteOutline } from "@material-ui/icons";
 import SetEducation from "../forms/SetEducation";
 import Popup from "../Popup";
 import jMoment from "moment-jalaali";
+import { add_education } from "../../actions/resume";
 
-export const Education = ({ education }) => {
+export const Education = ({ education, add_education }) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
@@ -55,7 +56,7 @@ export const Education = ({ education }) => {
                     justifyContent: "end",
                   }}
                 >
-                  <IconButton>
+                  <IconButton onClick={() => add_education(row.id)}>
                     <DeleteOutline color="error" />
                   </IconButton>
                 </div>
@@ -79,4 +80,4 @@ const mapStateToProps = (state) => ({
   education: state.resume.resume.education,
 });
 
-export default connect(mapStateToProps)(Education);
+export default connect(mapStateToProps, { add_education })(Education);

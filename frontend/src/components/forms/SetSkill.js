@@ -11,12 +11,13 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import { add_skill } from "../../actions/resume";
 
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
 }));
-const SetSkill = ({ setOpenPopup, requestSuccess, requestFail }) => {
+const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -31,20 +32,19 @@ const SetSkill = ({ setOpenPopup, requestSuccess, requestFail }) => {
     { title: "پیشرفته", value: "S" },
   ];
   useEffect(() => {
-    if (requestFail) {
+    if (new_skill && new_skill.title === title) {
+      setOpenPopup(false);
+    } else if (new_skill && new_skill === "error") {
       setRequestSent(false);
     }
-    if (requestSuccess) {
-      setOpenPopup(false);
-    }
-  }, [requestFail, requestSuccess]);
+  }, [new_skill]);
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
     setRequestSent(true);
-    console.log(formData);
+    add_skill(false, title, level);
   };
   return (
     <div style={{ textAlign: "center" }}>
@@ -104,7 +104,6 @@ const SetSkill = ({ setOpenPopup, requestSuccess, requestFail }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  requestSuccess: state.auth.requestSuccess,
-  requestFail: state.auth.requestFail,
+  new_skill: state.resume.new_skill,
 });
-export default connect(mapStateToProps, {})(SetSkill);
+export default connect(mapStateToProps, { add_skill })(SetSkill);

@@ -10,13 +10,14 @@ import { Done } from "@material-ui/icons";
 import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { add_education } from "../../actions/resume";
 jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
 }));
-const SetEducation = ({ setOpenPopup, requestSuccess, requestFail }) => {
+const SetEducation = ({ setOpenPopup, add_education, new_edu }) => {
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -27,21 +28,21 @@ const SetEducation = ({ setOpenPopup, requestSuccess, requestFail }) => {
   });
   const { title, end_date, campus, score } = formData;
   useEffect(() => {
-    if (requestFail) {
+    if (new_edu && new_edu.end_date === end_date) {
+      setOpenPopup(false);
+    } else if (new_edu && new_edu === "error") {
       setRequestSent(false);
     }
-    if (requestSuccess) {
-      setOpenPopup(false);
-    }
-  }, [requestFail, requestSuccess]);
+  }, [new_edu]);
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
     setRequestSent(true);
-    console.log(formData);
+    add_education(false, title, campus, end_date, score);
   };
+
   return (
     <div style={{ textAlign: "center" }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
@@ -126,7 +127,6 @@ const SetEducation = ({ setOpenPopup, requestSuccess, requestFail }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  requestSuccess: state.auth.requestSuccess,
-  requestFail: state.auth.requestFail,
+  new_edu: state.resume.new_edu,
 });
-export default connect(mapStateToProps, {})(SetEducation);
+export default connect(mapStateToProps, { add_education })(SetEducation);

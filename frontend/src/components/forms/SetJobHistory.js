@@ -10,13 +10,15 @@ import { Done } from "@material-ui/icons";
 import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { add_job } from "../../actions/resume";
+
 jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
 }));
-const SetJobHistory = ({ setOpenPopup, requestSuccess, requestFail }) => {
+const SetJobHistory = ({ setOpenPopup, add_job, new_job }) => {
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -27,20 +29,19 @@ const SetJobHistory = ({ setOpenPopup, requestSuccess, requestFail }) => {
   });
   const { title, end_date, start_date, company } = formData;
   useEffect(() => {
-    if (requestFail) {
+    if (new_job && new_job.end_date === end_date) {
+      setOpenPopup(false);
+    } else if (new_job && new_job === "error") {
       setRequestSent(false);
     }
-    if (requestSuccess) {
-      setOpenPopup(false);
-    }
-  }, [requestFail, requestSuccess]);
+  }, [new_job]);
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
     setRequestSent(true);
-    console.log(formData);
+    add_job(false, title, start_date, end_date, company);
   };
   return (
     <div style={{ textAlign: "center" }}>
@@ -134,7 +135,6 @@ const SetJobHistory = ({ setOpenPopup, requestSuccess, requestFail }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  requestSuccess: state.auth.requestSuccess,
-  requestFail: state.auth.requestFail,
+  new_job: state.resume.new_job,
 });
-export default connect(mapStateToProps, {})(SetJobHistory);
+export default connect(mapStateToProps, { add_job })(SetJobHistory);

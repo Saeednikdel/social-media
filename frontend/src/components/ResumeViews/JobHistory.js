@@ -12,8 +12,9 @@ import { DeleteOutline } from "@material-ui/icons";
 import SetJobHistory from "../forms/SetJobHistory";
 import Popup from "../Popup";
 import jMoment from "moment-jalaali";
+import { add_job } from "../../actions/resume";
 
-export const JobHistory = ({ job_history }) => {
+export const JobHistory = ({ job_history, add_job }) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
@@ -58,7 +59,7 @@ export const JobHistory = ({ job_history }) => {
                     justifyContent: "end",
                   }}
                 >
-                  <IconButton>
+                  <IconButton onClick={() => add_job(row.id)}>
                     <DeleteOutline color="error" />
                   </IconButton>
                 </div>
@@ -82,4 +83,4 @@ const mapStateToProps = (state) => ({
   job_history: state.resume.resume.job_history,
 });
 
-export default connect(mapStateToProps)(JobHistory);
+export default connect(mapStateToProps, { add_job })(JobHistory);
