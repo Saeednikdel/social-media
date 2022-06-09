@@ -27,15 +27,6 @@ class JobReply(models.Model):
         return self.user.email
 
 
-class JobLike(models.Model):
-    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-    job = models.ForeignKey(Job, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user.email
-
-
 class JobBookmark(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
