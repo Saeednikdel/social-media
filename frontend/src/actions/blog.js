@@ -45,7 +45,6 @@ export const load_posts = (page, keyword) => async (dispatch) => {
       type: LOAD_POSTS_SUCCESS,
       payload: res.data,
       page: page,
-      keyword: keyword,
     });
   } catch (err) {
     dispatch({

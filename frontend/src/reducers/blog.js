@@ -30,34 +30,18 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case LOAD_POSTS_SUCCESS:
-      if (keyword) {
-        if (page === 1) {
-          return {
-            ...state,
-            search_posts: payload.posts,
-            search_count: payload.count,
-          };
-        } else {
-          return {
-            ...state,
-            search_posts: state.search_posts.concat(payload.posts),
-            search_count: payload.count,
-          };
-        }
+      if (page === 1) {
+        return {
+          ...state,
+          posts: payload.posts,
+          count: payload.count,
+        };
       } else {
-        if (page === 1) {
-          return {
-            ...state,
-            posts: payload.posts,
-            count: payload.count,
-          };
-        } else {
-          return {
-            ...state,
-            posts: state.posts.concat(payload.posts),
-            count: payload.count,
-          };
-        }
+        return {
+          ...state,
+          posts: state.posts.concat(payload.posts),
+          count: payload.count,
+        };
       }
 
     case LOAD_USER_POSTS_SUCCESS:

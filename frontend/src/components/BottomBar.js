@@ -69,7 +69,7 @@ function BottomBar() {
               <Add />
             </Fab>
           </Link>
-          <Link className={classes.navLink} to="/search">
+          <Link className={classes.navLink} to="/jobs">
             <IconButton color="inherit">
               <Search />
             </IconButton>

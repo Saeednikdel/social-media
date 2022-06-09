@@ -5,7 +5,7 @@ import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import Setting from "./containers/Setting";
 import Bookmark from "./containers/Bookmark";
-import Search from "./containers/Search";
+import Jobs from "./containers/Jobs";
 import Activate from "./containers/Activate";
 import DetailPage from "./containers/DetailPage";
 import UserProfile from "./containers/UserProfile";
@@ -37,7 +37,7 @@ const App = () => (
           <Route exact path="/Bookmark" component={Bookmark} />
           <Route exact path="/messages" component={Messages} />
           <Route exact path="/list/:type/:id" component={List} />
-          <Route exact path="/search" component={Search} />
+          <Route exact path="/jobs" component={Jobs} />
           <Route exact path="/notification" component={Notification} />
           <Route exact path="/newpost" component={NewPost} />
           <Route exact path="/reset_password" component={ResetPassword} />
