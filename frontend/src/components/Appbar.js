@@ -106,20 +106,13 @@ const Appbar = ({
               </Link>
               <Link
                 className={classes.navLink}
-                to="/setting"
+                to="/setting/profile"
                 onClick={toggleDrawer}
               >
                 <Settings className={classes.menuicon} />
                 <Typography variant="body1">تنظیمات</Typography>
               </Link>
-              <Link
-                className={classes.navLink}
-                to="/resumecreate"
-                onClick={toggleDrawer}
-              >
-                <Settings className={classes.menuicon} />
-                <Typography variant="body1">تنظیمات رزومه</Typography>
-              </Link>
+
               <Link className={classes.navLink} onClick={() => logOut()}>
                 <ArrowForward className={classes.menuicon} />
                 <Typography variant="body1">خروج</Typography>

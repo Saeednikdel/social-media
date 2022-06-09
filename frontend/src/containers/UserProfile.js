@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "inherit",
     padding: 10,
+  },
+  buttonContainer: {
     flex: 1,
     display: "flex",
     justifyContent: "flex-end",
@@ -124,7 +126,7 @@ const UserProfile = ({
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Typography variant='h5'>{profile.profile_name}</Typography>
+              <Typography variant="h5">{profile.profile_name}</Typography>
 
               {profile.is_verified && (
                 <img
@@ -133,40 +135,41 @@ const UserProfile = ({
                 />
               )}
             </div>
-            <Typography variant='body1' color='textSecondary'>
+            <Typography variant="body1" color="textSecondary">
               {profile.name}@
             </Typography>
-            <Typography color='textSecondary' variant='subtitle2'>
+            <Typography color="textSecondary" variant="subtitle2">
               عضو از :
               {jMoment(profile.join_date, "YYYY/M/D").format("jYYYY/jM/jD")}
             </Typography>
           </div>
-          {isAuthenticated && user.id !== profile.id && (
-            <div
-              style={{
-                flex: 1,
-                display: "flex",
-                justifyContent: "flex-end",
-              }}>
-              <IconButton onClick={() => get_chat()} style={{ marginLeft: 10 }}>
-                <MailOutline color='secondary' />
-              </IconButton>
+          <div className={classes.buttonContainer}>
+            {isAuthenticated && user.id !== profile.id && (
+              <>
+                <IconButton
+                  onClick={() => get_chat()}
+                  style={{ marginLeft: 10 }}
+                >
+                  <MailOutline color="secondary" />
+                </IconButton>
 
-              <Button
-                color='secondary'
-                onClick={() => follow_unfollw(userName)}
-                style={{ marginLeft: 10 }}>
-                {profile.followed === true ? "آنفالو" : "فالو"}
-              </Button>
-            </div>
-          )}
-          {isAuthenticated && user.id === profile.id && (
-            <Link className={classes.navLink} to='/setting'>
-              <Typography color='secondary' variant='body1'>
-                ویرایش پروفایل
-              </Typography>
-            </Link>
-          )}
+                <Button
+                  color="secondary"
+                  onClick={() => follow_unfollw(userName)}
+                  style={{ marginLeft: 10 }}
+                >
+                  {profile.followed === true ? "آنفالو" : "فالو"}
+                </Button>
+              </>
+            )}
+            {isAuthenticated && user.id === profile.id && (
+              <Link className={classes.navLink} to="/setting/profile">
+                <Typography color="secondary" variant="body1">
+                  ویرایش پروفایل
+                </Typography>
+              </Link>
+            )}
+          </div>
         </div>
         {profile.bio && (
           <Typography style={{ marginTop: 10 }}>{profile.bio}</Typography>
@@ -174,15 +177,17 @@ const UserProfile = ({
         <div style={{ display: "flex", alignItems: "center" }}>
           <Link
             className={classes.navLinkFollower}
-            to={`/list/follower/${userName}`}>
-            <Typography color='textSecondary' variant='subtitle2'>
+            to={`/list/follower/${userName}`}
+          >
+            <Typography color="textSecondary" variant="subtitle2">
               دنبال کننده : {profile.followers}
             </Typography>
           </Link>
           <Link
             className={classes.navLinkFollower}
-            to={`/list/following/${userName}`}>
-            <Typography color='textSecondary' variant='subtitle2'>
+            to={`/list/following/${userName}`}
+          >
+            <Typography color="textSecondary" variant="subtitle2">
               دنبال میکند : {profile.followings}
             </Typography>
           </Link>
@@ -196,14 +201,15 @@ const UserProfile = ({
           hasMore={count > userposts.length}
           loader={
             <div className={classes.loader}>
-              <CircularProgress color='secondary' />
+              <CircularProgress color="secondary" />
             </div>
           }
           endMessage={
             <div className={classes.loader}>
               <p>...</p>
             </div>
-          }>
+          }
+        >
           {userposts.map((post) => (
             <PostCard post={post} />
           ))}
@@ -212,7 +218,7 @@ const UserProfile = ({
     </>
   ) : (
     <>
-      <LinearProgress color='secondary' />
+      <LinearProgress color="secondary" />
     </>
   );
 };

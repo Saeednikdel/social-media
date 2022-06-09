@@ -21,7 +21,6 @@ import { Provider } from "react-redux";
 import store from "./store";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./hocs/Layout";
-import ResumeCreator from "./containers/ResumeCreator";
 
 const App = () => (
   <Provider store={store}>
@@ -34,10 +33,9 @@ const App = () => (
           <Route exact path="/profile/:name" component={UserProfile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/Setting" component={Setting} />
+          <Route exact path="/Setting/:tab" component={Setting} />
           <Route exact path="/Bookmark" component={Bookmark} />
           <Route exact path="/messages" component={Messages} />
-          <Route exact path="/resumecreate" component={ResumeCreator} />
           <Route exact path="/list/:type/:id" component={List} />
           <Route exact path="/search" component={Search} />
           <Route exact path="/notification" component={Notification} />
