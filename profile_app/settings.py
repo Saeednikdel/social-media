@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'accounts',
     'resume',
     'blog',
+    'jobs',
     'message',
     'djoser',
     'rest_framework',

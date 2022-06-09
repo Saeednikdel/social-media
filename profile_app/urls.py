@@ -14,6 +14,7 @@ urlpatterns = [
     path('api/notification/', include('notification.urls')),
     path('api/message/', include('message.urls')),
     path('api/', include('resume.urls')),
+    path('api/jobs/', include('jobs.urls')),
     # path('api/resume/', include('resume.urls')),
     # url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     # url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
