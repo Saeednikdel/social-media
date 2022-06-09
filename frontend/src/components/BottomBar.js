@@ -15,7 +15,7 @@ import {
   Add,
   NotificationsNone,
   HomeOutlined,
-  Search,
+  WorkOutline,
 } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +55,7 @@ function BottomBar() {
         <Divider />
         <Toolbar className={classes.toolbar}>
           <Link className={classes.navLink} to="/messages">
-            <IconButton color="inherit" aria-label="Open drawer">
+            <IconButton color="inherit">
               <EmailOutlined />
             </IconButton>
           </Link>
@@ -71,7 +71,7 @@ function BottomBar() {
           </Link>
           <Link className={classes.navLink} to="/jobs">
             <IconButton color="inherit">
-              <Search />
+              <WorkOutline />
             </IconButton>
           </Link>
           <Link className={classes.navLink} to="/">

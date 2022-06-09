@@ -20,6 +20,7 @@ import {
   ArrowBack,
   BookmarkBorder,
   ArrowForward,
+  PersonAddOutlined,
 } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   center: { flexGrow: 1, textAlign: "center" },
@@ -30,6 +31,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     padding: 20,
+  },
+  navLinkUsers: {
+    textDecoration: "none",
+    color: "inherit",
+  },
+  logo: {
+    fontFamily: "Helvetica",
+    fontSize: "large",
+    fontWeight: "bold",
+    fontStyle: "italic",
+    color: "#2979ff",
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   list: {
     width: 280,
@@ -57,6 +72,10 @@ const Appbar = ({
     logout();
     setDrawerState(!drawerstate);
   };
+  const handleChangeTheme = () => {
+    onChange();
+    setDrawerState(!drawerstate);
+  };
   const [drawerstate, setDrawerState] = useState(false);
   const toggleDrawer = (event) => {
     if (
@@ -75,10 +94,21 @@ const Appbar = ({
           <IconButton color="inherit" onClick={toggleDrawer}>
             <Menu />
           </IconButton>
-          <div className={classes.center}></div>
-          <IconButton color="inherit" onClick={onChange}>
-            {checked ? <Brightness7 /> : <Brightness4 />}
-          </IconButton>
+          <div className={classes.center}>
+            <p
+              className={classes.logo}
+              onClick={() => {
+                window.scrollTo({ top: 0, right: 0, behavior: "smooth" });
+              }}
+            >
+              Profile
+            </p>
+          </div>
+          <Link className={classes.navLinkUsers} to="/users">
+            <IconButton color="inherit">
+              <PersonAddOutlined />
+            </IconButton>
+          </Link>
         </Toolbar>
         <Divider />
       </AppBar>
@@ -128,6 +158,16 @@ const Appbar = ({
               <Typography variant="body1">ورود</Typography>
             </Link>
           )}
+          <Link className={classes.navLink} onClick={() => handleChangeTheme()}>
+            {checked ? (
+              <Brightness7 className={classes.menuicon} />
+            ) : (
+              <Brightness4 className={classes.menuicon} />
+            )}
+            <Typography variant="body1">
+              {checked ? "تم روشن " : " تم تاریک"}
+            </Typography>
+          </Link>
         </div>
       </Drawer>
     </>
