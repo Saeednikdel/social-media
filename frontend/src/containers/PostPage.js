@@ -17,7 +17,7 @@ import {
 import DialogAlert from "../components/DialogAlert";
 import { connect } from "react-redux";
 import { load_post, load_replies, like, load_likes } from "../actions/blog";
-import { bookmark } from "../actions/auth";
+import { bookmark } from "../actions/blog";
 import jMoment from "moment-jalaali";
 import { Link, withRouter } from "react-router-dom";
 import linkify from "../utils/linkify";

@@ -17,6 +17,10 @@ import {
   LOAD_FOLLOWING_FAIL,
   LOAD_USERS_SUCCESS,
   LOAD_USERS_FAIL,
+  LOAD_BOOKMARK_FAIL,
+  LOAD_BOOKMARK_SUCCESS,
+  BOOKMARK_SUCCESS,
+  BOOKMARK_FAIL,
 } from "../actions/types";
 const initialState = {
   posts: [],
@@ -58,7 +62,20 @@ export default function (state = initialState, action) {
           users_count: payload.count,
         };
       }
-
+    case LOAD_BOOKMARK_SUCCESS:
+      if (page === 1) {
+        return {
+          ...state,
+          bookmarks: payload.bookmarks,
+          bookmark_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          bookmarks: state.bookmarks.concat(payload.bookmarks),
+          bookmark_count: payload.count,
+        };
+      }
     case LOAD_USER_POSTS_SUCCESS:
       if (page === 1) {
         return {
@@ -130,6 +147,9 @@ export default function (state = initialState, action) {
           following_count: payload.count,
         };
       }
+    case BOOKMARK_SUCCESS:
+    case BOOKMARK_FAIL:
+    case LOAD_BOOKMARK_FAIL:
     case LOAD_POSTS_FAIL:
     case LOAD_USERS_FAIL:
     case LOAD_POST_FAIL:

@@ -10,6 +10,8 @@ import {
   LOAD_USER_JOBS_FAIL,
   BOOKMARK_JOB_SUCCESS,
   BOOKMARK_JOB_FAIL,
+  LOAD_BOOKMARK_JOB_SUCCESS,
+  LOAD_BOOKMARK_JOB_FAIL,
 } from "./types";
 export const load_jobs = (page, keyword) => async (dispatch) => {
   const config = {
@@ -126,6 +128,41 @@ export const bookmark_job = (id) => async (dispatch) => {
     });
   }
 };
+export const load_bookmark =
+  (page = 1) =>
+  async (dispatch) => {
+    if (localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      const userId = localStorage.getItem("id");
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/jobs/bookmark-list/${userId}/${page}/`,
+          config
+        );
+
+        dispatch({
+          type: LOAD_BOOKMARK_JOB_SUCCESS,
+          payload: res.data,
+          page: page,
+        });
+      } catch (err) {
+        dispatch({
+          type: LOAD_BOOKMARK_JOB_FAIL,
+        });
+      }
+    } else {
+      dispatch({
+        type: LOAD_BOOKMARK_JOB_FAIL,
+      });
+    }
+  };
+
 export const load_replies =
   (item, page = 1) =>
   async (dispatch) => {

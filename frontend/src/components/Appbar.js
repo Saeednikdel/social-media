@@ -128,7 +128,7 @@ const Appbar = ({
               </Link>
               <Link
                 className={classes.navLink}
-                to="/bookmark"
+                to="/bookmark/posts"
                 onClick={toggleDrawer}
               >
                 <BookmarkBorder className={classes.menuicon} />

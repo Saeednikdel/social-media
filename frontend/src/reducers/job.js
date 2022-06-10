@@ -8,6 +8,8 @@ import {
   LOAD_USER_JOBS_FAIL,
   BOOKMARK_JOB_SUCCESS,
   BOOKMARK_JOB_FAIL,
+  LOAD_BOOKMARK_JOB_SUCCESS,
+  LOAD_BOOKMARK_JOB_FAIL,
 } from "../actions/types";
 const initialState = {
   jobs: [],
@@ -57,7 +59,21 @@ export default function (state = initialState, action) {
         ...state,
         comments: payload,
       };
-
+    case LOAD_BOOKMARK_JOB_SUCCESS:
+      if (page === 1) {
+        return {
+          ...state,
+          bookmarks: payload.bookmarks,
+          bookmark_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          bookmarks: state.bookmarks.concat(payload.bookmarks),
+          bookmark_count: payload.count,
+        };
+      }
+    case LOAD_BOOKMARK_JOB_FAIL:
     case LOAD_JOBS_FAIL:
     case LOAD_JOB_FAIL:
     case LOAD_USER_JOBS_FAIL:

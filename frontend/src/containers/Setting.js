@@ -3,7 +3,7 @@ import { Tabs, Tab } from "@material-ui/core";
 import { connect } from "react-redux";
 import Redirect from "react-router-dom/es/Redirect";
 import { NavLink } from "react-router-dom";
-import ProfleSetting from "./ProfileSetting";
+import ProfileSetting from "./ProfileSetting";
 import ResumeSetting from "./ResumeSetting";
 
 const Setting = ({ isAuthenticated, match }) => {
@@ -26,6 +26,7 @@ const Setting = ({ isAuthenticated, match }) => {
       <Tabs value={tab} indicatorColor="primary" textColor="primary">
         {tabList.map((tab) => (
           <Tab
+            style={{ flexGrow: 1 }}
             label={tab.label}
             value={tab.value}
             to={tab.to}
@@ -41,7 +42,7 @@ const Setting = ({ isAuthenticated, match }) => {
 function ProfileComponent({ value }) {
   switch (value) {
     case "profile":
-      return <ProfleSetting />;
+      return <ProfileSetting />;
     case "resume":
       return <ResumeSetting />;
     default:

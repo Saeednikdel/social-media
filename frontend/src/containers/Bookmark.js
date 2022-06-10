@@ -1,65 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Tabs, Tab } from "@material-ui/core";
 import { connect } from "react-redux";
-import { load_bookmark, bookmark } from "../actions/auth";
-import { makeStyles, CircularProgress } from "@material-ui/core";
 import Redirect from "react-router-dom/es/Redirect";
-import BookmarkCard from "../components/BookmarkCard";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { NavLink } from "react-router-dom";
+import PostBookmark from "./PostBookmark";
+import JobBookmark from "./JobBookmark";
 
-const useStyles = makeStyles((theme) => ({
-  loader: {
-    textAlign: "center",
-  },
-}));
-const Bookmark = ({
-  load_bookmark,
-  bookmarkList,
-  bookmark,
-  bookmark_count,
-  isAuthenticated,
-}) => {
-  const [page, setPage] = useState(2);
-
-  useEffect(() => {
-    load_bookmark(1);
-    setPage(2);
-  }, []);
-  const fetchData = async () => {
-    await load_bookmark(page);
-    setPage(page + 1);
-  };
-  const classes = useStyles();
+const Bookmark = ({ isAuthenticated, match }) => {
+  const tab = match.params.tab;
   if (isAuthenticated === false) return <Redirect to="/login" />;
-
-  return bookmarkList ? (
+  const tabList = [
+    {
+      label: "پست ها",
+      value: "posts",
+      to: "/bookmark/posts",
+    },
+    {
+      label: "شغل ها",
+      value: "jobs",
+      to: "/bookmark/jobs",
+    },
+  ];
+  return (
     <div>
-      <InfiniteScroll
-        dataLength={bookmarkList.length}
-        next={fetchData}
-        hasMore={bookmark_count > bookmarkList.length}
-        loader={
-          <div className={classes.loader}>
-            <CircularProgress color="secondary" />
-          </div>
-        }
-        endMessage={
-          <div className={classes.loader}>
-            <p>...</p>
-          </div>
-        }
-      >
-        {bookmarkList.map((post) => (
-          <BookmarkCard post={post} />
+      <Tabs value={tab} indicatorColor="primary" textColor="primary">
+        {tabList.map((tab) => (
+          <Tab
+            style={{ flexGrow: 1 }}
+            label={tab.label}
+            value={tab.value}
+            to={tab.to}
+            component={NavLink}
+          />
         ))}
-      </InfiniteScroll>
+      </Tabs>
+      <ProfileComponent value={tab} />
     </div>
-  ) : (
-    <CircularProgress color="secondary" />
   );
 };
+
+function ProfileComponent({ value }) {
+  switch (value) {
+    case "posts":
+      return <PostBookmark />;
+    case "jobs":
+      return <JobBookmark />;
+    default:
+      return <h1>not found</h1>;
+  }
+}
 const mapStateToProps = (state) => ({
-  bookmarkList: state.auth.bookmarks,
-  bookmark_count: state.auth.bookmark_count,
   isAuthenticated: state.auth.isAuthenticated,
 });
-export default connect(mapStateToProps, { load_bookmark, bookmark })(Bookmark);
+export default connect(mapStateToProps)(Bookmark);

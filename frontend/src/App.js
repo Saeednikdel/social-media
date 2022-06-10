@@ -36,7 +36,7 @@ const App = () => (
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/Setting/:tab" component={Setting} />
-          <Route exact path="/Bookmark" component={Bookmark} />
+          <Route exact path="/Bookmark/:tab" component={Bookmark} />
           <Route exact path="/messages" component={Messages} />
           <Route exact path="/list/:type/:id" component={List} />
           <Route exact path="/jobs" component={Jobs} />

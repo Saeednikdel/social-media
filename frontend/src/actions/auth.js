@@ -24,12 +24,8 @@ import {
   RESET_STATE,
   SET_USER_DETAIL_FAIL,
   SET_USER_DETAIL_SUCCESS,
-  LOAD_BOOKMARK_FAIL,
-  LOAD_BOOKMARK_SUCCESS,
   SET_COMMENTS_FAIL,
   SET_COMMENTS_SUCCESS,
-  BOOKMARK_SUCCESS,
-  BOOKMARK_FAIL,
   NEW_POST_SUCCESS,
   NEW_POST_FAIL,
   FOLLOW_SUCCESS,
@@ -310,78 +306,7 @@ export const set_user_detail =
       });
     }
   };
-export const bookmark = (id, page) => async (dispatch) => {
-  if (localStorage.getItem("access")) {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.getItem("access")}`,
-        Accept: "application/json",
-      },
-    };
-    const user = localStorage.getItem("id");
-    const body = JSON.stringify({ user, id });
 
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/blog/bookmark/`,
-        body,
-        config
-      );
-      dispatch({
-        type: BOOKMARK_SUCCESS,
-        payload: res.data,
-      });
-      if (page) {
-        dispatch(load_bookmark(page));
-      } else {
-        dispatch(load_post(id));
-      }
-    } catch (err) {
-      dispatch({
-        type: BOOKMARK_FAIL,
-      });
-    }
-  } else {
-    dispatch({
-      type: BOOKMARK_FAIL,
-    });
-  }
-};
-export const load_bookmark =
-  (page = 1) =>
-  async (dispatch) => {
-    if (localStorage.getItem("access")) {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${localStorage.getItem("access")}`,
-          Accept: "application/json",
-        },
-      };
-      const userId = localStorage.getItem("id");
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/blog/bookmark-list/${userId}/${page}/`,
-          config
-        );
-
-        dispatch({
-          type: LOAD_BOOKMARK_SUCCESS,
-          payload: res.data,
-          page: page,
-        });
-      } catch (err) {
-        dispatch({
-          type: LOAD_BOOKMARK_FAIL,
-        });
-      }
-    } else {
-      dispatch({
-        type: LOAD_BOOKMARK_FAIL,
-      });
-    }
-  };
 export const checkAuthenticated = () => async (dispatch) => {
   if (typeof window == "undefined") {
     dispatch({

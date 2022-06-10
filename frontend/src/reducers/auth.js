@@ -21,12 +21,8 @@ import {
   RESET_STATE,
   SET_USER_DETAIL_FAIL,
   SET_USER_DETAIL_SUCCESS,
-  LOAD_BOOKMARK_FAIL,
-  LOAD_BOOKMARK_SUCCESS,
   SET_COMMENTS_FAIL,
   SET_COMMENTS_SUCCESS,
-  BOOKMARK_SUCCESS,
-  BOOKMARK_FAIL,
   NEW_POST_SUCCESS,
   NEW_POST_FAIL,
   FOLLOW_SUCCESS,
@@ -45,7 +41,6 @@ const initialState = {
     id: null,
   },
   notification: [],
-  bookmarks: [],
 };
 
 export default function (state = initialState, action) {
@@ -120,21 +115,7 @@ export default function (state = initialState, action) {
         requestFail: true,
         set_detail_error: payload,
       };
-    case LOAD_BOOKMARK_SUCCESS:
-      if (page === 1) {
-        return {
-          ...state,
-          bookmarks: payload.bookmarks,
-          bookmark_count: payload.count,
-        };
-      } else {
-        return {
-          ...state,
-          bookmarks: state.bookmarks.concat(payload.bookmarks),
-          bookmark_count: payload.count,
-        };
-      }
-    case NEW_POST_SUCCESS:
+
     case SET_COMMENTS_SUCCESS:
       return {
         ...state,
@@ -155,6 +136,7 @@ export default function (state = initialState, action) {
         };
       }
 
+    case NEW_POST_SUCCESS:
     case NEW_POST_FAIL:
     case SET_COMMENTS_FAIL:
       return {
@@ -202,7 +184,6 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         user: null,
         notification: [],
-        bookmarks: [],
       };
     case USER_LOADED_FAIL:
       localStorage.removeItem("access");
@@ -215,7 +196,6 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         user: null,
         notification: [],
-        bookmarks: [],
       };
     case SIGNUP_FAIL:
       return {
@@ -240,7 +220,6 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         user: null,
         notification: [],
-        bookmarks: [],
       };
     case RESET_STATE:
       return {
@@ -253,9 +232,6 @@ export default function (state = initialState, action) {
     case UPDATE_AVATAR_FAIL:
     case FOLLOW_SUCCESS:
     case FOLLOW_FAIL:
-    case BOOKMARK_SUCCESS:
-    case BOOKMARK_FAIL:
-    case LOAD_BOOKMARK_FAIL:
     default:
       return state;
   }
