@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
-from .serializers import AvatarSerializer, UserSetSerializer, HeaderSerializer
+from .serializers import AvatarSerializer, UserSetSerializer, HeaderSerializer,UserSerializer
 from rest_framework import status
 from notification.models import Notification
 
@@ -63,3 +63,20 @@ def userSet(request):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def userList(request,page):
+    if request.data.get('keyword'):
+        users =UserAccount.objects.filter(name__contains=request.data.get('keyword'))
+    else:
+        users =UserAccount.objects.all()
+    itemperpage = 10
+    paginator = Paginator(users, itemperpage)
+    count = len(users)
+    users = paginator.get_page(page)
+    serializer = UserSerializer(users, many=True)
+    new_dict = {"count": count}
+    new_dict.update({"users": serializer.data})
+    return Response(new_dict)

@@ -7,8 +7,10 @@ import Setting from "./containers/Setting";
 import Bookmark from "./containers/Bookmark";
 import Jobs from "./containers/Jobs";
 import Activate from "./containers/Activate";
-import DetailPage from "./containers/DetailPage";
+import PostPage from "./containers/PostPage";
+import JobPage from "./containers/JobPage";
 import UserProfile from "./containers/UserProfile";
+import UsersList from "./containers/UsersList";
 import Messages from "./containers/Messages";
 import List from "./containers/List";
 import Notification from "./containers/Notification";
@@ -47,7 +49,9 @@ const App = () => (
             component={ResetPasswordConfirm}
           />
           <Route exact path="/activate/:uid/:token" component={Activate} />
-          <Route exact path="/detail/:postId" component={DetailPage} />
+          <Route exact path="/post/:postId" component={PostPage} />
+          <Route exact path="/job/:jobId" component={JobPage} />
+          <Route exact path="/users" component={UsersList} />
           <Route exact path="*" component={PageNotFound} />
         </Switch>
       </Layout>

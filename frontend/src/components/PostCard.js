@@ -23,11 +23,14 @@ const useStyles = makeStyles((theme) => ({
   content: { minHeight: 70, paddingLeft: 70 },
 }));
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, job }) {
   const classes = useStyles();
 
   return (
-    <Link className={classes.navLink} to={`/detail/${post.id}/`}>
+    <Link
+      className={classes.navLink}
+      to={job ? `/job/${post.id}/` : `/post/${post.id}/`}
+    >
       <div className={classes.avatarContainer}>
         <Link
           className={classes.navLink}

@@ -8,8 +8,8 @@ import {
   ADD_LANGUAGE_FAIL,
   ADD_SKILL_SUCCESS,
   ADD_SKILL_FAIL,
-  ADD_JOB_SUCCESS,
-  ADD_JOB_FAIL,
+  ADD_JOB_HISTORY_SUCCESS,
+  ADD_JOB_HISTORY_FAIL,
 } from "./types";
 
 export const load_resume = () => async (dispatch) => {
@@ -159,13 +159,13 @@ export const add_job =
           config
         );
         dispatch({
-          type: ADD_JOB_SUCCESS,
+          type: ADD_JOB_HISTORY_SUCCESS,
           payload: res.data,
         });
         dispatch(load_resume());
       } catch (err) {
         dispatch({
-          type: ADD_JOB_FAIL,
+          type: ADD_JOB_HISTORY_FAIL,
         });
       }
     }

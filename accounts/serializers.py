@@ -1,4 +1,3 @@
-from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from accounts.models import UserAccount
@@ -14,7 +13,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = ('id', 'name','image', 'profile_name')
+        fields = ('id', 'name','image', 'profile_name', 'is_verified')
 
 class AvatarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,4 +37,4 @@ class UserDetailSerializer(serializers.ModelSerializer):
 class UserSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = ('id', 'name','profile_name', 'bio','phone_no', 'birth_date')
+        fields = ('id', 'name', 'show_resume','militry_service', 'address' , 'profile_name', 'bio','phone_no', 'birth_date')

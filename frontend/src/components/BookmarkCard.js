@@ -23,7 +23,7 @@ export default function BookmarkCard({ post }) {
   const classes = useStyles();
 
   return (
-    <Link className={classes.navLink} to={`/detail/${post.post_id}/`}>
+    <Link className={classes.navLink} to={`/post/${post.post_id}/`}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <Link
           className={classes.navLink}

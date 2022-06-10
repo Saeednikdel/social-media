@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 17,
   },
 }));
-const DetailPage = ({
+const PostPage = ({
   post,
   likes,
   load_post,
@@ -336,5 +336,5 @@ export default withRouter(
     bookmark,
     like,
     load_replies,
-  })(DetailPage)
+  })(PostPage)
 );

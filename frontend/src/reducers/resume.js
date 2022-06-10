@@ -7,8 +7,8 @@ import {
   ADD_LANGUAGE_FAIL,
   ADD_SKILL_SUCCESS,
   ADD_SKILL_FAIL,
-  ADD_JOB_SUCCESS,
-  ADD_JOB_FAIL,
+  ADD_JOB_HISTORY_SUCCESS,
+  ADD_JOB_HISTORY_FAIL,
 } from "../actions/types";
 const initialState = {};
 
@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
         ...state,
         new_lang: payload,
       };
-    case ADD_JOB_SUCCESS:
+    case ADD_JOB_HISTORY_SUCCESS:
       return {
         ...state,
         new_job: payload,
@@ -46,7 +46,7 @@ export default function (state = initialState, action) {
         ...state,
         new_edu: "error",
       };
-    case ADD_JOB_FAIL:
+    case ADD_JOB_HISTORY_FAIL:
       return {
         ...state,
         new_job: "error",

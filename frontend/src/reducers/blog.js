@@ -15,10 +15,11 @@ import {
   LOAD_FOLLOWER_FAIL,
   LOAD_FOLLOWING_SUCCESS,
   LOAD_FOLLOWING_FAIL,
+  LOAD_USERS_SUCCESS,
+  LOAD_USERS_FAIL,
 } from "../actions/types";
 const initialState = {
   posts: [],
-  search_posts: [],
   userposts: [],
   likes: [],
   follower: [],
@@ -41,6 +42,20 @@ export default function (state = initialState, action) {
           ...state,
           posts: state.posts.concat(payload.posts),
           count: payload.count,
+        };
+      }
+    case LOAD_USERS_SUCCESS:
+      if (page === 1) {
+        return {
+          ...state,
+          users: payload.users,
+          users_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          users: state.users.concat(payload.users),
+          users_count: payload.count,
         };
       }
 
@@ -116,6 +131,7 @@ export default function (state = initialState, action) {
         };
       }
     case LOAD_POSTS_FAIL:
+    case LOAD_USERS_FAIL:
     case LOAD_POST_FAIL:
     case LOAD_LIKE_FAIL:
     case LOAD_FOLLOWER_FAIL:

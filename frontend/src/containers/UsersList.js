@@ -6,9 +6,9 @@ import {
   TextField,
   Toolbar,
 } from "@material-ui/core";
-import PostCard from "../components/PostCard";
+import UsersListCard from "../components/UserListCard";
 import { connect } from "react-redux";
-import { load_jobs } from "../actions/job";
+import { load_users } from "../actions/blog";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchSharp } from "@material-ui/icons";
 
@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: `${theme.palette.primary.border}`,
   },
 }));
-const Jobs = ({ jobs, load_jobs, count, history }) => {
+const UsersList = ({ users, load_users, count, history }) => {
   const [page, setPage] = useState(1);
   const classes = useStyles();
   const [search, setSearch] = useState(getQueryVariable("keyword"));
   useEffect(() => {
-    load_jobs(1, getQueryVariable("keyword"));
+    load_users(1, getQueryVariable("keyword"));
     setPage(2);
   }, []);
 
@@ -39,28 +39,28 @@ const Jobs = ({ jobs, load_jobs, count, history }) => {
     e.preventDefault();
     const currentUrlParams = new URLSearchParams();
     currentUrlParams.set("keyword", search);
-    if (window.location.pathname === "/jobs") {
+    if (window.location.pathname === "/users") {
       history.push(
         window.location.pathname + "?" + currentUrlParams.toString()
       );
     } else {
       window.location.replace("/?keyword=" + search);
     }
-    load_jobs(1, search);
+    load_users(1, search);
     setPage(2);
   };
   const fetchData = async () => {
-    await load_jobs(page, search);
+    await load_users(page, search);
     setPage(page + 1);
   };
   return (
     <div>
       <Toolbar />
-      {jobs && (
+      {users && (
         <InfiniteScroll
-          dataLength={jobs.length}
+          dataLength={users.length}
           next={fetchData}
-          hasMore={count > jobs.length}
+          hasMore={count > users.length}
           loader={
             <div className={classes.loader}>
               <CircularProgress color="secondary" />
@@ -72,8 +72,8 @@ const Jobs = ({ jobs, load_jobs, count, history }) => {
             </div>
           }
         >
-          {jobs.map((job) => (
-            <PostCard post={job} job={true} />
+          {users.map((user) => (
+            <UsersListCard user={user} />
           ))}
         </InfiniteScroll>
       )}
@@ -123,9 +123,9 @@ const Jobs = ({ jobs, load_jobs, count, history }) => {
 };
 
 const mapStateToProps = (state) => ({
-  jobs: state.job.jobs,
-  count: state.job.jobs_count,
+  users: state.blog.users,
+  count: state.blog.users_count,
 });
 export default connect(mapStateToProps, {
-  load_jobs,
-})(Jobs);
+  load_users,
+})(UsersList);

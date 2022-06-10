@@ -19,8 +19,39 @@ import {
   LOAD_FOLLOWER_FAIL,
   LOAD_FOLLOWING_SUCCESS,
   LOAD_FOLLOWING_FAIL,
+  LOAD_USERS_SUCCESS,
+  LOAD_USERS_FAIL,
 } from "./types";
-import { load_bookmark } from "./auth";
+export const load_users = (page, keyword) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    keyword,
+    page,
+  });
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/accounts/user-list/${page}/`,
+      body,
+      config
+    );
+
+    dispatch({
+      type: LOAD_USERS_SUCCESS,
+      payload: res.data,
+      page: page,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOAD_USERS_FAIL,
+    });
+  }
+};
+
 export const load_posts = (page, keyword) => async (dispatch) => {
   const config = {
     headers: {

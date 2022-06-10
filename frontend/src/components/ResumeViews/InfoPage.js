@@ -104,12 +104,7 @@ export const InfoPage = ({ resume }) => {
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
           >
-            <SetInfo
-              _id={resume.id}
-              _militry_service={resume && resume.militry_service}
-              _address={resume.address}
-              setOpenPopup={setOpenPopup}
-            />
+            <SetInfo setOpenPopup={setOpenPopup} />
           </Popup>
         </>
       )}

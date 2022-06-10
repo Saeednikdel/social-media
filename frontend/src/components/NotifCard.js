@@ -33,7 +33,7 @@ export default function NotifCard({ notif }) {
       to={
         notif.kind === "F"
           ? `/profile/${notif.sender_name}/`
-          : `/detail/${notif.post}/`
+          : `/post/${notif.post}/`
       }
     >
       <div style={{ display: "flex", alignItems: "center" }}>
