@@ -11,6 +11,8 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import { set_resume_detail } from "../../actions/auth";
+import { resetState } from "../../actions/auth";
 import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -20,12 +22,20 @@ const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
 }));
-const SetInfo = ({ setOpenPopup, resume }) => {
+const SetInfo = ({
+  setOpenPopup,
+  resume,
+  set_resume_detail,
+  resetState,
+  requestSuccess,
+  requestFail,
+}) => {
   const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
   const [formData, setFormData] = useState({
-    id: resume.id,
+    id: resume.user,
     profile_name: resume.profile_name,
+    name: resume.name,
     phone_no: resume.phone_no,
     bio: resume.bio,
     birth_date: resume.birth_date,
@@ -37,6 +47,7 @@ const SetInfo = ({ setOpenPopup, resume }) => {
     id,
     profile_name,
     phone_no,
+    name,
     birth_date,
     show_resume,
     military_service,
@@ -51,14 +62,33 @@ const SetInfo = ({ setOpenPopup, resume }) => {
     { title: "در حال انجام", value: "D" },
     { title: "معاف", value: "E" },
   ];
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (requestFail) {
+      setRequestSent(false);
+      resetState();
+    }
+    if (requestSuccess) {
+      setOpenPopup(false);
+      resetState();
+    }
+  }, [requestFail, requestSuccess]);
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    set_resume_detail(
+      id,
+      profile_name,
+      name,
+      phone_no,
+      birth_date,
+      show_resume,
+      military_service,
+      address,
+      bio
+    );
     setRequestSent(true);
-    console.log(formData);
   };
   return (
     <div style={{ textAlign: "center" }}>
@@ -188,5 +218,9 @@ const SetInfo = ({ setOpenPopup, resume }) => {
 };
 const mapStateToProps = (state) => ({
   resume: state.resume.resume,
+  requestSuccess: state.auth.requestSuccess,
+  requestFail: state.auth.requestFail,
 });
-export default connect(mapStateToProps, {})(SetInfo);
+export default connect(mapStateToProps, { set_resume_detail, resetState })(
+  SetInfo
+);

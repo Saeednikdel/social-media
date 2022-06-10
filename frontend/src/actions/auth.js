@@ -40,7 +40,7 @@ import {
   LOAD_NOTIF_FAIL,
 } from "./types";
 import { load_post, load_profile } from "./blog";
-
+import { load_resume } from "./resume";
 export const load_notif =
   (page = 1) =>
   async (dispatch) => {
@@ -196,7 +196,70 @@ export const comment = (item, star, title, description) => async (dispatch) => {
     }
   }
 };
+export const set_resume_detail =
+  (
+    id,
+    profile_name,
+    name,
+    phone_no,
+    birth_date,
+    show_resume,
+    military_service,
+    address,
+    bio
+  ) =>
+  async (dispatch) => {
+    if (localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      const body = JSON.stringify({
+        id,
+        profile_name,
+        name,
+        phone_no,
+        birth_date,
+        show_resume,
+        military_service,
+        address,
+        bio,
+      });
 
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/accounts/user-set/`,
+          body,
+          config
+        );
+
+        dispatch({
+          type: SET_USER_DETAIL_SUCCESS,
+          payload: res.data,
+        });
+        dispatch(load_resume());
+      } catch (error) {
+        if (error.request.status === 400) {
+          dispatch({
+            type: SET_USER_DETAIL_FAIL,
+            payload: JSON.parse(error.request.response),
+          });
+        } else {
+          dispatch({
+            type: SET_USER_DETAIL_FAIL,
+            payload: { error: "unknown error" },
+          });
+        }
+      }
+    } else {
+      dispatch({
+        type: SET_USER_DETAIL_FAIL,
+      });
+    }
+  };
 export const set_user_detail =
   (id, name, profile_name, bio, phone_no, birth_date) => async (dispatch) => {
     if (localStorage.getItem("access")) {
