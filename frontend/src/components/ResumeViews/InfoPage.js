@@ -88,8 +88,8 @@ export const InfoPage = ({ resume }) => {
                 </Typography>
                 <Typography>
                   وضعیت نظام وظیفه :
-                  {resume.militry_service
-                    ? convert(resume.militry_service)
+                  {resume.military_service
+                    ? convert(resume.military_service)
                     : "--"}
                 </Typography>
 

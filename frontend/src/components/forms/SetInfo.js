@@ -31,7 +31,7 @@ const SetInfo = ({ setOpenPopup, resume }) => {
     birth_date: resume.birth_date,
     show_resume: resume.show_resume,
     address: resume.address,
-    militry_service: resume.militry_service,
+    military_service: resume.military_service,
   });
   const {
     id,
@@ -39,7 +39,7 @@ const SetInfo = ({ setOpenPopup, resume }) => {
     phone_no,
     birth_date,
     show_resume,
-    militry_service,
+    military_service,
     address,
     bio,
   } = formData;
@@ -152,8 +152,8 @@ const SetInfo = ({ setOpenPopup, resume }) => {
               open={openMilitaryService}
               onClose={() => setOpenMilitaryService(false)}
               onOpen={() => setOpenMilitaryService(true)}
-              value={militry_service}
-              name="militry_service"
+              value={military_service}
+              name="military_service"
               onChange={(e) => onChange(e)}
             >
               <MenuItem value="">هیچ کدام</MenuItem>
