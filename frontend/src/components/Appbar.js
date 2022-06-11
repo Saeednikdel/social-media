@@ -72,10 +72,6 @@ const Appbar = ({
     logout();
     setDrawerState(!drawerstate);
   };
-  const handleChangeTheme = () => {
-    onChange();
-    setDrawerState(!drawerstate);
-  };
   const [drawerstate, setDrawerState] = useState(false);
   const toggleDrawer = (event) => {
     if (
@@ -158,7 +154,7 @@ const Appbar = ({
               <Typography variant="body1">ورود</Typography>
             </Link>
           )}
-          <Link className={classes.navLink} onClick={() => handleChangeTheme()}>
+          <Link className={classes.navLink} onClick={onChange}>
             {checked ? (
               <Brightness7 className={classes.menuicon} />
             ) : (
