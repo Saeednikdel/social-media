@@ -11,8 +11,13 @@ import { Done } from "@material-ui/icons";
 import Redirect from "react-router-dom/es/Redirect";
 
 const useStyles = makeStyles((theme) => ({
-  textField: { marginTop: 20, minWidth: 240, width: "80%" },
+  textField: { minWidth: 240, width: "80%" },
   button: { marginTop: 20, marginBottom: 20 },
+  left: {
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "90%",
+  },
 }));
 const NewPost = ({
   requestSuccess,
@@ -53,6 +58,27 @@ const NewPost = ({
   return (
     <div style={{ textAlign: "center" }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
+        <div className={classes.left}>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="contained"
+            color="secondary"
+            startIcon={
+              requestSent ? (
+                <CircularProgress
+                  size={20}
+                  style={{ marginLeft: "10px" }}
+                  color="inherit"
+                />
+              ) : (
+                <Done style={{ marginLeft: "10px" }} />
+              )
+            }
+          >
+            ارسال
+          </Button>
+        </div>
         <div>
           <TextField
             variant="outlined"
@@ -68,25 +94,6 @@ const NewPost = ({
             required
           />
         </div>
-        <Button
-          className={classes.button}
-          type="submit"
-          variant="contained"
-          color="secondary"
-          startIcon={
-            requestSent ? (
-              <CircularProgress
-                size={20}
-                style={{ marginLeft: "10px" }}
-                color="inherit"
-              />
-            ) : (
-              <Done style={{ marginLeft: "10px" }} />
-            )
-          }
-        >
-          ارسال
-        </Button>
       </form>
     </div>
   );
