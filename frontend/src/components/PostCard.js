@@ -69,7 +69,11 @@ export default function PostCard({ post, job }) {
       <CardContent className={classes.content}>
         <p
           className={classes.para}
-          dangerouslySetInnerHTML={{ __html: linkify(post.text) }}
+          dangerouslySetInnerHTML={
+            job
+              ? { __html: linkify(post.text, true) }
+              : { __html: linkify(post.text) }
+          }
         />
       </CardContent>
       <Divider />

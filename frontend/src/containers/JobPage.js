@@ -7,6 +7,7 @@ import {
   IconButton,
   Avatar,
   Button,
+  LinearProgress,
 } from "@material-ui/core";
 import { BookmarkBorder, Bookmark } from "@material-ui/icons";
 import DialogAlert from "../components/DialogAlert";
@@ -18,7 +19,7 @@ import jMoment from "moment-jalaali";
 import { Link, withRouter } from "react-router-dom";
 import linkify from "../utils/linkify";
 import axios from "axios";
-
+import RequstList from "./RequstList";
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
     marginTop: `${theme.spacing(2)}px`,
@@ -123,7 +124,7 @@ const JobPage = ({
   }
   return (
     <>
-      {job && (
+      {job && job.id == jobId ? (
         <>
           <Grid container>
             <Grid xs={12} sm={6}>
@@ -194,12 +195,18 @@ const JobPage = ({
           <div className={classes.summery}>
             <p
               className={classes.para}
-              dangerouslySetInnerHTML={{ __html: linkify(job.content) }}
+              dangerouslySetInnerHTML={{ __html: linkify(job.content, true) }}
             />
           </div>
           <Divider />
+          {user && user.id === job.user && <RequstList id={job.id} />}
           <DialogAlert alert={alert} setAlert={setAlert} />
           <Notification notify={notify} setNotify={setNotify} />
+        </>
+      ) : (
+        <>
+          <LinearProgress color="secondary" />
+          <div className={classes.emptyDiv}></div>
         </>
       )}
     </>

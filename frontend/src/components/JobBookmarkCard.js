@@ -65,7 +65,7 @@ export default function JobBookmarkCard({ job }) {
       <CardContent style={{ minHeight: 70, paddingRight: 70 }}>
         <p
           className={classes.para}
-          dangerouslySetInnerHTML={{ __html: linkify(job.job_content) }}
+          dangerouslySetInnerHTML={{ __html: linkify(job.job_content, true) }}
         />
       </CardContent>
       <Divider />

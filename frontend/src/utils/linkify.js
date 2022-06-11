@@ -1,10 +1,12 @@
 const reUrl = /(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-&?=%.]+/gi;
 const reHash = /(?:^|\s)(#[^\s#]+|[^\s#]+#)(?=$|\s)/g;
 const reAt = /(?:\s|^)?@[A-Za-z0-9\-\.\_]+(?:\s|$)/g;
-const hash_url = `${process.env.REACT_APP_API_URL}/search`;
-const at_url = `${process.env.REACT_APP_API_URL}/profile`;
 
-export default function (text) {
+export default function (text, job) {
+  const hash_url = job
+    ? `${process.env.REACT_APP_API_URL}/jobs`
+    : `${process.env.REACT_APP_API_URL}`;
+  const at_url = `${process.env.REACT_APP_API_URL}/profile`;
   return text
     .replace(reUrl, (url) => {
       let newUrl = url
