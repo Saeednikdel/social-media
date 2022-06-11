@@ -165,7 +165,7 @@ const PostPage = ({
     load_replies(postId, value);
   };
 
-  return post ? (
+  return post && post.id == postId ? (
     <>
       <Grid container>
         <Grid xs={12} sm={6}>
