@@ -43,7 +43,7 @@ const Layout = (props) => {
       type: palletType,
       primary: {
         main: "#2196f3",
-        border: darkState ? "#464646" : "#fff",
+        border: darkState ? "#303030" : "#fafafa",
       },
       secondary: {
         main: "#2979ff",
