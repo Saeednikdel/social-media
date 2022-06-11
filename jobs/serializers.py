@@ -2,6 +2,10 @@ from rest_framework import serializers
 from .models import Job, JobReply, JobBookmark
 from accounts.models import UserAccount
 
+class UserRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = ('id', 'name', 'image', 'profile_name', 'is_verified')
 
 class ReplySerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.name')
