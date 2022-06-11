@@ -4,21 +4,22 @@ import {
   Typography,
   makeStyles,
   LinearProgress,
-  CircularProgress,
   Avatar,
   Button,
   IconButton,
+  Tabs,
+  Tab,
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { load_profile, load_user_posts } from "../actions/blog";
+import { load_profile } from "../actions/blog";
 import { follow_unfollw } from "../actions/auth";
 import jMoment from "moment-jalaali";
-import { withRouter, Link } from "react-router-dom";
-import PostCard from "../components/PostCard";
+import { withRouter, Link, NavLink } from "react-router-dom";
 import { MailOutline } from "@material-ui/icons";
 import axios from "axios";
 import Redirect from "react-router-dom/es/Redirect";
-import InfiniteScroll from "react-infinite-scroll-component";
+import UserPostList from "./UserPostList";
+import UserJobList from "./UserJobList";
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -33,14 +34,7 @@ const useStyles = makeStyles((theme) => ({
     border: "4px solid",
     borderColor: `${theme.palette.primary.border}`,
   },
-  noItemContainer: {
-    textAlign: "center",
-    marginTop: 140,
-    marginBottom: 140,
-  },
-  loader: {
-    textAlign: "center",
-  },
+
   navLink: {
     textDecoration: "none",
     color: "inherit",
@@ -63,29 +57,38 @@ const UserProfile = ({
   isAuthenticated,
   load_profile,
   profile,
-  userposts,
-  history,
-  load_user_posts,
   follow_unfollw,
   user,
-  count,
 }) => {
   const [chatId, setChatId] = useState(false);
-  const [page, setPage] = useState(2);
-
+  const [tab, setTab] = useState("posts");
   const classes = useStyles();
   const userName = match.params.name;
 
+  const tabList = [
+    {
+      label: "پست ها",
+      value: "posts",
+    },
+    {
+      label: "شغل ها",
+      value: "jobs",
+    },
+  ];
+  function Component({ value }) {
+    switch (value) {
+      case "posts":
+        return <UserPostList userName={userName} />;
+      case "jobs":
+        return <UserJobList userName={userName} />;
+      default:
+        return <h1>not found</h1>;
+    }
+  }
   useEffect(() => {
     load_profile(userName);
-    load_user_posts(userName, 1);
-    setPage(2);
   }, [userName]);
 
-  const fetchData = async () => {
-    await load_user_posts(userName, page);
-    setPage(page + 1);
-  };
   async function get_chat() {
     const config = {
       headers: {
@@ -106,7 +109,7 @@ const UserProfile = ({
   }
   if (chatId !== false) return <Redirect to={`/chat/${chatId}/`} />;
 
-  return profile ? (
+  return profile && profile.name == userName ? (
     <>
       <img
         src={
@@ -194,27 +197,21 @@ const UserProfile = ({
         </div>
       </div>
       <Divider />
-      {userposts && (
-        <InfiniteScroll
-          dataLength={userposts.length}
-          next={fetchData}
-          hasMore={count > userposts.length}
-          loader={
-            <div className={classes.loader}>
-              <CircularProgress color="secondary" />
-            </div>
-          }
-          endMessage={
-            <div className={classes.loader}>
-              <p>...</p>
-            </div>
-          }
-        >
-          {userposts.map((post) => (
-            <PostCard post={post} />
-          ))}
-        </InfiniteScroll>
-      )}
+      <div>
+        {profile.is_entity && (
+          <Tabs value={tab} indicatorColor="primary" textColor="primary">
+            {tabList.map((t) => (
+              <Tab
+                style={{ flexGrow: 1 }}
+                label={t.label}
+                value={t.value}
+                onClick={() => setTab(t.value)}
+              />
+            ))}
+          </Tabs>
+        )}
+        <Component value={tab} />
+      </div>
     </>
   ) : (
     <>
@@ -227,13 +224,10 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
   profile: state.blog.profile,
-  userposts: state.blog.userposts,
-  count: state.blog.profile_count,
 });
 export default withRouter(
   connect(mapStateToProps, {
     load_profile,
-    load_user_posts,
     follow_unfollw,
   })(UserProfile)
 );
