@@ -37,11 +37,7 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
   },
   logo: {
-    fontFamily: "Helvetica",
-    fontSize: "large",
-    fontWeight: "bold",
-    fontStyle: "italic",
-    color: "#2979ff",
+    height: 30,
     "&:hover": {
       cursor: "pointer",
     },
@@ -91,14 +87,13 @@ const Appbar = ({
             <Menu />
           </IconButton>
           <div className={classes.center}>
-            <p
+            <img
               className={classes.logo}
               onClick={() => {
                 window.scrollTo({ top: 0, right: 0, behavior: "smooth" });
               }}
-            >
-              Profile
-            </p>
+              src={`${process.env.REACT_APP_API_URL}/media/logo.png`}
+            />
           </div>
           <Link className={classes.navLinkUsers} to="/users">
             <IconButton color="inherit">
