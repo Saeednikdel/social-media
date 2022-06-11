@@ -49,7 +49,7 @@ def jobRequestList(request, id, page):
     req = paginator.get_page(page)
     serializer = UserRequestSerializer(req, many=True)
     new_dict = {"count": count}
-    new_dict.update({"requested_users": serializer.data})
+    new_dict.update({"job_requests": serializer.data})
     return Response(new_dict)
 
 
