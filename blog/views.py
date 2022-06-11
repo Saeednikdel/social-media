@@ -6,7 +6,6 @@ from .models import Post, Like, Bookmark, Reply
 from .serializers import BookmarkSerializer, LikeSerializer, PostSerializer,NewPostSerializer ,ReplySerializer, PostsSerializer, UserDetailSerializer,FollowerSerializer
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
-import math
 from django.shortcuts import get_object_or_404
 from notification.models import Notification
 
