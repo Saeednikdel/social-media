@@ -85,17 +85,14 @@ const List = ({
       >
         {list.map((item) => (
           <>
-            <CardActionArea
-              component={NavLink}
-              to={`/profile/${item.user_name}/`}
-            >
+            <CardActionArea component={NavLink} to={`/profile/${item.name}/`}>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <Avatar
-                  src={item.user_image}
+                  src={item.image}
                   style={{ height: 50, width: 50, margin: 10 }}
                 />
-                <Typography variant="body1">{item.profile__name}</Typography>
-                {item.verified && (
+                <Typography variant="body1">{item.profile_name}</Typography>
+                {item.is_verified && (
                   <img
                     src={`${process.env.REACT_APP_API_URL}/media/verified.png`}
                     style={{ height: 12, marginRight: 5 }}

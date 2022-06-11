@@ -3,23 +3,19 @@ from .models import Post, Reply, Like, Bookmark
 from accounts.models import UserAccount
 
 class LikeSerializer(serializers.ModelSerializer):
-    user_name = serializers.ReadOnlyField(source='user.name')
-    user_image = serializers.ImageField(source='user.image')
-    profile__name = serializers.CharField(source='user.profile_name')
-    verified = serializers.BooleanField(source='user.is_verified')
+    name = serializers.ReadOnlyField(source='user.name')
+    image = serializers.ImageField(source='user.image')
+    profile_name = serializers.CharField(source='user.profile_name')
+    is_verified = serializers.BooleanField(source='user.is_verified')
     class Meta:
         model = Like
-        fields = ('user', 'user_name', 'user_image', 'profile__name', 'verified')
+        fields = ('user', 'name', 'image', 'profile_name', 'is_verified')
 
 class FollowerSerializer(serializers.ModelSerializer):
     user = serializers.IntegerField(source='id')
-    user_name = serializers.CharField(source='name')
-    user_image = serializers.ImageField(source='image')
-    profile__name = serializers.CharField(source='profile_name')
-    verified = serializers.BooleanField(source='is_verified')
     class Meta:
         model = UserAccount
-        fields = ('user', 'user_name', 'user_image', 'profile__name', 'verified')
+        fields = ('user', 'name', 'image', 'profile_name', 'is_verified')
 
 
 class ReplySerializer(serializers.ModelSerializer):

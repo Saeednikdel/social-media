@@ -232,7 +232,7 @@ const PostPage = ({
                     .reverse()
                     .map((like) => (
                       <Avatar
-                        src={like.user_image}
+                        src={like.image}
                         style={{ height: 25, width: 25, marginLeft: -8 }}
                       />
                     ))}
