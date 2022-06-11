@@ -34,12 +34,12 @@ const Bookmark = ({ isAuthenticated, match }) => {
           />
         ))}
       </Tabs>
-      <ProfileComponent value={tab} />
+      <BookmarkComponent value={tab} />
     </div>
   );
 };
 
-function ProfileComponent({ value }) {
+function BookmarkComponent({ value }) {
   switch (value) {
     case "posts":
       return <PostBookmark />;
