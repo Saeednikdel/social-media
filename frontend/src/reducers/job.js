@@ -10,6 +10,10 @@ import {
   BOOKMARK_JOB_FAIL,
   LOAD_BOOKMARK_JOB_SUCCESS,
   LOAD_BOOKMARK_JOB_FAIL,
+  LOAD_REQUEST_JOB_SUCCESS,
+  LOAD_REQUEST_JOB_FAIL,
+  LOAD_REQUESTED_RESUME_SUCCESS,
+  LOAD_REQUESTED_RESUME_FAIL,
 } from "../actions/types";
 const initialState = {
   jobs: [],
@@ -20,6 +24,11 @@ export default function (state = initialState, action) {
   const { type, payload, page, keyword } = action;
 
   switch (type) {
+    case LOAD_REQUESTED_RESUME_SUCCESS:
+      return {
+        ...state,
+        resume: payload,
+      };
     case LOAD_JOBS_SUCCESS:
       if (page === 1) {
         return {
@@ -34,18 +43,32 @@ export default function (state = initialState, action) {
           jobs_count: payload.count,
         };
       }
-    case LOAD_USER_JOBS_SUCCESS:
+    case LOAD_REQUEST_JOB_SUCCESS:
       if (page === 1) {
         return {
           ...state,
-          userposts: payload.posts,
-          profile_count: payload.count,
+          job_requests: payload.job_requests,
+          requests_count: payload.count,
         };
       } else {
         return {
           ...state,
-          userposts: state.userposts.concat(payload.posts),
-          profile_count: payload.count,
+          job_requests: state.job_requests.concat(payload.job_requests),
+          requests_count: payload.count,
+        };
+      }
+    case LOAD_USER_JOBS_SUCCESS:
+      if (page === 1) {
+        return {
+          ...state,
+          userjobs: payload.jobs,
+          user_job_count: payload.count,
+        };
+      } else {
+        return {
+          ...state,
+          userjobs: state.userjobs.concat(payload.jobs),
+          user_job_count: payload.count,
         };
       }
     case LOAD_JOB_SUCCESS:
