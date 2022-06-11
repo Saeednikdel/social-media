@@ -6,15 +6,18 @@ import {
   makeStyles,
   IconButton,
   Avatar,
+  Button,
 } from "@material-ui/core";
 import { BookmarkBorder, Bookmark } from "@material-ui/icons";
 import DialogAlert from "../components/DialogAlert";
+import Notification from "../components/Notification";
 import { connect } from "react-redux";
 import { load_job } from "../actions/job";
 import { bookmark_job } from "../actions/job";
 import jMoment from "moment-jalaali";
 import { Link, withRouter } from "react-router-dom";
 import linkify from "../utils/linkify";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
@@ -41,9 +44,21 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 17,
   },
 }));
-const JobPage = ({ job, load_job, match, isAuthenticated, bookmark_job }) => {
+const JobPage = ({
+  job,
+  load_job,
+  match,
+  isAuthenticated,
+  bookmark_job,
+  user,
+}) => {
   const classes = useStyles();
   const jobId = match.params.jobId;
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
   const [alert, setAlert] = useState({
     isOpen: false,
     title: "",
@@ -69,6 +84,43 @@ const JobPage = ({ job, load_job, match, isAuthenticated, bookmark_job }) => {
       });
     }
   };
+
+  async function send() {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
+    };
+    const body = JSON.stringify({ user: user.id, id: job.id });
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/jobs/send-resume/`,
+        body,
+        config
+      );
+      if (res.data.message === "resume sent") {
+        setNotify({
+          isOpen: true,
+          message: "رزومه ارسال شد.",
+          type: "success",
+        });
+      } else if (res.data.message === "allready sent") {
+        setNotify({
+          isOpen: true,
+          message: "رزومه قبلا ارسال شده.",
+          type: "info",
+        });
+      }
+    } catch (err) {
+      setNotify({
+        isOpen: true,
+        message: "رزومه ارسال نشد.",
+        type: "error",
+      });
+    }
+  }
   return (
     <>
       {job && (
@@ -121,6 +173,11 @@ const JobPage = ({ job, load_job, match, isAuthenticated, bookmark_job }) => {
                   justifyContent: "flex-end",
                 }}
               >
+                {user && user.id !== job.user && (
+                  <Button color="secondary" onClick={() => send()}>
+                    ارسال رزومه
+                  </Button>
+                )}
                 <IconButton
                   color="secondary"
                   onClick={() => BookmarkHandle(job.id)}
@@ -142,6 +199,7 @@ const JobPage = ({ job, load_job, match, isAuthenticated, bookmark_job }) => {
           </div>
           <Divider />
           <DialogAlert alert={alert} setAlert={setAlert} />
+          <Notification notify={notify} setNotify={setNotify} />
         </>
       )}
     </>
@@ -151,6 +209,7 @@ const JobPage = ({ job, load_job, match, isAuthenticated, bookmark_job }) => {
 const mapStateToProps = (state) => ({
   job: state.job.job,
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
 });
 export default withRouter(
   connect(mapStateToProps, {
