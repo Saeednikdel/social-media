@@ -9,6 +9,7 @@ import Jobs from "./containers/Jobs";
 import Activate from "./containers/Activate";
 import PostPage from "./containers/PostPage";
 import JobPage from "./containers/JobPage";
+import RequestJobResume from "./containers/RequestJobResume";
 import UserProfile from "./containers/UserProfile";
 import UsersList from "./containers/UsersList";
 import Messages from "./containers/Messages";
@@ -51,6 +52,11 @@ const App = () => (
           <Route exact path="/activate/:uid/:token" component={Activate} />
           <Route exact path="/post/:postId" component={PostPage} />
           <Route exact path="/job/:jobId" component={JobPage} />
+          <Route
+            exact
+            path="/job/:jobId/resume/:userId"
+            component={RequestJobResume}
+          />
           <Route exact path="/users" component={UsersList} />
           <Route exact path="*" component={PageNotFound} />
         </Switch>
