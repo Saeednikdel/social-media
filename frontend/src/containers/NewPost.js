@@ -1,66 +1,75 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { resetState, new_post } from "../actions/auth";
 import {
   TextField,
   Button,
   makeStyles,
   CircularProgress,
+  Checkbox,
+  FormControlLabel,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
 import Redirect from "react-router-dom/es/Redirect";
-
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   textField: { minWidth: 240, width: "80%" },
-  button: { marginTop: 20, marginBottom: 20 },
-  left: {
+  top: {
     display: "flex",
-    justifyContent: "flex-end",
-    width: "90%",
+    justifyContent: "space-between",
+    marginTop: 20,
+    marginBottom: 20,
+    width: "80%",
+  },
+  containter: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "stretch",
   },
 }));
-const NewPost = ({
-  requestSuccess,
-  requestFail,
-  new_post,
-  isAuthenticated,
-  resetState,
-}) => {
+const NewPost = ({ isAuthenticated, is_entity }) => {
   const [formData, setFormData] = useState({
     content: "",
   });
   const classes = useStyles();
-
+  const history = useHistory();
   const { content } = formData;
   const [requestSent, setRequestSent] = useState(false);
-  useEffect(() => {
-    if (requestFail) {
-      setRequestSent(false);
-      resetState();
-    }
-    if (requestSuccess) {
-      setRequestSent(false);
-      resetState();
-    }
-  }, [requestFail, requestSuccess]);
+  const [checkJob, setCheckJob] = useState(false);
   if (isAuthenticated === false) return <Redirect to="/login" />;
-  if (requestSuccess === true) return <Redirect to="/" />;
-
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    new_post(content);
+    checkJob ? new_job() : new_post();
     setRequestSent(true);
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
-        <div className={classes.left}>
+    <form
+      autoComplete="off"
+      onSubmit={(e) => onSubmit(e)}
+      style={{ textAlign: "center" }}
+    >
+      <div className={classes.containter}>
+        <div className={classes.top}>
+          <div>
+            {is_entity && (
+              <FormControlLabel
+                label="آگهی شغل"
+                control={
+                  <Checkbox
+                    checked={checkJob}
+                    onChange={() => setCheckJob(!checkJob)}
+                  />
+                }
+              />
+            )}
+          </div>
           <Button
-            className={classes.button}
             type="submit"
             variant="contained"
             color="secondary"
@@ -79,28 +88,77 @@ const NewPost = ({
             ارسال
           </Button>
         </div>
-        <div>
-          <TextField
-            variant="outlined"
-            autoComplete="off"
-            className={classes.textField}
-            type="text"
-            label="متن پست"
-            name="content"
-            value={content}
-            multiline
-            rows={10}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-      </form>
-    </div>
+      </div>
+      <div>
+        <TextField
+          variant="outlined"
+          autoComplete="off"
+          className={classes.textField}
+          type="text"
+          label={checkJob ? "متن آگهی" : "متن پست"}
+          name="content"
+          value={content}
+          multiline
+          rows={10}
+          onChange={(e) => onChange(e)}
+          required
+        />
+      </div>
+    </form>
   );
+  async function new_job() {
+    if (localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      const user = localStorage.getItem("id");
+      const body = JSON.stringify({ user, content });
+
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/jobs/job-create/`,
+          body,
+          config
+        );
+        setRequestSent(false);
+        history.push("/jobs");
+      } catch (err) {
+        setRequestSent(false);
+      }
+    }
+  }
+  async function new_post() {
+    if (localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      const user = localStorage.getItem("id");
+      const body = JSON.stringify({ user, content });
+
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/blog/post-create/`,
+          body,
+          config
+        );
+        setRequestSent(false);
+        history.push("/");
+      } catch (err) {
+        setRequestSent(false);
+      }
+    }
+  }
 };
 const mapStateToProps = (state) => ({
-  requestSuccess: state.auth.requestSuccess,
-  requestFail: state.auth.requestFail,
   isAuthenticated: state.auth.isAuthenticated,
+  is_entity: state.auth.user.is_entity,
 });
-export default connect(mapStateToProps, { resetState, new_post })(NewPost);
+export default connect(mapStateToProps, {})(NewPost);

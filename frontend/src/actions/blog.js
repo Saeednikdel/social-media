@@ -26,6 +26,7 @@ import {
   BOOKMARK_SUCCESS,
   BOOKMARK_FAIL,
 } from "./types";
+
 export const bookmark = (id, page) => async (dispatch) => {
   if (localStorage.getItem("access")) {
     const config = {

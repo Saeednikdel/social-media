@@ -23,8 +23,6 @@ import {
   SET_USER_DETAIL_SUCCESS,
   SET_COMMENTS_FAIL,
   SET_COMMENTS_SUCCESS,
-  NEW_POST_SUCCESS,
-  NEW_POST_FAIL,
   FOLLOW_SUCCESS,
   FOLLOW_FAIL,
   UPDATE_AVATAR_SUCCESS,
@@ -36,7 +34,7 @@ import {
 const initialState = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
-  isAuthenticated: null,
+  isAuthenticated: false,
   user: {
     id: null,
   },
@@ -135,9 +133,6 @@ export default function (state = initialState, action) {
           notif_count: payload.count,
         };
       }
-
-    case NEW_POST_SUCCESS:
-    case NEW_POST_FAIL:
     case SET_COMMENTS_FAIL:
       return {
         ...state,

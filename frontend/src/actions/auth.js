@@ -26,8 +26,6 @@ import {
   SET_USER_DETAIL_SUCCESS,
   SET_COMMENTS_FAIL,
   SET_COMMENTS_SUCCESS,
-  NEW_POST_SUCCESS,
-  NEW_POST_FAIL,
   FOLLOW_SUCCESS,
   FOLLOW_FAIL,
   UPDATE_AVATAR_SUCCESS,
@@ -133,35 +131,7 @@ export const follow_unfollw = (target_name) => async (dispatch) => {
     }
   }
 };
-export const new_post = (content) => async (dispatch) => {
-  if (localStorage.getItem("access")) {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.getItem("access")}`,
-        Accept: "application/json",
-      },
-    };
-    const user = localStorage.getItem("id");
-    const body = JSON.stringify({ user, content });
 
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/blog/post-create/`,
-        body,
-        config
-      );
-
-      dispatch({
-        type: NEW_POST_SUCCESS,
-      });
-    } catch (err) {
-      dispatch({
-        type: NEW_POST_FAIL,
-      });
-    }
-  }
-};
 export const comment = (item, star, title, description) => async (dispatch) => {
   if (localStorage.getItem("access")) {
     const config = {

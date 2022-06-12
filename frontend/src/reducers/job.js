@@ -14,6 +14,8 @@ import {
   LOAD_REQUEST_JOB_FAIL,
   LOAD_REQUESTED_RESUME_SUCCESS,
   LOAD_REQUESTED_RESUME_FAIL,
+  NEW_JOB_SUCCESS,
+  NEW_JOB_FAIL,
 } from "../actions/types";
 const initialState = {
   jobs: [],
