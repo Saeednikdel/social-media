@@ -48,6 +48,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=1000, blank=True, null=True)
     follower = models.ManyToManyField('self', symmetrical=False, related_name='user_follower')
     following = models.ManyToManyField('self', symmetrical=False, related_name='user_following')
+    employee = models.ManyToManyField('self', symmetrical=False, related_name='user_employee')
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'email'
@@ -58,7 +59,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
+     
+    def employee_count(self):
+        return self.employee.all().count()
+
     def follower_count(self):
         return self.follower.exclude(follower=self).count()
 
@@ -70,3 +74,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def following_list(self):
         return self.following.exclude(following=self)
+   
+    def employee_list(self):
+        return self.employee.all()
