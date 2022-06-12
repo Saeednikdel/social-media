@@ -18,7 +18,7 @@ def follow(request):
     if target in user.following.all():
         user.following.remove(target)
         target.follower.remove(user)
-        notif = get_object_or_404(Notification, sender=user, receiver=target, kind="F")
+        notif = get_object_or_404(Notification, sender=user, receiver=target, kind="followed you")
         notif.delete()
         return Response({"unfollowed"})
     else:
@@ -27,7 +27,7 @@ def follow(request):
             user.follower.add(user)
         user.following.add(target)
         target.follower.add(user)
-        notif, created = Notification.objects.get_or_create(sender=user, receiver=target, kind="F")
+        notif, created = Notification.objects.get_or_create(sender=user, receiver=target, kind="followed you")
         notif.save()
         return Response({"followed"})
 

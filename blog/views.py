@@ -103,7 +103,7 @@ def like(request):
         like.delete()
         post.like_count -= 1
         post.save()
-        notif = get_object_or_404(Notification, sender=user, post=post, receiver=post.user, kind="L")
+        notif = get_object_or_404(Notification, sender=user, post=post, receiver=post.user, kind="liked your post")
         notif.delete()
         return Response({"disliked"})
     else:
@@ -111,7 +111,7 @@ def like(request):
         like.save()
         post.like_count += 1
         post.save()
-        notif, created = Notification.objects.get_or_create(sender=user, post=post, receiver=post.user, kind="L")
+        notif, created = Notification.objects.get_or_create(sender=user, post=post, receiver=post.user, kind="liked your post")
         notif.save()
         return Response({"liked"})
 

@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import RegexValidator
 MILITARY_CHOICES =(
-    ('N', 'nothing'),
-    ('C', 'completed'),
-    ('D', 'during'),
-    ('E', 'exempt')
+    ('conscript', 'conscript'),
+    ('completed', 'completed'),
+    ('serving', 'serving'),
+    ('exempt', 'exempt')
 )
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, name, password=None):
@@ -44,7 +44,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     birth_date = models.DateField(blank=True ,null=True)
     image = models.ImageField(blank=True, null=True)
     header = models.ImageField(blank=True, null=True)
-    military_service = models.CharField(choices=MILITARY_CHOICES, max_length=1, blank=True, null=True)
+    military_service = models.CharField(choices=MILITARY_CHOICES, max_length=10, blank=True, null=True)
     address = models.CharField(max_length=1000, blank=True, null=True)
     follower = models.ManyToManyField('self', symmetrical=False, related_name='user_follower')
     following = models.ManyToManyField('self', symmetrical=False, related_name='user_following')
