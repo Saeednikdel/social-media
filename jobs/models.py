@@ -5,7 +5,7 @@ from accounts.models import UserAccount
 class Job(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, related_name="user")
     date = models.DateTimeField(auto_now_add=True)
-    expire_date = models.DateField()
+    expire_date = models.DateField(blank=True,null=True)
     view = models.IntegerField(default=0)
     content = models.TextField()
     image = models.ImageField()
