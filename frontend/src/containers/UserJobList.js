@@ -44,8 +44,8 @@ const UserJobList = ({ userName, userjobs, load_user_jobs, count }) => {
             </div>
           }
         >
-          {userjobs.map((post) => (
-            <PostCard post={post} />
+          {userjobs.map((job) => (
+            <PostCard post={job} job={true} />
           ))}
         </InfiniteScroll>
       )}
