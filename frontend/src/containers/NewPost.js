@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "stretch",
   },
 }));
-const NewPost = ({ isAuthenticated, is_entity }) => {
+const NewPost = ({ isAuthenticated, user }) => {
   const [formData, setFormData] = useState({
     content: "",
   });
@@ -38,7 +38,6 @@ const NewPost = ({ isAuthenticated, is_entity }) => {
   const { content } = formData;
   const [requestSent, setRequestSent] = useState(false);
   const [checkJob, setCheckJob] = useState(false);
-  if (isAuthenticated === false) return <Redirect to="/login" />;
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -47,6 +46,7 @@ const NewPost = ({ isAuthenticated, is_entity }) => {
     checkJob ? new_job() : new_post();
     setRequestSent(true);
   };
+  if (isAuthenticated === false) return <Redirect to="/login" />;
 
   return (
     <form
@@ -57,7 +57,7 @@ const NewPost = ({ isAuthenticated, is_entity }) => {
       <div className={classes.containter}>
         <div className={classes.top}>
           <div>
-            {is_entity && (
+            {user && user.is_entity && (
               <FormControlLabel
                 label="آگهی شغل"
                 control={
@@ -159,6 +159,6 @@ const NewPost = ({ isAuthenticated, is_entity }) => {
 };
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  is_entity: state.auth.user.is_entity,
+  user: state.auth.user,
 });
 export default connect(mapStateToProps, {})(NewPost);
