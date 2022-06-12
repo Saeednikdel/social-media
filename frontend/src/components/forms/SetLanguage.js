@@ -33,7 +33,7 @@ const SetLanguage = ({ setOpenPopup, add_language, new_lang }) => {
     { title: "مکالمه", value: "S" },
   ];
   useEffect(() => {
-    if (new_lang && new_lang.title === title) {
+    if (new_lang && new_lang.id) {
       setOpenPopup(false);
     } else if (new_lang && new_lang === "error") {
       setRequestSent(false);

@@ -29,7 +29,7 @@ const SetJobHistory = ({ setOpenPopup, add_job, new_job }) => {
   });
   const { title, end_date, start_date, company } = formData;
   useEffect(() => {
-    if (new_job && new_job.end_date === end_date) {
+    if (new_job && new_job.id) {
       setOpenPopup(false);
     } else if (new_job && new_job === "error") {
       setRequestSent(false);

@@ -28,7 +28,7 @@ const SetEducation = ({ setOpenPopup, add_education, new_edu }) => {
   });
   const { title, end_date, campus, score } = formData;
   useEffect(() => {
-    if (new_edu && new_edu.end_date === end_date) {
+    if (new_edu && new_edu.id) {
       setOpenPopup(false);
     } else if (new_edu && new_edu === "error") {
       setRequestSent(false);

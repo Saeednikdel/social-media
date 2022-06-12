@@ -32,7 +32,7 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
     { title: "پیشرفته", value: "S" },
   ];
   useEffect(() => {
-    if (new_skill && new_skill.title === title) {
+    if (new_skill && new_skill.id) {
       setOpenPopup(false);
     } else if (new_skill && new_skill === "error") {
       setRequestSent(false);
