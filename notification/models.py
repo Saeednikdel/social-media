@@ -4,9 +4,9 @@ from blog.models import Post, Reply
 
 
 NOTIF_CHOICES = (
-    ('F', 'follow'),
-    ('L', 'like'),
-    ('R', 'Reply')
+    ("followed you", "followed you"),
+    ( "liked your post",  "liked your post"),
+    ("replied to you", "replied to you")
 )
 
 class Notification(models.Model):
@@ -14,7 +14,7 @@ class Notification(models.Model):
     sender = models.ForeignKey(UserAccount, related_name="sender", on_delete=models.CASCADE)
     receiver = models.ForeignKey(UserAccount, related_name="receiver", on_delete=models.CASCADE)
     seen = models.BooleanField(default=False)
-    kind = models.CharField(choices=NOTIF_CHOICES, max_length=1)
+    kind = models.CharField(choices=NOTIF_CHOICES, max_length=15)
     post = models.ForeignKey(Post, blank=True, null=True, on_delete=models.CASCADE)
     reply = models.ForeignKey(Reply, blank=True, null=True, on_delete=models.CASCADE)
 
