@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/auth";
+import translate from "../translate";
 import {
   Brightness7,
   Brightness4,
@@ -115,7 +116,7 @@ const Appbar = ({
                 onClick={toggleDrawer}
               >
                 <PermIdentityRounded className={classes.menuicon} />
-                <Typography variant="body1">پروفایل</Typography>
+                <Typography variant="body1">{translate("profile")}</Typography>
               </Link>
               <Link
                 className={classes.navLink}
@@ -123,7 +124,7 @@ const Appbar = ({
                 onClick={toggleDrawer}
               >
                 <BookmarkBorder className={classes.menuicon} />
-                <Typography variant="body1">ذخیره شده</Typography>
+                <Typography variant="body1">{translate("bookmark")}</Typography>
               </Link>
               <Link
                 className={classes.navLink}
@@ -131,12 +132,12 @@ const Appbar = ({
                 onClick={toggleDrawer}
               >
                 <Settings className={classes.menuicon} />
-                <Typography variant="body1">تنظیمات</Typography>
+                <Typography variant="body1">{translate("setting")}</Typography>
               </Link>
 
               <Link className={classes.navLink} onClick={() => logOut()}>
                 <ArrowForward className={classes.menuicon} />
-                <Typography variant="body1">خروج</Typography>
+                <Typography variant="body1">{translate("log out")}</Typography>
               </Link>
             </>
           ) : (
@@ -146,7 +147,7 @@ const Appbar = ({
               onClick={toggleDrawer}
             >
               <ArrowBack className={classes.menuicon} />
-              <Typography variant="body1">ورود</Typography>
+              <Typography variant="body1">{translate("log in")}</Typography>
             </Link>
           )}
           <Link className={classes.navLink} onClick={onChange}>
@@ -156,7 +157,7 @@ const Appbar = ({
               <Brightness4 className={classes.menuicon} />
             )}
             <Typography variant="body1">
-              {checked ? "تم روشن " : " تم تاریک"}
+              {checked ? translate(" light theme ") : translate(" dark theme ")}
             </Typography>
           </Link>
         </div>

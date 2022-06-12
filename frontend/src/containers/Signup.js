@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import DialogAlert from "../components/DialogAlert";
 import { Done } from "@material-ui/icons";
-
+import translate from "../translate";
 const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",
@@ -55,8 +55,8 @@ const Signup = ({
       setRequestSent(false);
       setAlert({
         isOpen: true,
-        title: "ثبت نام انجام شد.",
-        message: "برای فعالسازی حساب خود لینک ارسال شده به ایمیل، را باز کنید.",
+        title: translate("sign up seccessfull"),
+        message: translate("open the link sent to you by email"),
       });
     }
   }, [requestFail, requestSuccess]);
@@ -74,47 +74,23 @@ const Signup = ({
   };
   if (isAuthenticated) return <Redirect to="/" />;
 
-  const nameHelper = (text) => {
-    switch (text) {
-      case "Only alphanumeric characters are allowed.":
-        return "فقط حروف انگلیسی و اعداد بدون فاصله";
-      case "user account with this name already exists.":
-        return "این نام کاربری در دسترس نیست";
-      default:
-        return "";
-    }
-  };
-  const passHelper = (text) => {
-    switch (text) {
-      case "This password is too short. It must contain at least 8 characters.":
-        return "حداقل ۸ کاراکتر شامل حروف و اعداد";
-      case "This password is too common.":
-        return "یک رمزعبور بهتر انتخاب کنید";
-      case "This password is entirely numeric.":
-        return "رمزعبور کاملا عددی مجاز نیست";
-      case "The password is too similar to the email.":
-        return "رمزعبور مشابه ایمیل مجاز نیست";
-      default:
-        return "";
-    }
-  };
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
-      <Typography variant="h5">ثبت نام</Typography>
+      <Typography variant="h5">{translate("sign up")}</Typography>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
         <div>
           <TextField
             className={classes.textfield}
             autoComplete="off"
             type="text"
-            label="نام کاربری"
+            label={translate("name")}
             name="name"
             value={name}
             error={signup_error && signup_error.name && true}
             helperText={
               signup_error &&
               signup_error.name &&
-              nameHelper(signup_error.name[0])
+              translate(signup_error.name[0])
             }
             onChange={(e) => onChange(e)}
             required
@@ -125,15 +101,11 @@ const Signup = ({
             className={classes.textfield}
             autoComplete="off"
             type="email"
-            label="ایمیل"
+            label={translate("email")}
             name="email"
             value={email}
             error={signup_error && signup_error.email && true}
-            helperText={
-              signup_error &&
-              signup_error.email &&
-              "ثبت نام با این ایمیل ممکن نیست"
-            }
+            helperText={signup_error && translate(signup_error.email)}
             onChange={(e) => onChange(e)}
             required
           />
@@ -143,14 +115,14 @@ const Signup = ({
             className={classes.textfield}
             autoComplete="off"
             type="password"
-            label="رمز عبور"
+            label={translate("password")}
             name="password"
             value={password}
             error={signup_error && signup_error.password && true}
             helperText={
               signup_error &&
               signup_error.password &&
-              passHelper(signup_error.password[0])
+              translate(signup_error.password[0])
             }
             onChange={(e) => onChange(e)}
             minLength="6"
@@ -162,14 +134,12 @@ const Signup = ({
             className={classes.textfield}
             autoComplete="off"
             type="password"
-            label="تایید رمز عبور"
+            label={translate("retype password")}
             name="re_password"
             value={re_password}
             error={signup_error && signup_error.non_field_errors && true}
             helperText={
-              signup_error &&
-              signup_error.non_field_errors &&
-              "تکرار رمز اشتباه است"
+              signup_error && translate(signup_error.non_field_errors)
             }
             onChange={(e) => onChange(e)}
             minLength="6"
@@ -193,13 +163,13 @@ const Signup = ({
             )
           }
         >
-          ایجاد حساب
+          {translate("sign up")}
         </Button>
       </form>
       <Typography variant="body1">
-        قبلا ثبت نام کرده اید؟{" "}
+        {translate("you have signed up before?")}{" "}
         <Link className={classes.navLink} to="/login">
-          ورود{" "}
+          {translate("log in")}{" "}
         </Link>
       </Typography>
       <DialogAlert alert={alert} setAlert={setAlert} />

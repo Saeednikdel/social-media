@@ -10,6 +10,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import translate from "../translate";
 const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",
@@ -54,18 +55,20 @@ const Login = ({
   if (isAuthenticated) return <Redirect to="/" />;
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
-      <Typography variant="h5">ورود</Typography>
+      <Typography variant="h5">{translate("log in")}</Typography>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
         <div>
           <TextField
             autoComplete="off"
             type="email"
-            label="ایمیل"
+            label={translate("email")}
             name="email"
             value={email}
             error={login_error && login_error.detail && true}
             helperText={
-              login_error && login_error.detail && "رمز یا ایمیل اشتباه است"
+              login_error &&
+              login_error.detail &&
+              translate("password or email doesn't match")
             }
             onChange={(e) => onChange(e)}
             required
@@ -75,7 +78,7 @@ const Login = ({
           <TextField
             autoComplete="off"
             type="password"
-            label="رمز عبور"
+            label={translate("password")}
             name="password"
             value={password}
             onChange={(e) => onChange(e)}
@@ -100,19 +103,19 @@ const Login = ({
             )
           }
         >
-          ورود
+          {translate("log in")}
         </Button>
       </form>
       <Typography variant="body1">
-        قبلا ثبت نام نکرده اید؟{" "}
+        {translate("haven't sign up yet?")}{" "}
         <Link className={classes.navLink} to="/signup">
-          ثبت نام
+          {translate("sign up")}
         </Link>
       </Typography>
       <Typography variant="body1">
-        رمز عبورتان را فراموش کرده اید؟{" "}
+        {translate("forgot your password?")}{" "}
         <Link className={classes.navLink} to="/reset_password">
-          بازیابی
+          {translate("reset")}
         </Link>
       </Typography>
     </div>
