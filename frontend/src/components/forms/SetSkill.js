@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
 import { add_skill } from "../../actions/resume";
+import translate from "../../translate";
 
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
@@ -27,9 +28,9 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
   const { title, level } = formData;
   const [openLevel, setOpenLevel] = useState(false);
   const levelList = [
-    { title: "مبتدی", value: "J" },
-    { title: "متوسط", value: "M" },
-    { title: "پیشرفته", value: "S" },
+    { title: translate("junior"), value: "J" },
+    { title: translate("mid-level"), value: "M" },
+    { title: translate("senior"), value: "S" },
   ];
   useEffect(() => {
     if (new_skill && new_skill.id) {
@@ -54,7 +55,7 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="عنوان"
+            label={translate("title")}
             name="title"
             value={title}
             onChange={(e) => onChange(e)}
@@ -63,7 +64,7 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
         </div>
         <div>
           <FormControl style={{ width: "100%" }}>
-            <InputLabel>سطح</InputLabel>
+            <InputLabel>{translate("level")}</InputLabel>
             <Select
               open={openLevel}
               onClose={() => setOpenLevel(false)}
@@ -72,7 +73,7 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
               name="level"
               onChange={(e) => onChange(e)}
             >
-              <MenuItem value="">هیچ کدام</MenuItem>
+              <MenuItem value="">{translate("none")}</MenuItem>
               {levelList.map((l) => (
                 <MenuItem value={l.value}>{l.title}</MenuItem>
               ))}
@@ -97,7 +98,7 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>

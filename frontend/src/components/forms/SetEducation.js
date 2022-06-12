@@ -11,6 +11,8 @@ import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { add_education } from "../../actions/resume";
+import translate from "../../translate";
+
 jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +53,7 @@ const SetEducation = ({ setOpenPopup, add_education, new_edu }) => {
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="مقطع"
+            label={translate("grade")}
             name="title"
             value={title}
             onChange={(e) => onChange(e)}
@@ -64,9 +66,9 @@ const SetEducation = ({ setOpenPopup, add_education, new_edu }) => {
               required
               className={classes.textField}
               name="end_date"
-              okLabel="تأیید"
-              label="تاریخ اخذ مدرک"
-              cancelLabel="لغو"
+              okLabel={translate("ok")}
+              label={translate("graduation date")}
+              cancelLabel={translate("cancel")}
               labelFunc={(date) => (date ? date.format("jYYYY/jMM/jDD") : "")}
               value={end_date}
               onChange={(date) =>
@@ -83,7 +85,7 @@ const SetEducation = ({ setOpenPopup, add_education, new_edu }) => {
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="محل تحصیل"
+            label={translate("university")}
             name="campus"
             value={campus}
             onChange={(e) => onChange(e)}
@@ -95,7 +97,7 @@ const SetEducation = ({ setOpenPopup, add_education, new_edu }) => {
             autoComplete="off"
             className={classes.textField}
             type="number"
-            label="معدل"
+            label={translate("grade point average")}
             name="score"
             value={score}
             onChange={(e) => onChange(e)}
@@ -120,7 +122,7 @@ const SetEducation = ({ setOpenPopup, add_education, new_edu }) => {
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>

@@ -16,6 +16,7 @@ import { resetState } from "../../actions/auth";
 import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import translate from "../../translate";
 jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 
 const useStyles = makeStyles((theme) => ({
@@ -57,10 +58,10 @@ const SetInfo = ({
   const [openMilitaryService, setOpenMilitaryService] = useState(false);
   const [openShowResume, setOpenShowResume] = useState(false);
   const serviceList = [
-    { title: "مشمول", value: "N" },
-    { title: "پایان خدمت", value: "C" },
-    { title: "در حال انجام", value: "D" },
-    { title: "معاف", value: "E" },
+    { title: translate("conscript"), value: "N" },
+    { title: translate("completed"), value: "C" },
+    { title: translate("serving"), value: "D" },
+    { title: translate("exempt"), value: "E" },
   ];
   useEffect(() => {
     if (requestFail) {
@@ -98,7 +99,7 @@ const SetInfo = ({
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="نام"
+            label={translate("name")}
             name="profile_name"
             value={profile_name}
             onChange={(e) => onChange(e)}
@@ -110,7 +111,7 @@ const SetInfo = ({
             className={classes.textField}
             autoComplete="off"
             type="number"
-            label="تلفن"
+            label={translate("phone number")}
             name="phone_no"
             value={phone_no}
             onChange={(e) => onChange(e)}
@@ -121,7 +122,7 @@ const SetInfo = ({
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="متن معرفی"
+            label={translate("biography")}
             name="bio"
             value={bio}
             onChange={(e) => onChange(e)}
@@ -133,7 +134,7 @@ const SetInfo = ({
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="محل سکونت"
+            label={translate("address")}
             name="address"
             value={address}
             onChange={(e) => onChange(e)}
@@ -142,7 +143,7 @@ const SetInfo = ({
         </div>
         <div>
           <FormControl style={{ width: "100%" }}>
-            <InputLabel>نمایش رزومه</InputLabel>
+            <InputLabel>{translate("show resume")}</InputLabel>
             <Select
               open={openShowResume}
               onClose={() => setOpenShowResume(false)}
@@ -151,8 +152,8 @@ const SetInfo = ({
               name="show_resume"
               onChange={(e) => onChange(e)}
             >
-              <MenuItem value={false}>فقط خودم</MenuItem>
-              <MenuItem value={true}>برای همه</MenuItem>
+              <MenuItem value={false}>{translate("only me")}</MenuItem>
+              <MenuItem value={true}>{translate("every one")}</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -161,9 +162,9 @@ const SetInfo = ({
             <DatePicker
               className={classes.textField}
               name="birth_date"
-              okLabel="تأیید"
-              label="تاریخ تولد"
-              cancelLabel="لغو"
+              okLabel={translate("ok")}
+              label={translate("birth date")}
+              cancelLabel={translate("cancel")}
               labelFunc={(date) => (date ? date.format("jYYYY/jMM/jDD") : "")}
               value={birth_date}
               onChange={(date) =>
@@ -177,7 +178,7 @@ const SetInfo = ({
         </div>
         <div>
           <FormControl style={{ width: "100%" }}>
-            <InputLabel>وضعیت نظام وظیفه</InputLabel>
+            <InputLabel>{translate("military service status")}</InputLabel>
             <Select
               open={openMilitaryService}
               onClose={() => setOpenMilitaryService(false)}
@@ -186,7 +187,7 @@ const SetInfo = ({
               name="military_service"
               onChange={(e) => onChange(e)}
             >
-              <MenuItem value="">هیچ کدام</MenuItem>
+              <MenuItem value="">{translate("none")}</MenuItem>
               {serviceList.map((l) => (
                 <MenuItem value={l.value}>{l.title}</MenuItem>
               ))}
@@ -210,7 +211,7 @@ const SetInfo = ({
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>

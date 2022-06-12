@@ -11,6 +11,7 @@ import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { add_job } from "../../actions/resume";
+import translate from "../../translate";
 
 jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 
@@ -51,7 +52,7 @@ const SetJobHistory = ({ setOpenPopup, add_job, new_job }) => {
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="عنوان"
+            label={translate("title")}
             name="title"
             value={title}
             onChange={(e) => onChange(e)}
@@ -63,10 +64,10 @@ const SetJobHistory = ({ setOpenPopup, add_job, new_job }) => {
             <DatePicker
               required
               className={classes.textField}
-              name="end_date"
-              okLabel="تأیید"
-              label="تاریخ شروع"
-              cancelLabel="لغو"
+              name="start_date"
+              okLabel={translate("ok")}
+              label={translate("start date")}
+              cancelLabel={translate("cancel")}
               labelFunc={(date) => (date ? date.format("jYYYY/jMM/jDD") : "")}
               value={start_date}
               onChange={(date) =>
@@ -84,9 +85,9 @@ const SetJobHistory = ({ setOpenPopup, add_job, new_job }) => {
               required
               className={classes.textField}
               name="end_date"
-              okLabel="تأیید"
-              label="تاریخ خاتمه"
-              cancelLabel="لغو"
+              okLabel={translate("ok")}
+              label={translate("end date")}
+              cancelLabel={translate("cancel")}
               labelFunc={(date) => (date ? date.format("jYYYY/jMM/jDD") : "")}
               value={end_date}
               onChange={(date) =>
@@ -103,7 +104,7 @@ const SetJobHistory = ({ setOpenPopup, add_job, new_job }) => {
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="محل کار"
+            label={translate("company")}
             name="company"
             value={company}
             onChange={(e) => onChange(e)}
@@ -128,7 +129,7 @@ const SetJobHistory = ({ setOpenPopup, add_job, new_job }) => {
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>
