@@ -20,10 +20,14 @@
   "name": "نام کاربری",
   "retype password": "تایید رمز عبور",
   "you have signed up before?": "قبلا ثبت نام کرده اید؟",
-  "profile":"پروفایل",
-  "bookmark":"ذخیره شده",
-  "setting":"تنظیمات",
-  "log out":"خروج",
-  " light theme ":"تم روشن " ,
-  " dark theme ":" تم تاریک"}
+  "profile": "پروفایل",
+  "bookmark": "ذخیره شده",
+  "setting": "تنظیمات",
+  "log out": "خروج",
+  " light theme ": "تم روشن ",
+  " dark theme ": " تم تاریک",
+  "F": " شما را فالو کرد ",
+  "L": " پست شما را پسندید ",
+  "R": " روی پست شما نوشت ",
+  "Page not found. 404": "صفحه مورد نظر پیدا نشد 404"
 }

@@ -9,7 +9,7 @@ import {
 import { Favorite, PersonAddRounded, ChatRounded } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import jMoment from "moment-jalaali";
-
+import translate from "../translate";
 const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",
@@ -19,14 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NotifCard({ notif }) {
   const classes = useStyles();
-  let msg = "";
-  if (notif.kind === "F") {
-    msg = " شما را فالو کرد ";
-  } else if (notif.kind === "L") {
-    msg = " پست شما را پسندید ";
-  } else {
-    msg = " روی پست شما نوشت ";
-  }
   return (
     <Link
       className={classes.navLink}
@@ -68,7 +60,7 @@ export default function NotifCard({ notif }) {
                   style={{ height: 12, marginRight: 5, marginLeft: 5 }}
                 />
               )}
-              <Typography>{msg}</Typography>
+              <Typography>{translate(notif.kind)}</Typography>
             </div>
           </Link>
           <Typography color="textSecondary" variant="body2">
