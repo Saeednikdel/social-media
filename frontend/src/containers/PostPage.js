@@ -21,6 +21,7 @@ import { bookmark } from "../actions/blog";
 import jMoment from "moment-jalaali";
 import { Link, withRouter } from "react-router-dom";
 import linkify from "../utils/linkify";
+import translate from "../translate";
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -110,9 +111,9 @@ const PostPage = ({
       setAlert({
         isOpen: true,
         title: "!",
-        message: "لطفا وارد شوید یا ثبت نام کنید.",
+        message: translate("please log in or sign up"),
         actionUrl: "/login",
-        actionText: "ورود",
+        actionText: translate("log in"),
       });
     }
   };
@@ -123,9 +124,9 @@ const PostPage = ({
       setAlert({
         isOpen: true,
         title: "!",
-        message: "لطفا وارد شوید یا ثبت نام کنید.",
+        message: translate("please log in or sign up"),
         actionUrl: "/login",
-        actionText: "ورود",
+        actionText: translate("log in"),
       });
     }
   };
@@ -136,9 +137,9 @@ const PostPage = ({
       setAlert({
         isOpen: true,
         title: "!",
-        message: "لطفا وارد شوید یا ثبت نام کنید.",
+        message: translate("please log in or sign up"),
         actionUrl: "/login",
-        actionText: "ورود",
+        actionText: translate("log in"),
       });
     }
   };

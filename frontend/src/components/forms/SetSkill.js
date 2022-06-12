@@ -28,9 +28,9 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
   const { title, level } = formData;
   const [openLevel, setOpenLevel] = useState(false);
   const levelList = [
-    { title: translate("junior"), value: "J" },
-    { title: translate("mid-level"), value: "M" },
-    { title: translate("senior"), value: "S" },
+    { title: translate("junior"), value: "junior" },
+    { title: translate("mid-level"), value: "mid-level" },
+    { title: translate("senior"), value: "senior" },
   ];
   useEffect(() => {
     if (new_skill && new_skill.id) {

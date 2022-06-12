@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Typography, Chip, Button, makeStyles } from "@material-ui/core";
 import { add_skill } from "../../actions/resume";
-
+import translate from "../../translate";
 import SetSkill from "../forms/SetSkill";
 import Popup from "../Popup";
 const useStyles = makeStyles((theme) => ({
@@ -16,22 +16,10 @@ const useStyles = makeStyles((theme) => ({
 export const Skills = ({ skill, add_skill }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const classes = useStyles();
-  const convert = (string) => {
-    switch (string) {
-      case "J":
-        return "مبتدی";
-      case "M":
-        return "متوسط";
-      case "S":
-        return "پیشرفته";
-      default:
-        return "";
-    }
-  };
   return (
     <div style={{ minHeight: 200, marginTop: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography color="secondary">مهارت ها</Typography>
+        <Typography color="secondary">{translate("skills")}</Typography>
         <Button
           color="secondary"
           variant="outlined"
@@ -47,14 +35,14 @@ export const Skills = ({ skill, add_skill }) => {
           skill.map((l) => (
             <Chip
               className={classes.chip}
-              label={l.title + " | " + convert(l.level)}
+              label={l.title + " | " + translate(l.level)}
               onDelete={() => add_skill(l.id)}
               color="secondary"
             />
           ))}
       </div>
       <Popup
-        title={"افزودن مهارت"}
+        title={translate("add skill")}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { load_jobs } from "../actions/job";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchSharp } from "@material-ui/icons";
+import translate from "../translate";
 
 const useStyles = makeStyles((theme) => ({
   loader: {
@@ -83,7 +84,7 @@ const Jobs = ({ jobs, load_jobs, count, history }) => {
           <TextField
             autoComplete="off"
             id="search"
-            placeholder="جستجو"
+            placeholder={translate("search")}
             color="secondary"
             variant="outlined"
             className={classes.textField}

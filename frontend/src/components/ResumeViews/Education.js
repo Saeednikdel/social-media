@@ -13,14 +13,14 @@ import SetEducation from "../forms/SetEducation";
 import Popup from "../Popup";
 import jMoment from "moment-jalaali";
 import { add_education } from "../../actions/resume";
-
+import translate from "../../translate";
 export const Education = ({ education, add_education }) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
     <div style={{ minHeight: 200, marginTop: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography color="secondary">تحصیلات</Typography>
+        <Typography color="secondary">{translate("education")}</Typography>
         <Button
           color="secondary"
           variant="outlined"
@@ -66,7 +66,7 @@ export const Education = ({ education, add_education }) => {
       </Grid>
 
       <Popup
-        title={"افزودن تحصیلات"}
+        title={translate("add education")}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

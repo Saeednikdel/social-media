@@ -18,6 +18,8 @@ import SetEmail from "./SetEmail";
 import SetPassword from "./SetPassword";
 import Popup from "../components/Popup";
 import SetUserDetail from "./SetUserDetail";
+import translate from "../translate";
+
 const useStyles = makeStyles((theme) => ({
   avatar: {
     height: 90,
@@ -71,7 +73,7 @@ const ProfileSetting = ({ user, load_user, logout, update_avatar }) => {
 
   function ChildrenComponent({ value }) {
     switch (value) {
-      case "ویرایش مشخصات":
+      case "edit info":
         return (
           <SetUserDetail
             _id={user.id}
@@ -83,9 +85,9 @@ const ProfileSetting = ({ user, load_user, logout, update_avatar }) => {
             setOpenPopup={setOpenPopup}
           />
         );
-      case "تغییر ایمیل":
+      case "change email":
         return <SetEmail setOpenPopup={setOpenPopup} />;
-      case "تغییر رمز عبور":
+      case "change password":
         return <SetPassword setOpenPopup={setOpenPopup} />;
     }
   }
@@ -144,59 +146,59 @@ const ProfileSetting = ({ user, load_user, logout, update_avatar }) => {
           style={{ margin: 10 }}
           color="secondary"
           variant="outlined"
-          onClick={() => handleDialog("ویرایش مشخصات")}
+          onClick={() => handleDialog("edit info")}
         >
-          ویرایش مشخصات
+          {translate("edit info")}
         </Button>
       </div>
       <div className={classes.detailContainer}>
         <Divider />
 
-        <Typography variant="h6">نام کاربری</Typography>
+        <Typography variant="h6">{translate("user name")}</Typography>
         <Typography variant="subtitle1">
           {user.name ? user.name : "--"}@
         </Typography>
         <Divider />
 
-        <Typography variant="h6">نام</Typography>
+        <Typography variant="h6">{translate("name")}</Typography>
         <Typography variant="subtitle1">
           {user.profile_name ? user.profile_name : "--"}
         </Typography>
         <Divider />
-        <Typography variant="h6">بیو</Typography>
+        <Typography variant="h6">{translate("biography")}</Typography>
         <Typography variant="subtitle1">
           {user.bio ? user.bio : "--"}
         </Typography>
         <Divider />
-        <Typography variant="h6">تلفن</Typography>
+        <Typography variant="h6">{translate("phone number")}</Typography>
         <Typography variant="subtitle1">
           {user.phone_no ? user.phone_no : "--"}
         </Typography>
         <Divider />
-        <Typography variant="h6">تاریخ تولد</Typography>
+        <Typography variant="h6">{translate("birth date")}</Typography>
         <Typography variant="subtitle1">
           {user.birth_date
             ? jMoment(user.birth_date, "YYYY/M/D").format("jYYYY/jM/jD")
             : "--"}
         </Typography>
         <Divider />
-        <Typography variant="h6">نوع حساب</Typography>
+        <Typography variant="h6">{translate("account type")}</Typography>
         <Typography variant="subtitle1">
-          {user.is_entity ? "کارفرما" : "کارجو"}
+          {user.is_entity ? translate("employer") : translate("employee")}
         </Typography>
         <Divider />
-        <Typography variant="h6">ایمیل</Typography>
+        <Typography variant="h6">{translate("email")}</Typography>
         <Typography variant="subtitle1">
           {user.email ? user.email : "--"}
-          <IconButton onClick={() => handleDialog("تغییر ایمیل")}>
+          <IconButton onClick={() => handleDialog("change email")}>
             <Edit />
           </IconButton>
         </Typography>
         <Divider />
-        <Typography variant="h6">رمز عبور</Typography>
+        <Typography variant="h6">{translate("password")}</Typography>
         <Typography variant="subtitle1">
           ********
-          <IconButton onClick={() => handleDialog("تغییر رمز عبور")}>
+          <IconButton onClick={() => handleDialog("change password")}>
             <Edit />
           </IconButton>
         </Typography>
@@ -210,12 +212,12 @@ const ProfileSetting = ({ user, load_user, logout, update_avatar }) => {
           onClick={() => logout()}
         >
           <Typography color="error" variant="h6">
-            خروج
+            {translate("log out")}
           </Typography>
         </Link>
       </div>
       <Popup
-        title={childComponent}
+        title={translate(childComponent)}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

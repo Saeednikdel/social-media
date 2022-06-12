@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { reset_password_confirm, resetState } from "../actions/auth";
 import { TextField, Button, CircularProgress } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import translate from "../translate";
 
 const ResetPasswordConfirm = ({
   requestSuccess,
@@ -47,20 +48,6 @@ const ResetPasswordConfirm = ({
     }
   };
   if (requestSent === requestSuccess) return <Redirect to="/" />;
-  const passHelper = (text) => {
-    switch (text) {
-      case "This password is too short. It must contain at least 8 characters.":
-        return "حداقل ۸ کاراکتر شامل حروف و اعداد";
-      case "This password is too common.":
-        return "یک رمزعبور بهتر انتخاب کنید";
-      case "This password is entirely numeric.":
-        return "رمزعبور کاملا عددی مجاز نیست";
-      case "The password is too similar to the email.":
-        return "رمزعبور مشابه ایمیل مجاز نیست";
-      default:
-        return "";
-    }
-  };
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
@@ -68,7 +55,7 @@ const ResetPasswordConfirm = ({
           <TextField
             autoComplete="off"
             type="password"
-            label="رمز عبور جدید"
+            label={translate("new password")}
             name="new_password"
             value={new_password}
             onChange={(e) => onChange(e)}
@@ -76,7 +63,7 @@ const ResetPasswordConfirm = ({
             helperText={
               reset_pass_error &&
               reset_pass_error.new_password &&
-              passHelper(reset_pass_error.new_password[0])
+              translate(reset_pass_error.new_password[0])
             }
             minLength="6"
             required
@@ -86,11 +73,13 @@ const ResetPasswordConfirm = ({
           <TextField
             autoComplete="off"
             type="password"
-            label="تکرار رمز عبور"
+            label={translate("retype password")}
             name="re_new_password"
             value={re_new_password}
             error={rePassHelper}
-            helperText={rePassHelper && "تکرار رمز اشتباه است"}
+            helperText={
+              rePassHelper && translate("The two password fields didn't match.")
+            }
             onChange={(e) => onChange(e)}
             minLength="6"
             required
@@ -113,7 +102,7 @@ const ResetPasswordConfirm = ({
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>

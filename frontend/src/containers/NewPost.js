@@ -12,6 +12,8 @@ import { Done } from "@material-ui/icons";
 import Redirect from "react-router-dom/es/Redirect";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import translate from "../translate";
+
 const useStyles = makeStyles((theme) => ({
   textField: { minWidth: 240, width: "80%" },
   top: {
@@ -59,7 +61,7 @@ const NewPost = ({ isAuthenticated, user }) => {
           <div>
             {user && user.is_entity && (
               <FormControlLabel
-                label="آگهی شغل"
+                label={translate("job")}
                 control={
                   <Checkbox
                     checked={checkJob}
@@ -85,7 +87,7 @@ const NewPost = ({ isAuthenticated, user }) => {
               )
             }
           >
-            ارسال
+            {translate("send")}
           </Button>
         </div>
       </div>
@@ -95,7 +97,9 @@ const NewPost = ({ isAuthenticated, user }) => {
           autoComplete="off"
           className={classes.textField}
           type="text"
-          label={checkJob ? "متن آگهی" : "متن پست"}
+          label={
+            checkJob ? translate("job content") : translate("post content")
+          }
           name="content"
           value={content}
           multiline

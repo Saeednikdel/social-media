@@ -4,7 +4,7 @@ import { Typography, Chip, Button, makeStyles } from "@material-ui/core";
 import SetLanguage from "../forms/SetLanguage";
 import Popup from "../Popup";
 import { add_language } from "../../actions/resume";
-
+import translate from "../../translate";
 const useStyles = makeStyles((theme) => ({
   chip: {
     margin: 10,
@@ -16,22 +16,10 @@ const useStyles = makeStyles((theme) => ({
 export const Language = ({ language, add_language }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const classes = useStyles();
-  const convert = (string) => {
-    switch (string) {
-      case "R":
-        return "خواندن و نوشتن";
-      case "C":
-        return "درک مطلب";
-      case "S":
-        return "مکالمه";
-      default:
-        return "";
-    }
-  };
   return (
     <div style={{ minHeight: 200, marginTop: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography color="secondary">زبان های خارجی</Typography>
+        <Typography color="secondary">{translate("languages")}</Typography>
         <Button
           color="secondary"
           variant="outlined"
@@ -47,14 +35,14 @@ export const Language = ({ language, add_language }) => {
           language.map((l) => (
             <Chip
               className={classes.chip}
-              label={l.title + " | " + convert(l.level)}
+              label={l.title + " | " + translate(l.level)}
               onDelete={() => add_language(l.id)}
               color="secondary"
             />
           ))}
       </div>
       <Popup
-        title={"افزودن زبان"}
+        title={translate("add language")}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

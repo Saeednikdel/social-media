@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { load_requested_resume } from "../actions/job";
 import jMoment from "moment-jalaali";
+import translate from "../translate";
 
 import {
   Typography,
   makeStyles,
-  Button,
   Card,
   Avatar,
   Chip,
@@ -49,80 +49,51 @@ const RequestJobResume = ({ load_requested_resume, resume, match }) => {
   useEffect(() => {
     load_requested_resume(jobId, userId);
   }, []);
-  const convert = (string) => {
-    switch (string) {
-      case "N":
-        return "مشمول";
-      case "C":
-        return "پایان خدمت";
-      case "D":
-        return "در حال خدمت";
-      case "E":
-        return "معاف";
-      default:
-        return "";
-    }
-  };
-  const convert_s = (string) => {
-    switch (string) {
-      case "J":
-        return "مبتدی";
-      case "M":
-        return "متوسط";
-      case "S":
-        return "پیشرفته";
-      default:
-        return "";
-    }
-  };
-  const convert_l = (string) => {
-    switch (string) {
-      case "R":
-        return "خواندن و نوشتن";
-      case "C":
-        return "درک مطلب";
-      case "S":
-        return "مکالمه";
-      default:
-        return "";
-    }
-  };
   return (
     <div style={{ minHeight: 400, margin: 10 }}>
       {resume && userId == resume.user && (
         <>
           <div className={classes.container}>
-            <Typography color="secondary">مشخصات</Typography>
+            <Typography color="secondary">{translate("info")}</Typography>
           </div>
           <Card variant="outlined">
             <Avatar className={classes.avatar} src={resume.image} />
             <div className={classes.paneContauner}>
               <div className={classes.pane}>
-                <Typography>نام : {resume.profile_name}</Typography>
-                <Typography>ایمیل : {resume.email}</Typography>
-                <Typography>تلفن : {resume.phone_no}</Typography>
-                <Typography>متن معرفی : {resume.bio}</Typography>
+                <Typography>
+                  {translate("name")} : {resume.profile_name}
+                </Typography>
+                <Typography>
+                  {translate("email")} : {resume.email}
+                </Typography>
+                <Typography>
+                  {translate("phone number")} : {resume.phone_no}
+                </Typography>
+                <Typography>
+                  {translate("biography")} : {resume.bio}
+                </Typography>
               </div>
               <div className={classes.pane}>
                 <Typography>
-                  تاریخ تولد :
+                  {translate("birth date")} :
                   {jMoment(resume.birth_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                 </Typography>
                 <Typography>
-                  وضعیت نظام وظیفه :
+                  {translate("military service status")} :
                   {resume.military_service
-                    ? convert(resume.military_service)
+                    ? translate(resume.military_service)
                     : "--"}
                 </Typography>
 
                 <Typography>
-                  محل سکونت : {resume.address ? resume.address : "--"}
+                  {translate("address")} :{" "}
+                  {resume.address ? resume.address : "--"}
                 </Typography>
               </div>
             </div>
           </Card>
           <div className={classes.container}>
-            <Typography color="secondary">تحصیلات</Typography>
+            <Typography color="secondary">{translate("education")}</Typography>
           </div>
           <Grid container spacing={1} style={{ marginTop: 10 }}>
             {resume.education.map((row) => (
@@ -136,19 +107,26 @@ const RequestJobResume = ({ load_requested_resume, resume, match }) => {
                       justifyContent: "space-around",
                     }}
                   >
-                    <Typography>{row.title + " از " + row.campus}</Typography>
                     <Typography>
-                      {"تاریخ اخذ مدرک : " +
+                      {row.title + translate(" from ") + row.campus}
+                    </Typography>
+                    <Typography>
+                      {translate("graduation date") +
+                        ":" +
                         jMoment(row.end_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                     </Typography>
-                    <Typography>{"معدل : " + row.score}</Typography>
+                    <Typography>
+                      {translate("grade point average") + ":" + row.score}
+                    </Typography>
                   </CardContent>
                 </Card>
               </Grid>
             ))}
           </Grid>
           <div className={classes.container}>
-            <Typography color="secondary">سابقه کاری</Typography>
+            <Typography color="secondary">
+              {translate("job history")}
+            </Typography>
           </div>
           <Grid container spacing={1} style={{ marginTop: 10 }}>
             {resume.job_history.map((row) => (
@@ -162,13 +140,15 @@ const RequestJobResume = ({ load_requested_resume, resume, match }) => {
                       justifyContent: "space-around",
                     }}
                   >
-                    <Typography>{row.title + " در " + row.company}</Typography>
                     <Typography>
-                      {"از " +
+                      {row.title + translate(" in ") + row.company}
+                    </Typography>
+                    <Typography>
+                      {translate("from ") +
                         jMoment(row.start_date, "YYYY/M/D").format(
                           "jYYYY/jM/jD"
                         ) +
-                        " تا " +
+                        translate(" to ") +
                         jMoment(row.end_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                     </Typography>
                   </CardContent>
@@ -177,27 +157,27 @@ const RequestJobResume = ({ load_requested_resume, resume, match }) => {
             ))}
           </Grid>
           <div className={classes.container}>
-            <Typography color="secondary">زبان های خارجی</Typography>
+            <Typography color="secondary">{translate("languagese")}</Typography>
           </div>
 
           <div className={classes.chipContainer}>
             {resume.language.map((l) => (
               <Chip
                 className={classes.chip}
-                label={l.title + " | " + convert_l(l.level)}
+                label={l.title + " | " + translate(l.level)}
                 color="secondary"
               />
             ))}
           </div>
           <div className={classes.container}>
-            <Typography color="secondary">مهارت ها</Typography>
+            <Typography color="secondary">{translate("skills")}</Typography>
           </div>
 
           <div className={classes.chipContainer}>
             {resume.skill.map((l) => (
               <Chip
                 className={classes.chip}
-                label={l.title + " | " + convert_s(l.level)}
+                label={l.title + " | " + translate(l.level)}
                 color="secondary"
               />
             ))}

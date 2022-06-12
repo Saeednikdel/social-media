@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { verify, resetState } from "../actions/auth";
 import { Button, Typography, LinearProgress } from "@material-ui/core";
-
+import translate from "../translate";
 const Activate = ({
   requestSuccess,
   verify,
@@ -32,7 +32,7 @@ const Activate = ({
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
       {requestSent && <LinearProgress />}
-      <Typography variant="h5">تایید ایمیل</Typography>
+      <Typography variant="h5">{translate("verify email")}</Typography>
       <Button
         style={{ margin: 20 }}
         type="submit"
@@ -40,7 +40,7 @@ const Activate = ({
         color="secondary"
         onClick={verify_account}
       >
-        تایید
+        {translate("ok")}
       </Button>
     </div>
   );

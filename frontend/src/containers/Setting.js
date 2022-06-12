@@ -5,18 +5,18 @@ import Redirect from "react-router-dom/es/Redirect";
 import { NavLink } from "react-router-dom";
 import ProfileSetting from "./ProfileSetting";
 import ResumeSetting from "./ResumeSetting";
-
+import translate from "../translate";
 const Setting = ({ isAuthenticated, match }) => {
   const tab = match.params.tab;
   if (isAuthenticated === false) return <Redirect to="/login" />;
   const tabList = [
     {
-      label: "پروفایل",
+      label: translate("profile"),
       value: "profile",
       to: "/setting/profile",
     },
     {
-      label: "رزومه",
+      label: translate("resume"),
       value: "resume",
       to: "/setting/resume",
     },

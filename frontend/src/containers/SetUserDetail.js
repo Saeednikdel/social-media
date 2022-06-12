@@ -11,6 +11,8 @@ import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { set_user_detail, resetState } from "../actions/auth";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import translate from "../translate";
+
 jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 
 const useStyles = makeStyles((theme) => ({
@@ -61,16 +63,7 @@ const SetUserDetail = ({
     set_user_detail(id, name, profile_name, bio, phone_no, birth_date);
     setRequestSent(true);
   };
-  const nameHelper = (text) => {
-    switch (text) {
-      case "Only alphanumeric characters are allowed.":
-        return "فقط حروف انگلیسی و اعداد بدون فاصله";
-      case "user account with this name already exists.":
-        return "این نام کاربری در دسترس نیست";
-      default:
-        return "";
-    }
-  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
@@ -79,14 +72,14 @@ const SetUserDetail = ({
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="نام کاربری"
+            label={translate("user name")}
             name="name"
             value={name}
             error={set_detail_error && set_detail_error.name && true}
             helperText={
               set_detail_error &&
               set_detail_error.name &&
-              nameHelper(set_detail_error.name[0])
+              translate(set_detail_error.name[0])
             }
             onChange={(e) => onChange(e)}
             required
@@ -97,7 +90,7 @@ const SetUserDetail = ({
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="نام"
+            label={translate("name")}
             name="profile_name"
             value={profile_name}
             onChange={(e) => onChange(e)}
@@ -109,7 +102,7 @@ const SetUserDetail = ({
             className={classes.textField}
             autoComplete="off"
             type="text"
-            label="بیو"
+            label={translate("biography")}
             name="bio"
             value={bio}
             onChange={(e) => onChange(e)}
@@ -120,7 +113,7 @@ const SetUserDetail = ({
             autoComplete="off"
             className={classes.textField}
             type="number"
-            label="تلفن"
+            label={translate("phone number")}
             name="phone_no"
             value={phone_no}
             onChange={(e) => onChange(e)}
@@ -131,9 +124,9 @@ const SetUserDetail = ({
             <DatePicker
               className={classes.textField}
               name="birth_date"
-              okLabel="تأیید"
-              label="تاریخ تولد"
-              cancelLabel="لغو"
+              okLabel={translate("ok")}
+              label={translate("birth date")}
+              cancelLabel={translate("cancel")}
               labelFunc={(date) => (date ? date.format("jYYYY/jMM/jDD") : "")}
               value={birth_date}
               onChange={(date) =>
@@ -162,7 +155,7 @@ const SetUserDetail = ({
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>

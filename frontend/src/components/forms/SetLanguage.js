@@ -29,9 +29,9 @@ const SetLanguage = ({ setOpenPopup, add_language, new_lang }) => {
   const [openLevel, setOpenLevel] = useState(false);
 
   const levelList = [
-    { title: translate("read and write"), value: "R" },
-    { title: translate("comprehension"), value: "C" },
-    { title: translate("speaking"), value: "S" },
+    { title: translate("read and write"), value: "read and write" },
+    { title: translate("comprehension"), value: "comprehension" },
+    { title: translate("speaking"), value: "speaking" },
   ];
   useEffect(() => {
     if (new_lang && new_lang.id) {

@@ -13,14 +13,14 @@ import SetJobHistory from "../forms/SetJobHistory";
 import Popup from "../Popup";
 import jMoment from "moment-jalaali";
 import { add_job } from "../../actions/resume";
-
+import translate from "../../translate";
 export const JobHistory = ({ job_history, add_job }) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
     <div style={{ minHeight: 200, marginTop: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography color="secondary">سابقه کاری</Typography>
+        <Typography color="secondary">{translate("job history")}</Typography>
         <Button
           color="secondary"
           variant="outlined"
@@ -43,13 +43,15 @@ export const JobHistory = ({ job_history, add_job }) => {
                     justifyContent: "space-around",
                   }}
                 >
-                  <Typography>{row.title + " در " + row.company}</Typography>
                   <Typography>
-                    {"از " +
+                    {row.title + translate(" in ") + row.company}
+                  </Typography>
+                  <Typography>
+                    {translate("from ") +
                       jMoment(row.start_date, "YYYY/M/D").format(
                         "jYYYY/jM/jD"
                       ) +
-                      " تا " +
+                      translate(" to ") +
                       jMoment(row.end_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                   </Typography>
                 </CardContent>
@@ -69,7 +71,7 @@ export const JobHistory = ({ job_history, add_job }) => {
       </Grid>
 
       <Popup
-        title={"افزودن سابقه کار"}
+        title={translate("add job history")}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

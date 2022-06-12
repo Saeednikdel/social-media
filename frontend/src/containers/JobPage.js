@@ -20,6 +20,8 @@ import { Link, withRouter } from "react-router-dom";
 import linkify from "../utils/linkify";
 import axios from "axios";
 import RequstList from "./RequstList";
+import translate from "../translate";
+
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
     marginTop: `${theme.spacing(2)}px`,
@@ -79,9 +81,9 @@ const JobPage = ({
       setAlert({
         isOpen: true,
         title: "!",
-        message: "لطفا وارد شوید یا ثبت نام کنید.",
+        message: translate("please log in or sign up"),
         actionUrl: "/login",
-        actionText: "ورود",
+        actionText: translate("log in"),
       });
     }
   };
@@ -104,20 +106,20 @@ const JobPage = ({
       if (res.data.message === "resume sent") {
         setNotify({
           isOpen: true,
-          message: "رزومه ارسال شد.",
+          message: translate("resume sent"),
           type: "success",
         });
       } else if (res.data.message === "allready sent") {
         setNotify({
           isOpen: true,
-          message: "رزومه قبلا ارسال شده.",
+          message: translate("resume has been already sent"),
           type: "info",
         });
       }
     } catch (err) {
       setNotify({
         isOpen: true,
-        message: "رزومه ارسال نشد.",
+        message: translate("resume couldn't be sent"),
         type: "error",
       });
     }
@@ -176,7 +178,7 @@ const JobPage = ({
               >
                 {user && user.id !== job.user && (
                   <Button color="secondary" onClick={() => send()}>
-                    ارسال رزومه
+                    {translate("send resume")}
                   </Button>
                 )}
                 <IconButton

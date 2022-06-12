@@ -12,6 +12,7 @@ import { load_msg } from "../actions/message";
 import Redirect from "react-router-dom/es/Redirect";
 import { withRouter } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import translate from "../translate";
 
 const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
   const room = match.params.room;
@@ -22,7 +23,9 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
 
   const [msg, setMsg] = useState("");
   const [online, setOnline] = useState(0);
-  const [connectionStatus, setConnectionStatus] = useState("در حال اتصال...");
+  const [connectionStatus, setConnectionStatus] = useState(
+    translate("connecting...")
+  );
   const [chat, setChat] = useState([]);
   const chatContainer = useRef();
   const [page, setPage] = useState(2);
@@ -32,7 +35,7 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
     setPage(2);
 
     client.onopen = () => {
-      setConnectionStatus("متصل");
+      setConnectionStatus(translate("connected"));
     };
     client.onmessage = (message) => {
       const data = JSON.parse(message.data);
@@ -41,7 +44,7 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
     };
     client.onclose = (e) => {
       console.log("connection closed");
-      setConnectionStatus("قطع شد");
+      setConnectionStatus(translate("disconnected"));
     };
     return () => {
       client.close();
@@ -86,7 +89,7 @@ const Chat = ({ match, load_msg, message, isAuthenticated, count }) => {
           {connectionStatus}
         </Typography>
         <Typography variant="subtitle2" color="textSecondary">
-          {online > 1 && "آنلاین"}
+          {online > 1 && translate("online")}
         </Typography>
         <div
           ref={chatContainer}

@@ -20,7 +20,7 @@ import axios from "axios";
 import Redirect from "react-router-dom/es/Redirect";
 import UserPostList from "./UserPostList";
 import UserJobList from "./UserJobList";
-
+import translate from "../translate";
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: `${theme.spacing(2)}px`,
@@ -67,11 +67,11 @@ const UserProfile = ({
 
   const tabList = [
     {
-      label: "پست ها",
+      label: translate("posts"),
       value: "posts",
     },
     {
-      label: "شغل ها",
+      label: translate("jobs"),
       value: "jobs",
     },
   ];
@@ -142,7 +142,7 @@ const UserProfile = ({
               {profile.name}@
             </Typography>
             <Typography color="textSecondary" variant="subtitle2">
-              عضو از :
+              {translate("joined")} :
               {jMoment(profile.join_date, "YYYY/M/D").format("jYYYY/jM/jD")}
             </Typography>
           </div>
@@ -161,14 +161,16 @@ const UserProfile = ({
                   onClick={() => follow_unfollw(userName)}
                   style={{ marginLeft: 10 }}
                 >
-                  {profile.followed === true ? "آنفالو" : "فالو"}
+                  {profile.followed === true
+                    ? translate("unfollow")
+                    : translate("follow")}
                 </Button>
               </>
             )}
             {isAuthenticated && user.id === profile.id && (
               <Link className={classes.navLink} to="/setting/profile">
                 <Typography color="secondary" variant="body1">
-                  ویرایش پروفایل
+                  {translate("setting")}
                 </Typography>
               </Link>
             )}
@@ -183,7 +185,7 @@ const UserProfile = ({
             to={`/list/follower/${userName}`}
           >
             <Typography color="textSecondary" variant="subtitle2">
-              دنبال کننده : {profile.followers}
+              {translate("follower")} : {profile.followers}
             </Typography>
           </Link>
           <Link
@@ -191,7 +193,7 @@ const UserProfile = ({
             to={`/list/following/${userName}`}
           >
             <Typography color="textSecondary" variant="subtitle2">
-              دنبال میکند : {profile.followings}
+              {translate("following")} : {profile.followings}
             </Typography>
           </Link>
         </div>

@@ -5,18 +5,18 @@ import Redirect from "react-router-dom/es/Redirect";
 import { NavLink } from "react-router-dom";
 import PostBookmark from "./PostBookmark";
 import JobBookmark from "./JobBookmark";
-
+import translate from "../translate";
 const Bookmark = ({ isAuthenticated, match }) => {
   const tab = match.params.tab;
   if (isAuthenticated === false) return <Redirect to="/login" />;
   const tabList = [
     {
-      label: "پست ها",
+      label: translate("posts"),
       value: "posts",
       to: "/bookmark/posts",
     },
     {
-      label: "شغل ها",
+      label: translate("jobs"),
       value: "jobs",
       to: "/bookmark/jobs",
     },

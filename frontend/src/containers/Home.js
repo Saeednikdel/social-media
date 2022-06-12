@@ -4,7 +4,6 @@ import {
   makeStyles,
   CircularProgress,
   TextField,
-  Divider,
   Toolbar,
 } from "@material-ui/core";
 import PostCard from "../components/PostCard";
@@ -12,6 +11,7 @@ import { connect } from "react-redux";
 import { load_posts } from "../actions/blog";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchSharp } from "@material-ui/icons";
+import translate from "../translate";
 
 const useStyles = makeStyles((theme) => ({
   loader: {
@@ -84,7 +84,7 @@ const Home = ({ posts, load_posts, count, history }) => {
           <TextField
             autoComplete="off"
             id="search"
-            placeholder="جستجو"
+            placeholder={translate("search")}
             color="secondary"
             variant="outlined"
             className={classes.textField}

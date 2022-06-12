@@ -8,6 +8,8 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import translate from "../translate";
+
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
@@ -57,15 +59,11 @@ const SetEmail = ({
             className={classes.textField}
             autoComplete="off"
             type="email"
-            label="ایمیل جدید"
+            label={translate("new email")}
             name="new_email"
             value={new_email}
             error={set_email_error && set_email_error.new_email && true}
-            helperText={
-              set_email_error &&
-              set_email_error.new_email &&
-              "این ایمیل در دسترس نیست"
-            }
+            helperText={set_email_error && translate(set_email_error.new_email)}
             onChange={(e) => onChange(e)}
             required
           />
@@ -75,14 +73,12 @@ const SetEmail = ({
             className={classes.textField}
             autoComplete="off"
             type="email"
-            label="تکرار ایمیل"
+            label={translate("retype email")}
             name="re_new_email"
             value={re_new_email}
             error={set_email_error && set_email_error.non_field_errors && true}
             helperText={
-              set_email_error &&
-              set_email_error.non_field_errors &&
-              "تکرار ایمیل اشتباه است"
+              set_email_error && translate(set_email_error.non_field_errors)
             }
             onChange={(e) => onChange(e)}
             required
@@ -93,15 +89,13 @@ const SetEmail = ({
             className={classes.textField}
             autoComplete="off"
             type="password"
-            label="رمز عبور"
+            label={translate("password")}
             name="current_password"
             value={current_password}
             onChange={(e) => onChange(e)}
             error={set_email_error && set_email_error.current_password && true}
             helperText={
-              set_email_error &&
-              set_email_error.current_password &&
-              "رمزعبور اشتباه است"
+              set_email_error && translate(set_email_error.current_password[0])
             }
             required
           />
@@ -123,7 +117,7 @@ const SetEmail = ({
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>

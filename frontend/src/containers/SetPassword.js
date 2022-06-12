@@ -8,6 +8,8 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import translate from "../translate";
+
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
@@ -47,20 +49,6 @@ const SetPassword = ({
     set_password(new_password, re_new_password, current_password);
     setRequestSent(true);
   };
-  const passHelper = (text) => {
-    switch (text) {
-      case "This password is too short. It must contain at least 8 characters.":
-        return "حداقل ۸ کاراکتر شامل حروف و اعداد";
-      case "This password is too common.":
-        return "یک رمزعبور بهتر انتخاب کنید";
-      case "This password is entirely numeric.":
-        return "رمزعبور کاملا عددی مجاز نیست";
-      case "The password is too similar to the email.":
-        return "رمزعبور مشابه ایمیل مجاز نیست";
-      default:
-        return "";
-    }
-  };
   return (
     <div style={{ textAlign: "center" }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
@@ -69,14 +57,14 @@ const SetPassword = ({
             className={classes.textField}
             autoComplete="off"
             type="password"
-            label="رمز عبور جدید"
+            label={translate("new password")}
             name="new_password"
             value={new_password}
             error={set_pass_error && set_pass_error.new_password && true}
             helperText={
               set_pass_error &&
               set_pass_error.new_password &&
-              passHelper(set_pass_error.new_password[0])
+              translate(set_pass_error.new_password[0])
             }
             onChange={(e) => onChange(e)}
             required
@@ -87,14 +75,12 @@ const SetPassword = ({
             className={classes.textField}
             autoComplete="off"
             type="password"
-            label="تکرار رمز جدید"
+            label={translate("retype password")}
             name="re_new_password"
             value={re_new_password}
             error={set_pass_error && set_pass_error.non_field_errors && true}
             helperText={
-              set_pass_error &&
-              set_pass_error.non_field_errors &&
-              "تکرار رمز اشتباه است"
+              set_pass_error && translate(set_pass_error.non_field_errors)
             }
             onChange={(e) => onChange(e)}
             required
@@ -105,14 +91,12 @@ const SetPassword = ({
             className={classes.textField}
             autoComplete="off"
             type="password"
-            label="رمز عبور فعلی"
+            label={translate("current password")}
             name="current_password"
             value={current_password}
             error={set_pass_error && set_pass_error.current_password && true}
             helperText={
-              set_pass_error &&
-              set_pass_error.current_password &&
-              "رمزعبور اشتباه است"
+              set_pass_error && translate(set_pass_error.current_password[0])
             }
             onChange={(e) => onChange(e)}
             required
@@ -135,7 +119,7 @@ const SetPassword = ({
             )
           }
         >
-          تایید
+          {translate("ok")}
         </Button>
       </form>
     </div>

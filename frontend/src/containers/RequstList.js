@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { load_job_requests } from "../actions/job";
 import InfiniteScroll from "react-infinite-scroll-component";
+import translate from "../translate";
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
@@ -44,7 +45,7 @@ const RequestList = ({
 
   return (
     <div style={{ margin: 10 }}>
-      <Typography color="secondary">رزومه های ارسالی</Typography>
+      <Typography color="secondary">{translate("sent resumes")}</Typography>
       {job_requests && (
         <InfiniteScroll
           dataLength={job_requests.length}
@@ -90,7 +91,7 @@ const RequestList = ({
                     className={classes.navLink}
                     to={`/job/${id}/resume/${item.id}`}
                   >
-                    <Button color="secondary">دیدن رزومه</Button>
+                    <Button color="secondary">{translate("see resume")}</Button>
                   </Link>
                 </div>
               </div>

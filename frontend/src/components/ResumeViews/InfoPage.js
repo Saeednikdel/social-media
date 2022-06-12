@@ -10,6 +10,7 @@ import {
 import Popup from "../Popup";
 import SetInfo from "../forms/SetInfo";
 import jMoment from "moment-jalaali";
+import translate from "../../translate";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,20 +41,6 @@ const useStyles = makeStyles((theme) => ({
 export const InfoPage = ({ resume }) => {
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
-  const convert = (string) => {
-    switch (string) {
-      case "N":
-        return "مشمول";
-      case "C":
-        return "پایان خدمت";
-      case "D":
-        return "در حال خدمت";
-      case "E":
-        return "معاف";
-      default:
-        return "";
-    }
-  };
   return (
     <div>
       {resume && (
@@ -66,41 +53,52 @@ export const InfoPage = ({ resume }) => {
               size="small"
               onClick={() => setOpenPopup(true)}
             >
-              ویرایش
+              {translate("edit")}
             </Button>
           </div>
           <Card variant="outlined">
             <Avatar className={classes.avatar} src={resume.image} />
             <div className={classes.paneContauner}>
               <div className={classes.pane}>
-                <Typography>نام : {resume.profile_name}</Typography>
-                <Typography>ایمیل : {resume.email}</Typography>
-                <Typography>تلفن : {resume.phone_no}</Typography>
-                <Typography>متن معرفی : {resume.bio}</Typography>
+                <Typography>
+                  {translate("name")} : {resume.profile_name}
+                </Typography>
+                <Typography>
+                  {translate("email")}: {resume.email}
+                </Typography>
+                <Typography>
+                  {translate("phone number")} : {resume.phone_no}
+                </Typography>
+                <Typography>
+                  {translate("biography")}: {resume.bio}
+                </Typography>
               </div>
               <div className={classes.pane}>
                 <Typography>
-                  نمایش رزومه : {resume.show_resume ? "برای همه" : "فقط خودم"}
+                  {translate("show resume")} :
+                  {resume.show_resume
+                    ? translate("every one")
+                    : translate("only me")}
                 </Typography>
                 <Typography>
-                  تاریخ تولد :
+                  {translate("birth date")} :
                   {jMoment(resume.birth_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                 </Typography>
                 <Typography>
-                  وضعیت نظام وظیفه :
+                  {translate("military service status")} :
                   {resume.military_service
-                    ? convert(resume.military_service)
+                    ? translate(resume.military_service)
                     : "--"}
                 </Typography>
-
                 <Typography>
-                  محل سکونت : {resume.address ? resume.address : "--"}
+                  {translate("address")} :
+                  {resume.address ? resume.address : "--"}
                 </Typography>
               </div>
             </div>
           </Card>
           <Popup
-            title={"ویرایش مشخصات"}
+            title={translate("edit info")}
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
           >

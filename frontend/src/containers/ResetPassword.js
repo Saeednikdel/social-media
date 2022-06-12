@@ -9,6 +9,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
+import translate from "../translate";
 
 const ResetPassword = ({
   requestSuccess,
@@ -38,18 +39,20 @@ const ResetPassword = ({
     reset_password(email);
     setRequestSent(true);
   };
-  if (requestSent === requestSuccess) return <Redirect to='/' />;
+  if (requestSent === requestSuccess) return <Redirect to="/" />;
 
   return (
     <div style={{ textAlign: "center", marginTop: 20 }}>
-      <Typography variant='h5'>درخواست بازنشانی رمز عبور</Typography>
-      <form autoComplete='off' onSubmit={(e) => onSubmit(e)}>
+      <Typography variant="h5">
+        {translate("request reset password")}
+      </Typography>
+      <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
         <div>
           <TextField
-            autoComplete='off'
-            type='email'
-            label='ایمیل'
-            name='email'
+            autoComplete="off"
+            type="email"
+            label={translate("email")}
+            name="email"
             value={email}
             onChange={(e) => onChange(e)}
             required
@@ -57,21 +60,22 @@ const ResetPassword = ({
         </div>
         <Button
           style={{ margin: 20 }}
-          variant='contained'
-          color='secondary'
-          type='submit'
+          variant="contained"
+          color="secondary"
+          type="submit"
           startIcon={
             requestSent ? (
               <CircularProgress
                 size={20}
                 style={{ marginLeft: "10px" }}
-                color='inherit'
+                color="inherit"
               />
             ) : (
               <Done style={{ marginLeft: "10px" }} />
             )
-          }>
-          ارسال
+          }
+        >
+          {translate("send")}
         </Button>
       </form>
     </div>

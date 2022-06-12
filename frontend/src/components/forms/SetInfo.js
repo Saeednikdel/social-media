@@ -58,10 +58,10 @@ const SetInfo = ({
   const [openMilitaryService, setOpenMilitaryService] = useState(false);
   const [openShowResume, setOpenShowResume] = useState(false);
   const serviceList = [
-    { title: translate("conscript"), value: "N" },
-    { title: translate("completed"), value: "C" },
-    { title: translate("serving"), value: "D" },
-    { title: translate("exempt"), value: "E" },
+    { title: translate("conscript"), value: "conscript" },
+    { title: translate("completed"), value: "completed" },
+    { title: translate("serving"), value: "serving" },
+    { title: translate("exempt"), value: "exempt" },
   ];
   useEffect(() => {
     if (requestFail) {
