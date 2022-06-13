@@ -54,14 +54,14 @@ function BottomBar() {
       >
         <Divider />
         <Toolbar className={classes.toolbar}>
-          <Link className={classes.navLink} to="/messages">
+          <Link className={classes.navLink} to="/">
             <IconButton color="inherit">
-              <EmailOutlined />
+              <HomeOutlined />
             </IconButton>
           </Link>
-          <Link className={classes.navLink} to="/notification">
+          <Link className={classes.navLink} to="/jobs">
             <IconButton color="inherit">
-              <NotificationsNone />
+              <WorkOutline />
             </IconButton>
           </Link>
           <Link className={classes.navLink} to="/newpost">
@@ -69,14 +69,14 @@ function BottomBar() {
               <Add />
             </Fab>
           </Link>
-          <Link className={classes.navLink} to="/jobs">
+          <Link className={classes.navLink} to="/notification">
             <IconButton color="inherit">
-              <WorkOutline />
+              <NotificationsNone />
             </IconButton>
           </Link>
-          <Link className={classes.navLink} to="/">
+          <Link className={classes.navLink} to="/messages">
             <IconButton color="inherit">
-              <HomeOutlined />
+              <EmailOutlined />
             </IconButton>
           </Link>
         </Toolbar>

@@ -27,18 +27,22 @@ const Layout = (props) => {
         .querySelector('meta[name="theme-color"]')
         .setAttribute("content", "#464646");
     }
+    if (localStorage.getItem("direction")) {
+      document.body.setAttribute("dir", localStorage.getItem("direction"));
+    }
     fetchData();
   }, []);
   const [darkState, setDarkState] = useState(
     JSON.parse(localStorage.getItem("darkState"))
   );
+  const [direction, setDirection] = useState(localStorage.getItem("direction"));
   const palletType = darkState ? "dark" : "light";
 
   const darkTheme = createMuiTheme({
     typography: {
       fontFamily: "Vazir",
     },
-    direction: "rtl",
+    direction: direction,
     palette: {
       type: palletType,
       primary: {
@@ -50,6 +54,19 @@ const Layout = (props) => {
       },
     },
   });
+  const handleLangChange = () => {
+    if (direction == "ltr") {
+      document.body.setAttribute("dir", "rtl");
+      setDirection("rtl");
+      localStorage.setItem("direction", "rtl");
+      localStorage.setItem("lang", "fa");
+    } else {
+      document.body.setAttribute("dir", "ltr");
+      setDirection("ltr");
+      localStorage.setItem("direction", "ltr");
+      localStorage.setItem("lang", "en");
+    }
+  };
   const handleThemeChange = () => {
     if (!darkState) {
       document
@@ -70,7 +87,11 @@ const Layout = (props) => {
   return (
     <StylesProvider jss={jss}>
       <ThemeProvider theme={darkTheme}>
-        <Appbar checked={darkState} onChange={handleThemeChange} />
+        <Appbar
+          checked={darkState}
+          onChange={handleThemeChange}
+          changeLang={handleLangChange}
+        />
         <div
           style={{
             display: "flex",

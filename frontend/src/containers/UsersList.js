@@ -11,12 +11,13 @@ import { connect } from "react-redux";
 import { load_users } from "../actions/blog";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchSharp } from "@material-ui/icons";
+import translate from "../translate";
 
 const useStyles = makeStyles((theme) => ({
   loader: {
     textAlign: "center",
   },
-  textField: { width: "100%" },
+  textField: { width: "100%", maxWidth: 900 },
   form: {
     padding: 10,
     position: "fixed",
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     top: 0,
     backgroundColor: `${theme.palette.primary.border}`,
+    textAlign: "center",
   },
 }));
 const UsersList = ({ users, load_users, count, history }) => {
@@ -83,7 +85,7 @@ const UsersList = ({ users, load_users, count, history }) => {
           <TextField
             autoComplete="off"
             id="search"
-            placeholder="جستجو"
+            placeholder={translate("search")}
             color="secondary"
             variant="outlined"
             className={classes.textField}

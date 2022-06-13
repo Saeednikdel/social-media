@@ -22,6 +22,7 @@ import {
   BookmarkBorder,
   ArrowForward,
   PersonAddOutlined,
+  Language,
 } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   center: { flexGrow: 1, textAlign: "center" },
@@ -60,7 +61,7 @@ const Appbar = ({
   logout,
   checked,
   onChange,
-  history,
+  changeLang,
   user,
 }) => {
   const classes = useStyles();
@@ -158,6 +159,13 @@ const Appbar = ({
             )}
             <Typography variant="body1">
               {checked ? translate(" light theme ") : translate(" dark theme ")}
+            </Typography>
+          </Link>
+
+          <Link className={classes.navLink} onClick={changeLang}>
+            <Language className={classes.menuicon} />
+            <Typography variant="body1">
+              {translate("change language")}
             </Typography>
           </Link>
         </div>
