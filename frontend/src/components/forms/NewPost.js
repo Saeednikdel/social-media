@@ -80,7 +80,7 @@ const NewPost = ({ isAuthenticated, user }) => {
     return getDefaultKeyBinding(e);
   };
 
-  if (isAuthenticated === false) return <Redirect to="/login" />;
+  if (isAuthenticated === false) return <Redirect to='/login' />;
 
   return (
     <div className={classes.containter}>
@@ -99,27 +99,26 @@ const NewPost = ({ isAuthenticated, user }) => {
           )}
         </div>
         <Button
-          size="small"
-          type="submit"
-          variant="contained"
-          color="secondary"
+          size='small'
+          type='submit'
+          variant='contained'
+          color='secondary'
           onClick={onSubmit}
           startIcon={
             requestSent ? (
               <CircularProgress
                 size={20}
                 style={{ marginLeft: "10px" }}
-                color="inherit"
+                color='inherit'
               />
             ) : (
               <Done style={{ marginLeft: "10px" }} />
             )
-          }
-        >
+          }>
           {translate("send")}
         </Button>
       </div>
-      <div className="RichEditor-root">
+      <div className='RichEditor-root'>
         <BlockStyleControls
           editorState={editorState}
           onToggle={toggleBlockType}
@@ -128,7 +127,7 @@ const NewPost = ({ isAuthenticated, user }) => {
           editorState={editorState}
           onToggle={toggleInlineStyle}
         />
-        <div className="RichEditor-editor">
+        <div className='RichEditor-editor'>
           <Editor
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
@@ -262,7 +261,8 @@ class StyleButton extends React.Component {
             onMouseDown={this.onToggle}
           />
         );
-
+      case "Code Block":
+        return <Code className={className} onMouseDown={this.onToggle} />;
       default:
         return (
           <span className={className} onMouseDown={this.onToggle}>
@@ -283,6 +283,7 @@ const BLOCK_TYPES = [
   { label: "Blockquote", style: "blockquote" },
   { label: "UL", style: "unordered-list-item" },
   { label: "OL", style: "ordered-list-item" },
+  { label: "Code Block", style: "code-block" },
 ];
 
 const BlockStyleControls = (props) => {
@@ -294,7 +295,7 @@ const BlockStyleControls = (props) => {
     .getType();
 
   return (
-    <div className="RichEditor-controls">
+    <div className='RichEditor-controls'>
       {BLOCK_TYPES.map((type) => (
         <StyleButton
           key={type.label}
@@ -319,7 +320,7 @@ const InlineStyleControls = (props) => {
   const currentStyle = props.editorState.getCurrentInlineStyle();
 
   return (
-    <div className="RichEditor-controls">
+    <div className='RichEditor-controls'>
       {INLINE_STYLES.map((type) => (
         <StyleButton
           key={type.label}
