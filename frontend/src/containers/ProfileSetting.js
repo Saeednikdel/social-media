@@ -14,10 +14,10 @@ import jMoment from "moment-jalaali";
 import { logout } from "../actions/auth";
 import { Link } from "react-router-dom";
 import { Edit, AddAPhotoTwoTone } from "@material-ui/icons";
-import SetEmail from "./SetEmail";
-import SetPassword from "./SetPassword";
+import SetEmail from "../components/forms/SetEmail";
+import SetPassword from "../components/forms/SetPassword";
 import Popup from "../components/Popup";
-import SetUserDetail from "./SetUserDetail";
+import SetUserDetail from "../components/forms/SetUserDetail";
 import translate from "../translate";
 
 const useStyles = makeStyles((theme) => ({

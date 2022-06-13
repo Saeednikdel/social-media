@@ -9,9 +9,9 @@ import {
 import { Done } from "@material-ui/icons";
 import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
-import { set_user_detail, resetState } from "../actions/auth";
+import { set_user_detail, resetState } from "../../actions/auth";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import translate from "../translate";
+import translate from "../../translate";
 
 jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { login, resetState } from "../actions/auth";
+import { login, resetState } from "../../actions/auth";
 import {
   TextField,
   Button,
@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
-import translate from "../translate";
+import translate from "../../translate";
 const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",

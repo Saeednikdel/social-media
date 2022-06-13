@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import { signup, resetState } from "../actions/auth";
+import { signup, resetState } from "../../actions/auth";
 import {
   TextField,
   Button,
@@ -9,9 +9,9 @@ import {
   Typography,
   CircularProgress,
 } from "@material-ui/core";
-import DialogAlert from "../components/DialogAlert";
+import DialogAlert from "../DialogAlert";
 import { Done } from "@material-ui/icons";
-import translate from "../translate";
+import translate from "../../translate";
 const useStyles = makeStyles((theme) => ({
   navLink: {
     textDecoration: "none",

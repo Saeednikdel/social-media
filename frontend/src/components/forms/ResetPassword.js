@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { reset_password, resetState } from "../actions/auth";
+import { reset_password, resetState } from "../../actions/auth";
 import {
   TextField,
   Button,
@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
-import translate from "../translate";
+import translate from "../../translate";
 
 const ResetPassword = ({
   requestSuccess,

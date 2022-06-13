@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { set_email, resetState } from "../actions/auth";
+import { set_password, resetState } from "../../actions/auth";
 import {
   TextField,
   Button,
@@ -8,30 +8,29 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Done } from "@material-ui/icons";
-import translate from "../translate";
+import translate from "../../translate";
 
 const useStyles = makeStyles((theme) => ({
   textField: { marginTop: 5, minWidth: 240 },
   button: { marginTop: 20, marginBottom: 20 },
 }));
-const SetEmail = ({
-  set_email,
+const SetPassword = ({
+  set_password,
   setOpenPopup,
   requestSuccess,
-  requestFail,
   resetState,
-  set_email_error,
+  requestFail,
+  set_pass_error,
 }) => {
   const [formData, setFormData] = useState({
-    new_email: "",
-    re_new_email: "",
+    new_password: "",
+    re_new_password: "",
     current_password: "",
   });
-
-  const { new_email, re_new_email, current_password } = formData;
+  const [requestSent, setRequestSent] = useState(false);
   const classes = useStyles();
 
-  const [requestSent, setRequestSent] = useState(false);
+  const { new_password, re_new_password, current_password } = formData;
   useEffect(() => {
     if (requestFail) {
       setRequestSent(false);
@@ -47,10 +46,9 @@ const SetEmail = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    set_email(new_email, re_new_email, current_password);
+    set_password(new_password, re_new_password, current_password);
     setRequestSent(true);
   };
-
   return (
     <div style={{ textAlign: "center" }}>
       <form autoComplete="off" onSubmit={(e) => onSubmit(e)}>
@@ -58,27 +56,15 @@ const SetEmail = ({
           <TextField
             className={classes.textField}
             autoComplete="off"
-            type="email"
-            label={translate("new email")}
-            name="new_email"
-            value={new_email}
-            error={set_email_error && set_email_error.new_email && true}
-            helperText={set_email_error && translate(set_email_error.new_email)}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div>
-          <TextField
-            className={classes.textField}
-            autoComplete="off"
-            type="email"
-            label={translate("retype email")}
-            name="re_new_email"
-            value={re_new_email}
-            error={set_email_error && set_email_error.non_field_errors && true}
+            type="password"
+            label={translate("new password")}
+            name="new_password"
+            value={new_password}
+            error={set_pass_error && set_pass_error.new_password && true}
             helperText={
-              set_email_error && translate(set_email_error.non_field_errors)
+              set_pass_error &&
+              set_pass_error.new_password &&
+              translate(set_pass_error.new_password[0])
             }
             onChange={(e) => onChange(e)}
             required
@@ -89,14 +75,30 @@ const SetEmail = ({
             className={classes.textField}
             autoComplete="off"
             type="password"
-            label={translate("password")}
+            label={translate("retype password")}
+            name="re_new_password"
+            value={re_new_password}
+            error={set_pass_error && set_pass_error.non_field_errors && true}
+            helperText={
+              set_pass_error && translate(set_pass_error.non_field_errors)
+            }
+            onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            className={classes.textField}
+            autoComplete="off"
+            type="password"
+            label={translate("current password")}
             name="current_password"
             value={current_password}
-            onChange={(e) => onChange(e)}
-            error={set_email_error && set_email_error.current_password && true}
+            error={set_pass_error && set_pass_error.current_password && true}
             helperText={
-              set_email_error && translate(set_email_error.current_password[0])
+              set_pass_error && translate(set_pass_error.current_password[0])
             }
+            onChange={(e) => onChange(e)}
             required
           />
         </div>
@@ -126,6 +128,8 @@ const SetEmail = ({
 const mapStateToProps = (state) => ({
   requestSuccess: state.auth.requestSuccess,
   requestFail: state.auth.requestFail,
-  set_email_error: state.auth.set_email_error,
+  set_pass_error: state.auth.set_pass_error,
 });
-export default connect(mapStateToProps, { set_email, resetState })(SetEmail);
+export default connect(mapStateToProps, { set_password, resetState })(
+  SetPassword
+);
