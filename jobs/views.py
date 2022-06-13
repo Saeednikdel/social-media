@@ -111,6 +111,12 @@ def JobDetail(request, pk):
     new_dict.update(serializer.data)
     return Response(new_dict)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def jobRemove(request):
+    job = get_object_or_404(Job,user=request.data.get('user'), id=request.data.get('id'))
+    job.delete()
+    return Response({"id":request.data.get('id')})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

@@ -6,6 +6,7 @@ urlpatterns = [
     path('user-post-list/<str:name>/<str:page>/', views.userPostList, name="user-post-list"),
     path('post-detail/<str:pk>/', views.postDetail, name="post-detail"),
     path('post-create/', views.postCreate, name="post-create"),
+    path('post-remove/', views.postRemove, name="post-remove"),
 
     path('like/', views.like, name="like"),
     path('like-list/<str:id>/<str:page>/', views.likeList, name="like-list"),

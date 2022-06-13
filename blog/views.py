@@ -82,6 +82,14 @@ def profileDetail(request):
     new_dict.update(serializer.data)
     return Response(new_dict)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def postRemove(request):
+    post = get_object_or_404(Post,user=request.data.get('user'), id=request.data.get('id'))
+    post.delete()
+    return Response({"id":request.data.get('id')})
+    
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
