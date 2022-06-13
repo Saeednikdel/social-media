@@ -8,19 +8,22 @@ import {
   Avatar,
   Button,
   LinearProgress,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
-import { BookmarkBorder, Bookmark } from "@material-ui/icons";
+import { BookmarkBorder, Bookmark, MoreVert } from "@material-ui/icons";
 import DialogAlert from "../components/DialogAlert";
 import Notification from "../components/Notification";
 import { connect } from "react-redux";
 import { load_job } from "../actions/job";
 import { bookmark_job } from "../actions/job";
 import jMoment from "moment-jalaali";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useHistory } from "react-router-dom";
 import linkify from "../utils/linkify";
 import axios from "axios";
 import RequstList from "./RequstList";
 import translate from "../translate";
+import { RWebShare } from "react-web-share";
 
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
@@ -28,17 +31,10 @@ const useStyles = makeStyles((theme) => ({
     padding: `${theme.spacing(2)}px`,
     minHeight: 250,
   },
-  commentCard: {
-    marginTop: `${theme.spacing(2)}px`,
-    padding: `${theme.spacing(2)}px`,
-    minHeight: 150,
-  },
-
   emptyDiv: {
     textAlign: "center",
     height: 600,
   },
-
   navLink: {
     textDecoration: "none",
     color: "inherit",
@@ -57,6 +53,9 @@ const JobPage = ({
 }) => {
   const classes = useStyles();
   const jobId = match.params.jobId;
+  const history = useHistory();
+
+  const [openMenu, setOpenMenu] = useState(null);
   const [notify, setNotify] = useState({
     isOpen: false,
     message: "",
@@ -87,7 +86,20 @@ const JobPage = ({
       });
     }
   };
-
+  const DeleteHandle = (id) => {
+    setOpenMenu(null);
+    if (isAuthenticated === true) {
+      remove();
+    } else {
+      setAlert({
+        isOpen: true,
+        title: "!",
+        message: translate("please log in or sign up"),
+        actionUrl: "/login",
+        actionText: translate("log in"),
+      });
+    }
+  };
   async function send() {
     const config = {
       headers: {
@@ -191,6 +203,45 @@ const JobPage = ({
                     <BookmarkBorder style={{ fontSize: 25 }} />
                   )}
                 </IconButton>
+                <IconButton
+                  aria-label="More"
+                  aria-owns={Boolean(openMenu) ? "menu" : undefined}
+                  aria-haspopup="true"
+                  onClick={(e) => setOpenMenu(e.currentTarget)}
+                >
+                  <MoreVert style={{ fontSize: 25 }} />
+                </IconButton>
+                <Menu
+                  id="menu"
+                  anchorEl={openMenu}
+                  open={Boolean(openMenu)}
+                  onClose={() => setOpenMenu(null)}
+                  PaperProps={{
+                    style: {
+                      width: 150,
+                    },
+                  }}
+                >
+                  {user && user.id == job.user && (
+                    <MenuItem onClick={() => DeleteHandle()}>
+                      {translate("delete")}
+                    </MenuItem>
+                  )}
+                  <MenuItem onClick={() => setOpenMenu(null)}>
+                    {translate("report")}
+                  </MenuItem>
+                  <RWebShare
+                    data={{
+                      // text: "Profile app",
+                      url: `${process.env.REACT_APP_API_URL}/job/${jobId}`,
+                      // title: "post",
+                    }}
+                  >
+                    <MenuItem onClick={() => setOpenMenu(null)}>
+                      {translate("share")}
+                    </MenuItem>
+                  </RWebShare>
+                </Menu>
               </div>
             </Grid>
           </Grid>
@@ -213,6 +264,30 @@ const JobPage = ({
       )}
     </>
   );
+  async function remove() {
+    if (localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      const user = localStorage.getItem("id");
+      const body = JSON.stringify({
+        user,
+        id: jobId,
+      });
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/jobs/job-remove/`,
+          body,
+          config
+        );
+        history.push("/jobs");
+      } catch (err) {}
+    }
+  }
 };
 
 const mapStateToProps = (state) => ({

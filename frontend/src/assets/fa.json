@@ -113,5 +113,8 @@
   "follower": "دنبال کننده",
   "following": "دنبال میکند",
   "edit": "ویرایش",
-  "change language": "تغییر زبان"
+  "change language": "تغییر زبان",
+  "delete": "حذف",
+  "report": "گزارش تخلف",
+  "share": "اشتراک گذاری"
 }

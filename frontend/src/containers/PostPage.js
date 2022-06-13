@@ -7,66 +7,35 @@ import {
   IconButton,
   LinearProgress,
   Avatar,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import {
   BookmarkBorder,
   Bookmark,
   FavoriteBorder,
   Favorite,
+  MoreVert,
 } from "@material-ui/icons";
 import DialogAlert from "../components/DialogAlert";
 import { connect } from "react-redux";
 import { load_post, load_replies, like, load_likes } from "../actions/blog";
 import { bookmark } from "../actions/blog";
 import jMoment from "moment-jalaali";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useHistory } from "react-router-dom";
 import linkify from "../utils/linkify";
 import translate from "../translate";
+import { RWebShare } from "react-web-share";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: `${theme.spacing(2)}px`,
     padding: `${theme.spacing(2)}px`,
   },
-  commentContainer: {
-    marginTop: `${theme.spacing(2)}px`,
-    padding: `${theme.spacing(2)}px`,
-    minHeight: 250,
-  },
-  commentCard: {
-    marginTop: `${theme.spacing(2)}px`,
-    padding: `${theme.spacing(2)}px`,
-    minHeight: 150,
-  },
-  paper: {
-    height: 250,
-  },
-  summery: {
-    margin: `${theme.spacing(2)}px`,
-  },
-  collapseTitle: { flex: 1 },
-  paginatorDiv: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 20,
-  },
   emptyDiv: {
     textAlign: "center",
     height: 600,
-  },
-  carousel: { height: 400 },
-  off: {
-    backgroundColor: "#f44336",
-    borderRadius: 15,
-    color: "#fff",
-    paddingRight: 8,
-    paddingLeft: 8,
-    display: "inline-block",
-    margin: 10,
-  },
-  discountPrice: {
-    display: "inline-block",
   },
   navLink: {
     textDecoration: "none",
@@ -85,12 +54,13 @@ const PostPage = ({
   isAuthenticated,
   bookmark,
   like,
-  load_replies,
+  user,
 }) => {
-  const [page, setPage] = useState(1);
   const classes = useStyles();
   const postId = match.params.postId;
-  const [openPopup, setOpenPopup] = useState(false);
+  const history = useHistory();
+
+  const [openMenu, setOpenMenu] = useState(null);
   const [alert, setAlert] = useState({
     isOpen: false,
     title: "",
@@ -104,19 +74,6 @@ const PostPage = ({
     //load_replies(itemId, 1);
     window.scrollTo(0, 0);
   }, [postId]);
-  const AddCommentHandle = () => {
-    if (isAuthenticated === true) {
-      setOpenPopup(true);
-    } else {
-      setAlert({
-        isOpen: true,
-        title: "!",
-        message: translate("please log in or sign up"),
-        actionUrl: "/login",
-        actionText: translate("log in"),
-      });
-    }
-  };
   const BookmarkHandle = (id) => {
     if (isAuthenticated === true) {
       bookmark(id, false);
@@ -143,29 +100,20 @@ const PostPage = ({
       });
     }
   };
-  const [expand, setExpand] = React.useState({
-    detail: false,
-    summery: false,
-  });
-  const { detail, summery } = expand;
-  const handleExpandClick = (name) => {
-    if (name === "detail") {
-      setExpand({
-        detail: !detail,
-        summery: false,
-      });
+  const DeleteHandle = (id) => {
+    setOpenMenu(null);
+    if (isAuthenticated === true) {
+      remove();
     } else {
-      setExpand({
-        detail: false,
-        summery: !summery,
+      setAlert({
+        isOpen: true,
+        title: "!",
+        message: translate("please log in or sign up"),
+        actionUrl: "/login",
+        actionText: translate("log in"),
       });
     }
   };
-  const handleChange = (event, value) => {
-    setPage(value);
-    load_replies(postId, value);
-  };
-
   return post && post.id == postId ? (
     <>
       <Grid container>
@@ -256,6 +204,46 @@ const PostPage = ({
                 <BookmarkBorder style={{ fontSize: 25 }} />
               )}
             </IconButton>
+
+            <IconButton
+              aria-label="More"
+              aria-owns={Boolean(openMenu) ? "menu" : undefined}
+              aria-haspopup="true"
+              onClick={(e) => setOpenMenu(e.currentTarget)}
+            >
+              <MoreVert style={{ fontSize: 25 }} />
+            </IconButton>
+            <Menu
+              id="menu"
+              anchorEl={openMenu}
+              open={Boolean(openMenu)}
+              onClose={() => setOpenMenu(null)}
+              PaperProps={{
+                style: {
+                  width: 150,
+                },
+              }}
+            >
+              {user && user.id == post.user && (
+                <MenuItem onClick={() => DeleteHandle()}>
+                  {translate("delete")}
+                </MenuItem>
+              )}
+              <MenuItem onClick={() => setOpenMenu(null)}>
+                {translate("report")}
+              </MenuItem>
+              <RWebShare
+                data={{
+                  // text: "Profile app",
+                  url: `${process.env.REACT_APP_API_URL}/post/${postId}`,
+                  // title: "post",
+                }}
+              >
+                <MenuItem onClick={() => setOpenMenu(null)}>
+                  {translate("share")}
+                </MenuItem>
+              </RWebShare>
+            </Menu>
           </div>
         </Grid>
       </Grid>
@@ -269,51 +257,6 @@ const PostPage = ({
 
       <Divider />
 
-      {/* <Card className={classes.commentContainer}>
-        <Button
-          color='secondary'
-          variant='outlined'
-          onClick={() => AddCommentHandle()}>
-          ثبت نظر
-        </Button>
-        <Grid container spacing={1}>
-          {comments &&
-            comments.comments.length > 0 &&
-            comments.comments.map((comment) => (
-              <Grid item xs={12} md={6}>
-                <Card variant='outlined' className={classes.commentCard}>
-                  <Typography color='textSecondary' variant='subtitle2'>
-                    {jMoment(comment.date, "YYYY/M/D").format("jYYYY/jM/jD")}
-                  </Typography>
-                  <Typography variant='subtitle2'>
-                    {comment.user_name}
-                  </Typography>
-                  <Typography variant='body1'>{comment.title}</Typography>
-                  <Rating name='read-only' value={comment.star} readOnly />
-                  <Typography variant='body1'>{comment.description}</Typography>
-                </Card>
-              </Grid>
-            ))}
-        </Grid>
-        {comments && comments.count > 1 && (
-          <div className={classes.paginatorDiv}>
-            <Pagination
-              count={comments.count}
-              page={page}
-              color='secondary'
-              onChange={handleChange}
-            />
-          </div>
-        )}
-      </Card>
-      <Notification notify={notify} setNotify={setNotify} />
-      
-      <Popup
-        title={"ثبت نظر"}
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}>
-        <SetComment id={post.id} setOpenPopup={setOpenPopup} />
-      </Popup> */}
       <DialogAlert alert={alert} setAlert={setAlert} />
     </>
   ) : (
@@ -322,13 +265,37 @@ const PostPage = ({
       <div className={classes.emptyDiv}></div>
     </>
   );
+  async function remove() {
+    if (localStorage.getItem("access")) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      const user = localStorage.getItem("id");
+      const body = JSON.stringify({
+        user,
+        id: postId,
+      });
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/blog/post-remove/`,
+          body,
+          config
+        );
+        history.push("/");
+      } catch (err) {}
+    }
+  }
 };
 
 const mapStateToProps = (state) => ({
   post: state.blog.post,
   likes: state.blog.likes,
-  //comments: state.shop.comments,
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
 });
 export default withRouter(
   connect(mapStateToProps, {
