@@ -54,17 +54,23 @@ const Layout = (props) => {
       },
     },
   });
-  const handleLangChange = () => {
-    if (direction == "ltr") {
-      document.body.setAttribute("dir", "rtl");
-      setDirection("rtl");
-      localStorage.setItem("direction", "rtl");
-      localStorage.setItem("lang", "fa");
-    } else {
-      document.body.setAttribute("dir", "ltr");
-      setDirection("ltr");
-      localStorage.setItem("direction", "ltr");
-      localStorage.setItem("lang", "en");
+  const handleLangChange = (l) => {
+    localStorage.setItem("lang", l);
+    switch (l) {
+      case "en":
+      case "tr":
+      case "ku":
+        localStorage.setItem("direction", "ltr");
+        document.body.setAttribute("dir", "ltr");
+        setDirection("ltr");
+        break;
+      case "fa":
+      case "ar":
+      case "so":
+        localStorage.setItem("direction", "rtl");
+        document.body.setAttribute("dir", "rtl");
+        setDirection("rtl");
+        break;
     }
   };
   const handleThemeChange = () => {

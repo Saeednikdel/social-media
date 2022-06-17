@@ -6,6 +6,11 @@ import {
   IconButton,
   Drawer,
   Divider,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -24,6 +29,7 @@ import {
   PersonAddOutlined,
   Language,
 } from "@material-ui/icons";
+import Popup from "./Popup";
 const useStyles = makeStyles((theme) => ({
   center: { flexGrow: 1, textAlign: "center" },
   rightIcons: { flexGrow: 1 },
@@ -54,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 10,
     marginRight: 10,
   },
+  button: {
+    margin: 20,
+  },
 }));
 
 const Appbar = ({
@@ -71,6 +80,21 @@ const Appbar = ({
     setDrawerState(!drawerstate);
   };
   const [drawerstate, setDrawerState] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [openLang, setOpenLang] = useState(false);
+  const [lang, setlLang] = useState(localStorage.getItem("lang"));
+  const langList = [
+    { title: translate("English"), value: "en" },
+    { title: translate("Farsi"), value: "fa" },
+    { title: translate("Kurdish (ku)"), value: "ku" },
+    { title: translate("Kurdish (so)"), value: "so" },
+    { title: translate("Turkish"), value: "tr" },
+    { title: translate("Arabic"), value: "ar" },
+  ];
+  const handleLang = () => {
+    changeLang(lang);
+    setOpenPopup(false);
+  };
   const toggleDrawer = (event) => {
     if (
       event.type === "keydown" &&
@@ -162,7 +186,7 @@ const Appbar = ({
             </Typography>
           </Link>
 
-          <Link className={classes.navLink} onClick={changeLang}>
+          <Link className={classes.navLink} onClick={() => setOpenPopup(true)}>
             <Language className={classes.menuicon} />
             <Typography variant="body1">
               {translate("change language")}
@@ -170,6 +194,37 @@ const Appbar = ({
           </Link>
         </div>
       </Drawer>
+      <Popup
+        title={translate("change language")}
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+      >
+        <FormControl style={{ width: "100%" }}>
+          <InputLabel>{translate("choose language")}</InputLabel>
+          <Select
+            open={openLang}
+            onClose={() => setOpenLang(false)}
+            onOpen={() => setOpenLang(true)}
+            value={lang}
+            name="lang"
+            onChange={(e) => setlLang(e.target.value)}
+          >
+            {langList.map((l) => (
+              <MenuItem value={l.value}>{l.title}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <div className={classes.center}>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+            onClick={() => handleLang()}
+          >
+            {translate("ok")}
+          </Button>
+        </div>
+      </Popup>
     </>
   );
 };

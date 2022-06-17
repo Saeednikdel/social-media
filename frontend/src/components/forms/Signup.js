@@ -55,7 +55,7 @@ const Signup = ({
       setRequestSent(false);
       setAlert({
         isOpen: true,
-        title: translate("sign up seccessfull"),
+        title: translate("sign up successful"),
         message: translate("open the link sent to you by email"),
       });
     }
