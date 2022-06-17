@@ -7,7 +7,7 @@
   "forgot your password?": "رمز عبورتان را فراموش کرده اید؟",
   "reset": "بازیابی",
   "password or email doesn't match": "رمز یا ایمیل اشتباه است",
-  "sign up seccessfull": "ثبت نام انجام شد.",
+  "sign up successful": "ثبت نام انجام شد.",
   "open the link sent to you by email": "برای فعالسازی حساب خود لینک ارسال شده به ایمیل، را باز کنید.",
   "Only alphanumeric characters are allowed.": "فقط حروف انگلیسی و اعداد بدون فاصله",
   "user account with this name already exists.": "این نام کاربری در دسترس نیست",
@@ -117,5 +117,12 @@
   "delete": "حذف",
   "report": "گزارش تخلف",
   "share": "اشتراک گذاری",
-  "cllose":"بستن"
+  "close": "بستن",
+  "choose language": "انتخاب زبان",
+  "English": "انگلیسی",
+  "Farsi": "فارسی",
+  "Kurdish (ku)": "کردی کرمانجی",
+  "Kurdish (so)": "کردی سورانی",
+  "Turkish": "ترکی",
+  "Arabic": "عربی"
 }
