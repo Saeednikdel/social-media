@@ -46,7 +46,7 @@ export const InfoPage = ({ resume }) => {
       {resume && (
         <>
           <div className={classes.container}>
-            <Typography color="secondary">مشخصات</Typography>
+            <Typography color="secondary">{translate("info")}</Typography>
             <Button
               color="secondary"
               variant="outlined"

@@ -35,14 +35,13 @@ const Layout = (props) => {
   const [darkState, setDarkState] = useState(
     JSON.parse(localStorage.getItem("darkState"))
   );
-  const [direction, setDirection] = useState(localStorage.getItem("direction"));
   const palletType = darkState ? "dark" : "light";
 
   const darkTheme = createMuiTheme({
     typography: {
       fontFamily: "Vazir",
     },
-    direction: direction,
+    direction: localStorage.getItem("direction"),
     palette: {
       type: palletType,
       primary: {
@@ -61,17 +60,14 @@ const Layout = (props) => {
       case "tr":
       case "ku":
         localStorage.setItem("direction", "ltr");
-        document.body.setAttribute("dir", "ltr");
-        setDirection("ltr");
         break;
       case "fa":
       case "ar":
       case "so":
         localStorage.setItem("direction", "rtl");
-        document.body.setAttribute("dir", "rtl");
-        setDirection("rtl");
         break;
     }
+    document.location.reload();
   };
   const handleThemeChange = () => {
     if (!darkState) {

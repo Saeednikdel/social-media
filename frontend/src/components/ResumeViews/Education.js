@@ -43,12 +43,17 @@ export const Education = ({ education, add_education }) => {
                     justifyContent: "space-around",
                   }}
                 >
-                  <Typography>{row.title + " از " + row.campus}</Typography>
                   <Typography>
-                    {"تاریخ اخذ مدرک : " +
+                    {row.title + translate("from") + row.campus}
+                  </Typography>
+                  <Typography>
+                    {translate("graduation date") +
+                      " : " +
                       jMoment(row.end_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                   </Typography>
-                  <Typography>{"معدل : " + row.score}</Typography>
+                  <Typography>
+                    {translate("grade") + " : " + row.score}
+                  </Typography>
                 </CardContent>
                 <div
                   style={{

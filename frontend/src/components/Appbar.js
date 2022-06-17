@@ -86,14 +86,15 @@ const Appbar = ({
   const langList = [
     { title: translate("English"), value: "en" },
     { title: translate("Farsi"), value: "fa" },
-    { title: translate("Kurdish (ku)"), value: "ku" },
-    { title: translate("Kurdish (so)"), value: "so" },
+    { title: translate("Kurdi kurmanji"), value: "ku" },
+    { title: translate("Kurdi sorani"), value: "so" },
     { title: translate("Turkish"), value: "tr" },
     { title: translate("Arabic"), value: "ar" },
   ];
   const handleLang = () => {
-    changeLang(lang);
     setOpenPopup(false);
+    setDrawerState(false);
+    changeLang(lang);
   };
   const toggleDrawer = (event) => {
     if (
@@ -182,7 +183,7 @@ const Appbar = ({
               <Brightness4 className={classes.menuicon} />
             )}
             <Typography variant="body1">
-              {checked ? translate(" light theme ") : translate(" dark theme ")}
+              {checked ? translate("light theme") : translate("dark theme")}
             </Typography>
           </Link>
 
