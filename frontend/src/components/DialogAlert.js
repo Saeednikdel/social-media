@@ -7,7 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-
+import translate from "../translate"
 export default function DialogAlert({ alert, setAlert }) {
   const handleClose = () => {
     setAlert({
@@ -24,7 +24,7 @@ export default function DialogAlert({ alert, setAlert }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">
-            بستن
+            {translate("close")}
           </Button>
           {alert.actionUrl && (
             <Button href={alert.actionUrl} color="secondary" autoFocus>
