@@ -44,7 +44,7 @@ export const Education = ({ education, add_education }) => {
                   }}
                 >
                   <Typography>
-                    {row.title + translate("from") + row.campus}
+                    {row.title + " " + translate("from") + " " + row.campus}
                   </Typography>
                   <Typography>
                     {translate("graduation date") +

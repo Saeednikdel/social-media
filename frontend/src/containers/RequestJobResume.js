@@ -108,7 +108,7 @@ const RequestJobResume = ({ load_requested_resume, resume, match }) => {
                     }}
                   >
                     <Typography>
-                      {row.title + translate("from") + row.campus}
+                      {row.title + " " + translate("from") + " " + row.campus}
                     </Typography>
                     <Typography>
                       {translate("graduation date") +
@@ -141,14 +141,17 @@ const RequestJobResume = ({ load_requested_resume, resume, match }) => {
                     }}
                   >
                     <Typography>
-                      {row.title + translate("in") + row.company}
+                      {row.title + " " + translate("in") + " " + row.company}
                     </Typography>
                     <Typography>
                       {translate("from") +
+                        " " +
                         jMoment(row.start_date, "YYYY/M/D").format(
                           "jYYYY/jM/jD"
                         ) +
+                        " " +
                         translate("to") +
+                        " " +
                         jMoment(row.end_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                     </Typography>
                   </CardContent>
