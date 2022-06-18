@@ -60,7 +60,14 @@ const SetUserDetail = ({
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    set_user_detail(id, name, profile_name, bio, phone_no, birth_date);
+    set_user_detail(
+      id,
+      name.toLowerCase(),
+      profile_name,
+      bio,
+      phone_no,
+      birth_date
+    );
     setRequestSent(true);
   };
 

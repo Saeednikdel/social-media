@@ -49,7 +49,7 @@ const Login = ({
   const onSubmit = (e) => {
     e.preventDefault();
     setRequestSent(true);
-    login(email, password);
+    login(email.toLowerCase(), password);
   };
 
   if (isAuthenticated) return <Redirect to="/" />;

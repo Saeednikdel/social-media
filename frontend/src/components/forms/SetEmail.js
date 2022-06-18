@@ -47,7 +47,11 @@ const SetEmail = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    set_email(new_email, re_new_email, current_password);
+    set_email(
+      new_email.toLowerCase(),
+      re_new_email.toLowerCase(),
+      current_password
+    );
     setRequestSent(true);
   };
 

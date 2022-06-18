@@ -65,12 +65,8 @@ const Signup = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    signup({ name, email, password, re_password });
+    signup(name.toLowerCase(), email.toLowerCase(), password, re_password);
     setRequestSent(true);
-    // if (password === re_password) {
-    //   signup({ name, email, password, re_password });
-    //   setRequestSent(true);
-    // }
   };
   if (isAuthenticated) return <Redirect to="/" />;
 

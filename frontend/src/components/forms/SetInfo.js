@@ -81,7 +81,7 @@ const SetInfo = ({
     set_resume_detail(
       id,
       profile_name,
-      name,
+      name.toLowerCase(),
       phone_no,
       birth_date,
       show_resume,
