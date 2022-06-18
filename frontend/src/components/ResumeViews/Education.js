@@ -52,7 +52,7 @@ export const Education = ({ education, add_education }) => {
                       jMoment(row.end_date, "YYYY/M/D").format("jYYYY/jM/jD")}
                   </Typography>
                   <Typography>
-                    {translate("grade") + " : " + row.score}
+                    {translate("grade point average") + " : " + row.score}
                   </Typography>
                 </CardContent>
                 <div
