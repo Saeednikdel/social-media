@@ -23,7 +23,7 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     title: null,
-    level: null,
+    level: "junior",
   });
   const { title, level } = formData;
   const [openLevel, setOpenLevel] = useState(false);
@@ -33,10 +33,10 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
     { title: translate("senior"), value: "senior" },
   ];
   useEffect(() => {
-    if (new_skill && new_skill.id) {
-      setOpenPopup(false);
-    } else if (new_skill && new_skill === "error") {
+    if (new_skill && new_skill === "error") {
       setRequestSent(false);
+    } else if (new_skill && requestSent) {
+      setOpenPopup(false);
     }
   }, [new_skill]);
   const onChange = (e) => {
@@ -73,7 +73,6 @@ const SetSkill = ({ setOpenPopup, add_skill, new_skill }) => {
               name="level"
               onChange={(e) => onChange(e)}
             >
-              <MenuItem value="">{translate("none")}</MenuItem>
               {levelList.map((l) => (
                 <MenuItem value={l.value}>{l.title}</MenuItem>
               ))}

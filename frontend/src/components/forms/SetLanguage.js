@@ -23,7 +23,7 @@ const SetLanguage = ({ setOpenPopup, add_language, new_lang }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     title: null,
-    level: null,
+    level: "read and write",
   });
   const { title, level } = formData;
   const [openLevel, setOpenLevel] = useState(false);
@@ -34,10 +34,10 @@ const SetLanguage = ({ setOpenPopup, add_language, new_lang }) => {
     { title: translate("speaking"), value: "speaking" },
   ];
   useEffect(() => {
-    if (new_lang && new_lang.id) {
-      setOpenPopup(false);
-    } else if (new_lang && new_lang === "error") {
+    if (new_lang && new_lang === "error") {
       setRequestSent(false);
+    } else if (new_lang && requestSent) {
+      setOpenPopup(false);
     }
   }, [new_lang]);
   const onChange = (e) => {
@@ -74,7 +74,6 @@ const SetLanguage = ({ setOpenPopup, add_language, new_lang }) => {
               name="level"
               onChange={(e) => onChange(e)}
             >
-              <MenuItem value="">{translate("none")}</MenuItem>
               {levelList.map((l) => (
                 <MenuItem value={l.value}>{l.title}</MenuItem>
               ))}
